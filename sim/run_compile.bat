@@ -4,5 +4,6 @@ REM if any memory initialization files exist, copy them to this folder
 if exist work rmdir /S /Q work
 
 vlib work
+vlog ./*.v
 vlog ../tb/*.v
 vlog ../src/*.v 

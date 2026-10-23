@@ -64,17 +64,25 @@ module tb();
     assign HEX[ 7: 0] = {1'b0, HEX5};
 
     // convert real VGA signals to the DESim VGA interface
-    // downsample by 4x since desim is really slow
-    assign VGA_X = DUT.sx >> 2;
-    assign VGA_Y = DUT.sy >> 2;
+    reg [9:0] VGA_X_d;
+    reg [8:0] VGA_Y_d;
+
+    // delay by 1 cycle
+    always @(posedge VGA_CLK) begin
+        VGA_X_d <= DUT.sx;
+        VGA_Y_d <= DUT.sy[8:0];
+    end
+
+    assign VGA_X = VGA_X_d >> 2;
+    assign VGA_Y = VGA_Y_d >> 2;
 
     assign VGA_COLOR = {VGA_R, VGA_G, VGA_B};
 
-    assign plot =
-        DUT.de &&
-        (DUT.sx[1:0] == 0) &&
-        (DUT.sy[1:0] == 0);
-    
+    // only draw one pixel from each block (top left corner)
+    assign plot = VGA_BLANK_N &&
+        (VGA_X_d[1:0] == 2'b00) &&
+        (VGA_Y_d[1:0] == 2'b00);
+
     top DUT (
         .clk(CLOCK_50),
         .rst(rst),

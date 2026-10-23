@@ -14,42 +14,88 @@ Z1 dC:/Users/every/Documents/Programming/feforce/sim
 T_opt
 !i145 1
 !i144 0
-!s110 1792781392
-V?L0CmWhUT13@Mlg?jTSh33
+!s110 1792795906
+V7ihmRIBz?ZiigP1MVfi^D0
 04 2 4 work tb fast 0
-=1-24b2b99b94c9-6adbac4f-384-7010
+=1-24b2b99b94c9-6adbe501-1ff-639c
 R0
 !s12f OEM100
 !s12b OEM100
-!s124 OEM10U4 
+!s124 OEM10U6 
 !s135 nogc
 o-quiet -work work -Lf 220model -Lf altera_mf_ver -Lf verilog
 tCvgOpt 0 defaultOptions 1107585188
 n@_opt
 OL;O;2025.2;82
 vdisplay
-Z2 2../src/top.v|../src/vga.v
-Z3 !s110 1792781389
+Z2 2../src/framebuffer.v|../src/top.v|../src/vga.v
+Z3 !s110 1792795903
 !i10b 1
-!s100 c?f=AOcg0gcHzU5OC6L[l1
-IlOV<G4:nD38fb?V97znAY0
+!s100 I]6e;<Mk;zz2^cJl4E`f83
+I8C7Gfo=]fo6gZ_56@@L]Q2
 R1
-Z4 w1792779952
+Z4 w1792795897
 Z5 8../src/vga.v
 Z6 F../src/vga.v
-!i122 1
+!i122 2
 L0 21 45
 Z7 VDg1SIo80bB@j0V0VzS_@n1
 Z8 OL;L;2025.2;82
 r1
 !s85 0
 31
-Z9 !s108 1792781389.000000
-Z10 !s107 ../src/vga.v|../src/top.v|
-Z11 !s90 ../src/top.v|../src/vga.v|
+Z9 !s108 1792795903.000000
+Z10 !s107 ../src/vga.v|../src/top.v|../src/framebuffer.v|
+Z11 !s90 ../src/framebuffer.v|../src/top.v|../src/vga.v|
 !i113 0
 Z12 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
 Z13 tCvgOpt 0 defaultOptions 1085333592
+vframebuffer
+R2
+R3
+!i10b 1
+!s100 D8UdP:=PLzVcK?W8_kLhL0
+I49;T2e7C4UQNL73mVDnnk0
+R1
+w1792795683
+8../src/framebuffer.v
+F../src/framebuffer.v
+!i122 2
+L0 1 41
+R7
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+R13
+vframebuffer_ram
+2./framebuffer_ram.v
+R3
+!i10b 1
+!s100 OA3RYmW=bOln:bemh]WJN1
+IPF1;JF_HJQHl4RSm7:emA3
+R1
+w1792790159
+8./framebuffer_ram.v
+F./framebuffer_ram.v
+!i122 0
+L0 3 19
+R7
+R8
+r1
+!s85 0
+31
+R9
+!s107 ./framebuffer_ram.v|
+!s90 ./framebuffer_ram.v|
+!i113 0
+R12
+R13
 vpixel_clock
 R2
 R3
@@ -60,7 +106,7 @@ R1
 R4
 R5
 R6
-!i122 1
+!i122 2
 L0 3 17
 R7
 R8
@@ -77,14 +123,14 @@ vtb
 2../tb/tb.v
 R3
 !i10b 1
-!s100 =7YH=3oPWf6Mznf5C:^Oo2
-IAHLR1UCl6HKz27[G`djR=2
+!s100 N87z@1De_ez>GPXT46>fl1
+IOG`<GK_aHR^YVg]G[Bcom1
 R1
-w1792781385
+w1792795124
 8../tb/tb.v
 F../tb/tb.v
-!i122 0
-L0 6 84
+!i122 1
+L0 7 92
 R7
 R8
 r1
@@ -100,14 +146,14 @@ vtop
 R2
 R3
 !i10b 1
-!s100 F?f;1MYcW`^F][M[5EREa3
-I]@7:]A:48cZ?`8Z3`jJ4e3
+!s100 5>`c43=1>_@^VUU1oV<SH2
+IMUD=VQiFBQZg^Jzh0z8Hf0
 R1
-w1792780680
+w1792795742
 8../src/top.v
 F../src/top.v
-!i122 1
-L0 3 57
+!i122 2
+L0 3 100
 R7
 R8
 r1

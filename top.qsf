@@ -897,3 +897,4 @@ set_global_assignment -name EDA_TEST_BENCH_NAME testbench -section_id eda_simula
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id testbench
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME testbench -section_id testbench
 set_global_assignment -name EDA_TEST_BENCH_FILE ModelSim/testbench.v -section_id testbench
+set_global_assignment -name QIP_FILE src/framebuffer_ram/framebuffer_ram.qip
