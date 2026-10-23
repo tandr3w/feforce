@@ -1,0 +1,121 @@
+m255
+K4
+z2
+!s12c _opt
+Z0 !s99 nomlopt
+!s11f vlog 2025.2 2025.05, May 31 2025
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 dC:/Users/every/Documents/Programming/feforce/sim
+T_opt
+!i145 1
+!i144 0
+!s110 1792781392
+V?L0CmWhUT13@Mlg?jTSh33
+04 2 4 work tb fast 0
+=1-24b2b99b94c9-6adbac4f-384-7010
+R0
+!s12f OEM100
+!s12b OEM100
+!s124 OEM10U4 
+!s135 nogc
+o-quiet -work work -Lf 220model -Lf altera_mf_ver -Lf verilog
+tCvgOpt 0 defaultOptions 1107585188
+n@_opt
+OL;O;2025.2;82
+vdisplay
+Z2 2../src/top.v|../src/vga.v
+Z3 !s110 1792781389
+!i10b 1
+!s100 c?f=AOcg0gcHzU5OC6L[l1
+IlOV<G4:nD38fb?V97znAY0
+R1
+Z4 w1792779952
+Z5 8../src/vga.v
+Z6 F../src/vga.v
+!i122 1
+L0 21 45
+Z7 VDg1SIo80bB@j0V0VzS_@n1
+Z8 OL;L;2025.2;82
+r1
+!s85 0
+31
+Z9 !s108 1792781389.000000
+Z10 !s107 ../src/vga.v|../src/top.v|
+Z11 !s90 ../src/top.v|../src/vga.v|
+!i113 0
+Z12 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z13 tCvgOpt 0 defaultOptions 1085333592
+vpixel_clock
+R2
+R3
+!i10b 1
+!s100 UK[dFUJiEKbJaoBX1jlM01
+IRB5l:WA]PH9e:iOzfUzcD3
+R1
+R4
+R5
+R6
+!i122 1
+L0 3 17
+R7
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+R13
+vtb
+2../tb/tb.v
+R3
+!i10b 1
+!s100 =7YH=3oPWf6Mznf5C:^Oo2
+IAHLR1UCl6HKz27[G`djR=2
+R1
+w1792781385
+8../tb/tb.v
+F../tb/tb.v
+!i122 0
+L0 6 84
+R7
+R8
+r1
+!s85 0
+31
+R9
+!s107 ../tb/tb.v|
+!s90 ../tb/tb.v|
+!i113 0
+R12
+R13
+vtop
+R2
+R3
+!i10b 1
+!s100 F?f;1MYcW`^F][M[5EREa3
+I]@7:]A:48cZ?`8Z3`jJ4e3
+R1
+w1792780680
+8../src/top.v
+F../src/top.v
+!i122 1
+L0 3 57
+R7
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+R13

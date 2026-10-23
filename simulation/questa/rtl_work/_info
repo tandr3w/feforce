@@ -1,0 +1,125 @@
+m255
+K4
+z2
+!s12c _opt
+Z0 !s99 nomlopt
+!s11f vlog 2025.2 2025.05, May 31 2025
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 dC:/Users/every/Documents/Programming/feforce/simulation/questa
+T_opt
+!i145 1
+!i144 0
+!s110 1792780244
+VZMn92][_=QBI9fD@_T8`h3
+04 9 4 work testbench fast 0
+=1-24b2b99b94c9-6adba7d3-1b3-7aa8
+R0
+!s12f OEM100
+!s12b OEM100
+!s124 OEM10U4 
+!s135 nogc
+o-quiet -auto_acc_if_foreign -work work -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work +acc
+tCvgOpt 0 defaultOptions 1107585188
+n@_opt
+OL;O;2025.2;82
+vdisplay
+Z2 2C:/Users/every/Documents/Programming/feforce/src/vga.v
+Z3 !s110 1792780241
+!i10b 1
+!s100 c?f=AOcg0gcHzU5OC6L[l1
+IYF1D@RM5R@m3LlH?l40Z51
+R1
+Z4 w1792779952
+Z5 8C:/Users/every/Documents/Programming/feforce/src/vga.v
+Z6 FC:/Users/every/Documents/Programming/feforce/src/vga.v
+!i122 0
+L0 21 45
+Z7 VDg1SIo80bB@j0V0VzS_@n1
+Z8 OL;L;2025.2;82
+r1
+!s85 0
+31
+Z9 !s108 1792780241.000000
+Z10 !s107 C:/Users/every/Documents/Programming/feforce/src/vga.v|
+Z11 !s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/src|C:/Users/every/Documents/Programming/feforce/src/vga.v|
+!i113 0
+Z12 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z13 !s92 -work work +incdir+C:/Users/every/Documents/Programming/feforce/src -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z14 tCvgOpt 0 defaultOptions 1085333592
+vpixel_clock
+R2
+R3
+!i10b 1
+!s100 UK[dFUJiEKbJaoBX1jlM01
+I2V^IhleekoZ>BikCUAQaO2
+R1
+R4
+R5
+R6
+!i122 0
+L0 3 17
+R7
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+R13
+R14
+vtestbench
+2C:/Users/every/Documents/Programming/feforce/ModelSim/testbench.v
+Z15 !s110 1792780242
+!i10b 1
+!s100 0JLn_MO:a`=MY;KVVh0<U1
+INc0kCa_749R588D5CjGVd2
+R1
+w1792780187
+8C:/Users/every/Documents/Programming/feforce/ModelSim/testbench.v
+FC:/Users/every/Documents/Programming/feforce/ModelSim/testbench.v
+!i122 2
+L0 3 39
+R7
+R8
+r1
+!s85 0
+31
+Z16 !s108 1792780242.000000
+!s107 C:/Users/every/Documents/Programming/feforce/ModelSim/testbench.v|
+!s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/ModelSim|C:/Users/every/Documents/Programming/feforce/ModelSim/testbench.v|
+!i113 0
+R12
+!s92 -work work +incdir+C:/Users/every/Documents/Programming/feforce/ModelSim -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R14
+vtop
+2C:/Users/every/Documents/Programming/feforce/src/top.v
+R15
+!i10b 1
+!s100 F?f;1MYcW`^F][M[5EREa3
+Id2Y3bE3n7bFU]Xff9]H^N1
+R1
+w1792779880
+8C:/Users/every/Documents/Programming/feforce/src/top.v
+FC:/Users/every/Documents/Programming/feforce/src/top.v
+!i122 1
+L0 3 57
+R7
+R8
+r1
+!s85 0
+31
+R16
+!s107 C:/Users/every/Documents/Programming/feforce/src/top.v|
+!s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/src|C:/Users/every/Documents/Programming/feforce/src/top.v|
+!i113 0
+R12
+R13
+R14
