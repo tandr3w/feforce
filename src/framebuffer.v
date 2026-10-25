@@ -1,7 +1,8 @@
 // inspired by https://projectf.io/posts/framebuffers/ and https://www-ug.eecg.toronto.edu/msl/manuals/tutorial_DE1-SoC-v5.4.pdf
 
 module framebuffer (
-    input wire clk,
+    input wire clk_write,
+    input wire clk_read,
 
     input wire [8:0] write_x,
     input wire [7:0] write_y,
@@ -30,7 +31,8 @@ module framebuffer (
     assign read_address = (read_x < 640 && read_y < 480) ? fb_y * 17'd320 + fb_x : 17'd0;
 
     framebuffer_ram memory (
-        .clock     (clk),
+        .rdclock   (clk_read),
+        .wrclock   (clk_write),
         .data      (write_color),
         .wraddress (write_address),
         .wren      (write_enable),

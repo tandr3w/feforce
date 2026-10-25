@@ -68,9 +68,9 @@ module top(
     end
 
     rasterizer raster (
-        .clk(pixel_clk),
+        .clk(clk),
         .rst(rst),
-        .color_in(16'hF800),
+        .color_in(16'h001F),
 
         .x0_in(9'd50),
         .y0_in(8'd40),
@@ -93,7 +93,8 @@ module top(
 
     wire [15:0] fb_color;
     framebuffer fb (
-        .clk(pixel_clk),
+        .clk_write(clk),
+        .clk_read(pixel_clk),
 
         // Parameters to write to framebuffer
         .write_x(raster_x),
