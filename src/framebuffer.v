@@ -5,12 +5,12 @@ module framebuffer (
 
     input wire [8:0] write_x,
     input wire [7:0] write_y,
-    input wire [15:0] write_colour,
+    input wire [15:0] write_color,
     input wire write_enable,
 
     input wire [9:0] read_x,
     input wire [9:0] read_y,
-    output wire [15:0] read_colour
+    output wire [15:0] read_color
 );
 
     wire [16:0] write_address;
@@ -31,11 +31,11 @@ module framebuffer (
 
     framebuffer_ram memory (
         .clock     (clk),
-        .data      (write_colour),
+        .data      (write_color),
         .wraddress (write_address),
         .wren      (write_enable),
         .rdaddress (read_address),
-        .q         (read_colour)
+        .q         (read_color)
     );
 
 endmodule

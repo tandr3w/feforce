@@ -47,45 +47,64 @@ module top(
         end
     end
 
-    // ------ Test code, will remove later -------
-    wire [15:0] fb_colour;
-    reg [8:0] fill_x;
-    reg [7:0] fill_y;
-    reg fill_done;
+    // ------ Code to draw to the framebuffer -------
+    wire [8:0] raster_x;
+    wire [7:0] raster_y;
+    wire [15:0] raster_color;
+    wire raster_write;
+    wire raster_busy;
 
-    // fill the screen with red pixels
+    // Pulse raster_start for 1 cycle after reset
+    reg raster_start;
+
     always @(posedge pixel_clk or posedge rst) begin
         if (rst) begin
-            fill_x <= 0;
-            fill_y <= 0;
-            fill_done <= 0;
-        end else if (!fill_done) begin
-            if (fill_x == 319) begin
-                fill_x <= 0;
-
-                if (fill_y == 239)
-                    fill_done <= 1;
-                else
-                    fill_y <= fill_y + 1;
-            end else begin
-                fill_x <= fill_x + 1;
-            end
+            raster_start <= 0;
+        end else if (!raster_start) begin
+            raster_start <= 1;
+        end else begin
+            raster_start <= 0;
         end
     end
 
+    rasterizer raster (
+        .clk(pixel_clk),
+        .rst(rst),
+        .color_in(16'hF800),
+
+        .x0_in(9'd50),
+        .y0_in(8'd40),
+
+        .x1_in(9'd250),
+        .y1_in(8'd70),
+
+        .x2_in(9'd120),
+        .y2_in(8'd200),
+
+        .start(raster_start),
+
+        .write_x(raster_x),
+        .write_y(raster_y),
+        .write_color(raster_color),
+        .write_enable(raster_write),
+
+        .busy(raster_busy)
+    );
+
+    wire [15:0] fb_color;
     framebuffer fb (
         .clk(pixel_clk),
 
         // Parameters to write to framebuffer
-        .write_x(fill_x),
-        .write_y(fill_y),
-        .write_colour(16'hF800),
-        .write_enable(!fill_done),
+        .write_x(raster_x),
+        .write_y(raster_y),
+        .write_color(raster_color),
+        .write_enable(raster_write),
 
         // Parameters to read from framebuffer
         .read_x(sx),
         .read_y(sy),
-        .read_colour(fb_colour)
+        .read_color(fb_color)
     );
     // -------------
 
@@ -94,8 +113,10 @@ module top(
     assign VGA_SYNC_N = 1'b0;
     assign VGA_HS = hsync_d;
     assign VGA_VS = vsync_d;
-    assign VGA_R = de_d ? {fb_colour[15:11], fb_colour[15:13]} : 8'h00;
-    assign VGA_G = de_d ? {fb_colour[10:5], fb_colour[10:9]} : 8'h00;
-    assign VGA_B = de_d ? {fb_colour[4:0], fb_colour[4:2]} : 8'h00;
+
+    // Convert the 5 or 6 bit colors from the framebuffer to the 8 bit that the VGA wants.
+    assign VGA_R = de_d ? {fb_color[15:11], fb_color[15:13]} : 8'h00;
+    assign VGA_G = de_d ? {fb_color[10:5], fb_color[10:9]} : 8'h00;
+    assign VGA_B = de_d ? {fb_color[4:0], fb_color[4:2]} : 8'h00;
 
 endmodule
