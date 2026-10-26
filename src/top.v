@@ -52,45 +52,17 @@ module top(
     wire [7:0] raster_y;
     wire [15:0] raster_color;
     wire raster_write;
-    wire raster_busy;
 
-    // Pulse raster_start for 1 cycle after reset
-    reg raster_start;
-
-    always @(posedge pixel_clk or posedge rst) begin
-        if (rst) begin
-            raster_start <= 0;
-        end else if (!raster_start) begin
-            raster_start <= 1;
-        end else begin
-            raster_start <= 0;
-        end
-    end
-
-    rasterizer raster (
+    render_controller rc (
         .clk(clk),
         .rst(rst),
-        .color_in(16'h001F),
-
-        .x0_in(9'd50),
-        .y0_in(8'd40),
-
-        .x1_in(9'd250),
-        .y1_in(8'd70),
-
-        .x2_in(9'd120),
-        .y2_in(8'd200),
-
-        .start(raster_start),
 
         .write_x(raster_x),
         .write_y(raster_y),
         .write_color(raster_color),
-        .write_enable(raster_write),
-
-        .busy(raster_busy)
+        .write_enable(raster_write)
     );
-
+    
     wire [15:0] fb_color;
     framebuffer fb (
         .clk_write(clk),

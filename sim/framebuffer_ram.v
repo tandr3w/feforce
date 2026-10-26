@@ -1,13 +1,13 @@
 // Module to simulate ram for DESim since it can't use the IP
 
 module framebuffer_ram (
-    input wire rdclock,
-    input wire wrclock,
+    input rdclock,
+    input wrclock,
 
-    input wire [15:0] data,
-    input wire [16:0] wraddress,
-    input wire wren,
-    input wire [16:0] rdaddress,
+    input [15:0] data,
+    input [16:0] wraddress,
+    input wren,
+    input [16:0] rdaddress,
     output reg [15:0] q
 );
 

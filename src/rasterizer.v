@@ -1,6 +1,4 @@
-// math theory used is from https://fgiesen.wordpress.com/2013/02/08/triangle-rasterization-in-practice/
-// and https://jtsorlinis.github.io/rendering-tutorial/ 
-// all verilog and module design is hand-written and original!
+// Background math theory used is from https://jtsorlinis.github.io/rendering-tutorial/ 
 
 module edge_function (
     input [8:0] ax, bx, px,
@@ -38,9 +36,9 @@ module rasterizer (
     output [7:0] write_y,
     output [15:0] write_color,
     output write_enable, // should we actually write to this pixel?
-
-    output reg busy // is the rasterizer busy rasterizing a triangle?
+    output reg done // signal to tell the render controller that we are done rasterizing this triangle
 );
+
     parameter IDLE = 2'b00; // Ready to accept a new triangle
     parameter SETUP = 2'b01; // Setup bounding box and initial position
     parameter RASTER = 2'b10; // Rasterizing the triangle
@@ -123,12 +121,11 @@ module rasterizer (
     always @(posedge clk or posedge rst) begin
         if (rst) begin
             state <= IDLE;
-            busy <= 0;
+            done <= 0;
         end else begin
             case (state)
                 IDLE: begin
-                    busy <= 0;
-
+                    done <= 0;
                     if (start) begin
                         // Store triangle in a register so we don't need to worry about inputs changing
                         x0 <= x0_in;
@@ -140,13 +137,13 @@ module rasterizer (
                         color <= color_in;
 
                         state <= SETUP;
-                        busy <= 1;
                     end
                 end
 
                 SETUP: begin
                     if (!valid) begin
                         // Skip this triangle
+                        done <= 1;
                         state <= IDLE;
                     end else begin
                         curr_x <= min_x;
@@ -164,6 +161,7 @@ module rasterizer (
                         curr_y <= curr_y + 1;
                     end else begin
                         state <= IDLE; // Done all pixels in bounding box, go back to idle
+                        done <= 1;
                     end
                 end
             endcase
