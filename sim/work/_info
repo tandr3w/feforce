@@ -9,13 +9,13 @@ z2
 cModel Technology
 Z0 dC:/Users/tanandr4/feforce/sim
 vdisplay
-Z1 !s110 1793731711
+Z1 !s110 1793737349
 !i10b 1
 !s100 U9EHJRR`K12>Pm15JziP62
 I7nmC:9JVn4LP=6:5oMBi01
 Z2 VDg1SIo80bB@j0V0VzS_@n1
 R0
-Z3 w1793731364
+Z3 w1793735409
 Z4 8../src/vga.v
 Z5 F../src/vga.v
 L0 21
@@ -23,7 +23,7 @@ Z6 OV;L;10.5b;63
 r1
 !s85 0
 31
-Z7 !s108 1793731711.000000
+Z7 !s108 1793737349.000000
 Z8 !s107 ../src/vga.v|../src/triangle_loader.v|../src/top.v|../src/render_controller.v|../src/rasterizer.v|../src/framebuffer.v|
 Z9 !s90 ../src/framebuffer.v|../src/rasterizer.v|../src/render_controller.v|../src/top.v|../src/triangle_loader.v|../src/vga.v|
 !i113 1
@@ -35,7 +35,7 @@ R1
 I;aj:]j79WlKmKbk:YGok<3
 R2
 R0
-Z11 w1793729315
+Z11 w1793736689
 Z12 8../src/rasterizer.v
 Z13 F../src/rasterizer.v
 L0 3
@@ -55,7 +55,7 @@ R1
 IF<S@Qg?Fkz7gWdJH[HF]41
 R2
 R0
-R11
+Z14 w1793729315
 8../src/framebuffer.v
 F../src/framebuffer.v
 L0 3
@@ -75,7 +75,7 @@ R1
 I:XlWI?NkAL26b7e@oIEP_2
 R2
 R0
-R11
+R14
 8./framebuffer_ram.v
 F./framebuffer_ram.v
 L0 3
@@ -84,8 +84,8 @@ r1
 !s85 0
 31
 R7
-Z14 !s107 ./vertex_rom.v|./triangle_rom.v|./framebuffer_ram.v|
-Z15 !s90 ./framebuffer_ram.v|./triangle_rom.v|./vertex_rom.v|
+Z15 !s107 ./vertex_rom.v|./triangle_rom.v|./framebuffer_ram.v|
+Z16 !s90 ./framebuffer_ram.v|./triangle_rom.v|./vertex_rom.v|
 !i113 1
 R10
 vpixel_clock
@@ -131,11 +131,11 @@ R10
 vrender_controller
 R1
 !i10b 1
-!s100 ElWXSoLbdljk64OHPC`lc3
-I>`W;<@Okg[SUAommn3GmQ0
+!s100 HB<?mch@<[:JfnaVARR2Y1
+IDozi2_:1;UgL27P3^kJO>2
 R2
 R0
-w1793731425
+w1793737242
 8../src/render_controller.v
 F../src/render_controller.v
 L0 1
@@ -151,11 +151,11 @@ R10
 vtb
 R1
 !i10b 1
-!s100 0Rz5SgZT<T^LG1bPi;=d]3
-IH1R4a_<oJgR0RH2oCHc>?1
+!s100 _]2ej5RRj`LZ2JA^MgeP;2
+IH:T>9Jc<Z_;XJ99[Ie0Be1
 R2
 R0
-w1793731709
+w1793736454
 8../tb/tb.v
 F../tb/tb.v
 L0 7
@@ -171,11 +171,11 @@ R10
 vtop
 R1
 !i10b 1
-!s100 bil2>YDO4N3QQPEO`be;63
-IIOgRmn?aA``5c23`izf;>3
+!s100 UF=;EM28_Ml8hPI4I<7L`1
+I07iQNFW5:f`b_iWDoceP33
 R2
 R0
-w1793731695
+w1793736639
 8../src/top.v
 F../src/top.v
 L0 3
@@ -191,11 +191,11 @@ R10
 vtriangle_loader
 R1
 !i10b 1
-!s100 9bG];DGF:R5CQfA`KXABW1
-I[nc9KmlzLb=`@1l8]Lc1H2
+!s100 o?if]QJWzz`T:0BIn9=XG2
+IBC8Q[A@@:`jgF0_4d8@gg0
 R2
 R0
-w1793731161
+w1793737138
 8../src/triangle_loader.v
 F../src/triangle_loader.v
 L0 1
@@ -211,11 +211,11 @@ R10
 vtriangle_rom
 R1
 !i10b 1
-!s100 doDke@_2jREaR8?7]g?Y41
-IihkS^64N4mW8diG3ifEU62
+!s100 98S?ULK<EOEbN^fWJ0KO[2
+Ih6bZ_[7ES9e=GUW[ac>Tg0
 R2
 R0
-w1793730998
+w1793737347
 8./triangle_rom.v
 F./triangle_rom.v
 L0 3
@@ -224,8 +224,8 @@ r1
 !s85 0
 31
 R7
-R14
 R15
+R16
 !i113 1
 R10
 vvertex_rom
@@ -235,7 +235,7 @@ R1
 IA38eTzdDheW2VFGa=OJj]0
 R2
 R0
-R11
+w1793736469
 8./vertex_rom.v
 F./vertex_rom.v
 L0 2
@@ -244,7 +244,7 @@ r1
 !s85 0
 31
 R7
-R14
 R15
+R16
 !i113 1
 R10

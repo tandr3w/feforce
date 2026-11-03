@@ -1,5 +1,5 @@
 Analysis & Synthesis report for top
-Tue Nov  3 14:30:05 2026
+Tue Nov  3 15:01:26 2026
 Quartus Prime Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition
 
 
@@ -64,7 +64,7 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +---------------------------------+------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Tue Nov  3 14:30:05 2026          ;
+; Analysis & Synthesis Status     ; Successful - Tue Nov  3 15:01:26 2026          ;
 ; Quartus Prime Version           ; 23.1std.0 Build 991 11/28/2023 SC Lite Edition ;
 ; Revision Name                   ; top                                            ;
 ; Top-level Entity Name           ; top                                            ;
@@ -186,9 +186,7 @@ https://fpgasoftware.intel.com/eula.
 ;     Processor 1            ; 100.0%      ;
 ;     Processor 2            ;   0.0%      ;
 ;     Processor 3            ;   0.0%      ;
-;     Processor 4            ;   0.0%      ;
-;     Processor 5            ;   0.0%      ;
-;     Processors 6-16        ;   0.0%      ;
+;     Processors 4-16        ;   0.0%      ;
 +----------------------------+-------------+
 
 
@@ -226,33 +224,33 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------+-----------------+----------------------------------------+--------------------------------------------------------------------------------------------+---------+
 
 
-+---------------------------------------------------------+
-; Analysis & Synthesis Resource Usage Summary             ;
-+---------------------------------------------+-----------+
-; Resource                                    ; Usage     ;
-+---------------------------------------------+-----------+
-; Estimate of Logic utilization (ALMs needed) ; 382       ;
-;                                             ;           ;
-; Combinational ALUT usage for logic          ; 591       ;
-;     -- 7 input functions                    ; 1         ;
-;     -- 6 input functions                    ; 158       ;
-;     -- 5 input functions                    ; 78        ;
-;     -- 4 input functions                    ; 82        ;
-;     -- <=3 input functions                  ; 272       ;
-;                                             ;           ;
-; Dedicated logic registers                   ; 207       ;
-;                                             ;           ;
-; I/O pins                                    ; 44        ;
-; Total MLAB memory bits                      ; 0         ;
-; Total block memory bits                     ; 1243392   ;
-;                                             ;           ;
-; Total DSP Blocks                            ; 4         ;
-;                                             ;           ;
-; Maximum fan-out node                        ; clk~input ;
-; Maximum fan-out                             ; 393       ;
-; Total fan-out                               ; 8632      ;
-; Average fan-out                             ; 7.80      ;
-+---------------------------------------------+-----------+
++--------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                  ;
++---------------------------------------------+----------------+
+; Resource                                    ; Usage          ;
++---------------------------------------------+----------------+
+; Estimate of Logic utilization (ALMs needed) ; 382            ;
+;                                             ;                ;
+; Combinational ALUT usage for logic          ; 591            ;
+;     -- 7 input functions                    ; 1              ;
+;     -- 6 input functions                    ; 158            ;
+;     -- 5 input functions                    ; 78             ;
+;     -- 4 input functions                    ; 82             ;
+;     -- <=3 input functions                  ; 272            ;
+;                                             ;                ;
+; Dedicated logic registers                   ; 207            ;
+;                                             ;                ;
+; I/O pins                                    ; 44             ;
+; Total MLAB memory bits                      ; 0              ;
+; Total block memory bits                     ; 1243392        ;
+;                                             ;                ;
+; Total DSP Blocks                            ; 4              ;
+;                                             ;                ;
+; Maximum fan-out node                        ; CLOCK_50~input ;
+; Maximum fan-out                             ; 393            ;
+; Total fan-out                               ; 8632           ;
+; Average fan-out                             ; 7.80           ;
++---------------------------------------------+----------------+
 
 
 +-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -794,7 +792,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition
-    Info: Processing started: Tue Nov  3 14:29:58 2026
+    Info: Processing started: Tue Nov  3 15:01:19 2026
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off feforce -c top
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 16 of the 20 processors detected
@@ -821,11 +819,11 @@ Info (12021): Found 1 design units, including 1 entities, in source file framebu
     Info (12023): Found entity 1: framebuffer_ram File: C:/Users/tanandr4/feforce/framebuffer_ram.v Line: 40
 Info (12127): Elaborating entity "top" for the top level hierarchy
 Warning (10034): Output port "LEDR[9..1]" at top.v(7) has no driver File: C:/Users/tanandr4/feforce/src/top.v Line: 7
-Info (12128): Elaborating entity "pixel_clock" for hierarchy "pixel_clock:U1" File: C:/Users/tanandr4/feforce/src/top.v Line: 27
-Info (12128): Elaborating entity "display" for hierarchy "display:U2" File: C:/Users/tanandr4/feforce/src/top.v Line: 37
+Info (12128): Elaborating entity "pixel_clock" for hierarchy "pixel_clock:U1" File: C:/Users/tanandr4/feforce/src/top.v Line: 29
+Info (12128): Elaborating entity "display" for hierarchy "display:U2" File: C:/Users/tanandr4/feforce/src/top.v Line: 39
 Warning (10230): Verilog HDL assignment warning at vga.v(59): truncated value with size 32 to match size of target (10) File: C:/Users/tanandr4/feforce/src/vga.v Line: 59
 Warning (10230): Verilog HDL assignment warning at vga.v(62): truncated value with size 32 to match size of target (10) File: C:/Users/tanandr4/feforce/src/vga.v Line: 62
-Info (12128): Elaborating entity "render_controller" for hierarchy "render_controller:rc" File: C:/Users/tanandr4/feforce/src/top.v Line: 70
+Info (12128): Elaborating entity "render_controller" for hierarchy "render_controller:rc" File: C:/Users/tanandr4/feforce/src/top.v Line: 72
 Warning (10230): Verilog HDL assignment warning at render_controller.v(44): truncated value with size 32 to match size of target (9) File: C:/Users/tanandr4/feforce/src/render_controller.v Line: 44
 Warning (10230): Verilog HDL assignment warning at render_controller.v(45): truncated value with size 32 to match size of target (8) File: C:/Users/tanandr4/feforce/src/render_controller.v Line: 45
 Warning (10230): Verilog HDL assignment warning at render_controller.v(46): truncated value with size 32 to match size of target (9) File: C:/Users/tanandr4/feforce/src/render_controller.v Line: 46
@@ -885,7 +883,7 @@ Warning (10230): Verilog HDL assignment warning at rasterizer.v(70): truncated v
 Warning (10230): Verilog HDL assignment warning at rasterizer.v(158): truncated value with size 32 to match size of target (9) File: C:/Users/tanandr4/feforce/src/rasterizer.v Line: 158
 Warning (10230): Verilog HDL assignment warning at rasterizer.v(161): truncated value with size 32 to match size of target (8) File: C:/Users/tanandr4/feforce/src/rasterizer.v Line: 161
 Info (12128): Elaborating entity "edge_function" for hierarchy "render_controller:rc|rasterizer:raster|edge_function:area_func" File: C:/Users/tanandr4/feforce/src/rasterizer.v Line: 84
-Info (12128): Elaborating entity "framebuffer" for hierarchy "framebuffer:fb" File: C:/Users/tanandr4/feforce/src/top.v Line: 87
+Info (12128): Elaborating entity "framebuffer" for hierarchy "framebuffer:fb" File: C:/Users/tanandr4/feforce/src/top.v Line: 89
 Warning (10230): Verilog HDL assignment warning at framebuffer.v(25): truncated value with size 10 to match size of target (9) File: C:/Users/tanandr4/feforce/src/framebuffer.v Line: 25
 Warning (10230): Verilog HDL assignment warning at framebuffer.v(26): truncated value with size 10 to match size of target (9) File: C:/Users/tanandr4/feforce/src/framebuffer.v Line: 26
 Info (12128): Elaborating entity "framebuffer_ram" for hierarchy "framebuffer:fb|framebuffer_ram:memory" File: C:/Users/tanandr4/feforce/src/framebuffer.v Line: 41
@@ -1556,10 +1554,10 @@ Info (21057): Implemented 973 device resources after synthesis - the final resou
     Info (21064): Implemented 217 RAM segments
     Info (21062): Implemented 4 DSP elements
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 642 warnings
-    Info: Peak virtual memory: 4947 megabytes
-    Info: Processing ended: Tue Nov  3 14:30:05 2026
+    Info: Peak virtual memory: 4923 megabytes
+    Info: Processing ended: Tue Nov  3 15:01:26 2026
     Info: Elapsed time: 00:00:07
-    Info: Total CPU time (on all processors): 00:00:12
+    Info: Total CPU time (on all processors): 00:00:13
 
 
 +------------------------------------------+

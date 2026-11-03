@@ -1,7 +1,7 @@
 // VGA signal names: https://www-ug.eecg.toronto.edu/msl/manuals/tutorial_DE1-SoC-v5.4.pdf
 
 module top(
-    input clk,
+    input CLOCK_50,
     // input rst,
     input [3:0] KEY,
     output [9:0] LEDR,
@@ -19,6 +19,8 @@ module top(
     wire de, hsync, vsync;
 
     wire rst;
+    wire clk;
+    assign clk = CLOCK_50;
 
     pixel_clock U1(
         .clk(clk),

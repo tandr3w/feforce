@@ -219,3 +219,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+db/
+incremental_db/
+output_files/
+greybox_tmp/
+hc_output/
+hps_isw_handoff/
+sys_description/

@@ -84,7 +84,7 @@ module tb();
         (VGA_Y_d[1:0] == 2'b00);
 
     top DUT (
-        .clk(CLOCK_50),
+        .CLOCK_50(CLOCK_50),
         // .rst(rst),
         .KEY(KEY),
         .LEDR(LEDR),
