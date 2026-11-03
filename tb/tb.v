@@ -85,7 +85,9 @@ module tb();
 
     top DUT (
         .clk(CLOCK_50),
-        .rst(rst),
+        // .rst(rst),
+        .KEY(KEY),
+        .LEDR(LEDR),
         .VGA_R(VGA_R),
         .VGA_G(VGA_G),
         .VGA_B(VGA_B),

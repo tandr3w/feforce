@@ -2,7 +2,9 @@
 
 module top(
     input clk,
-    input rst,
+    // input rst,
+    input [3:0] KEY,
+    output [9:0] LEDR,
     output [7:0] VGA_R,
     output [7:0] VGA_G,
     output [7:0] VGA_B,
@@ -15,6 +17,8 @@ module top(
     wire [9:0] sx, sy;
     wire pixel_clk;
     wire de, hsync, vsync;
+
+    wire rst;
 
     pixel_clock U1(
         .clk(clk),
@@ -32,6 +36,8 @@ module top(
         .de(de)
     );
 
+    assign rst = ~KEY[0];
+    assign LEDR[0] = rst;
     // Delay signals by 1 clock cycle since the RAM has 1 cycle read latency
     // so we have to delay all of the VGA cycles by 1 cycle as well
     reg hsync_d, vsync_d, de_d;
