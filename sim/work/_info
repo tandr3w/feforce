@@ -14,14 +14,14 @@ Z1 dC:/Users/every/Documents/Programming/feforce/sim
 T_opt
 !i145 1
 !i144 0
-!s110 1792975857
-V:OGE?j;zRXjJ<A@lMcc0D2
+!s110 1794345340
+Vo5Af90b>g1FgCdg0FE>GK3
 04 2 4 work tb fast 0
-=1-24b2b99b94c9-6adea3f0-334-526c
+=1-24b2b99b94c9-6af3897b-1f2-4364
 R0
 !s12f OEM100
 !s12b OEM100
-!s124 OEM10U15 
+!s124 OEM10U16 
 !s135 nogc
 o-quiet -work work -Lf 220model -Lf altera_mf_ver -Lf verilog
 tCvgOpt 0 defaultOptions 1107585188
@@ -29,7 +29,7 @@ n@_opt
 OL;O;2025.2;82
 vdisplay
 Z2 2../src/framebuffer.v|../src/rasterizer.v|../src/render_controller.v|../src/top.v|../src/triangle_loader.v|../src/vga.v
-Z3 !s110 1792975854
+Z3 !s110 1794345336
 !i10b 1
 !s100 I]6e;<Mk;zz2^cJl4E`f83
 I8C7Gfo=]fo6gZ_56@@L]Q2
@@ -44,12 +44,35 @@ Z8 OL;L;2025.2;82
 r1
 !s85 0
 31
-Z9 !s108 1792975854.000000
+Z9 !s108 1794345336.000000
 Z10 !s107 ../src/vga.v|../src/triangle_loader.v|../src/top.v|../src/render_controller.v|../src/rasterizer.v|../src/framebuffer.v|
 Z11 !s90 ../src/framebuffer.v|../src/rasterizer.v|../src/render_controller.v|../src/top.v|../src/triangle_loader.v|../src/vga.v|
 !i113 0
 Z12 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
 Z13 tCvgOpt 0 defaultOptions 1085333592
+vdivider
+Z14 2./divider.v|./framebuffer_ram.v|./triangle_rom.v|./vertex_rom.v
+R3
+!i10b 1
+!s100 VC8mlK73380CaUAR7L6KX1
+I0IVi1Vd4[EZ4@9eG7zk3E3
+R1
+w1794345320
+8./divider.v
+F./divider.v
+!i122 0
+L0 1 35
+R7
+R8
+r1
+!s85 0
+31
+Z15 !s108 1794345335.000000
+Z16 !s107 ./vertex_rom.v|./triangle_rom.v|./framebuffer_ram.v|./divider.v|
+Z17 !s90 ./divider.v|./framebuffer_ram.v|./triangle_rom.v|./vertex_rom.v|
+!i113 0
+R12
+R13
 vedge_function
 R2
 R3
@@ -57,9 +80,9 @@ R3
 !s100 9]VK6G7_MXbg]73?8Sm3=0
 IbWHBm]o67:fXL9?A:fZa82
 R1
-Z14 w1792967271
-Z15 8../src/rasterizer.v
-Z16 F../src/rasterizer.v
+Z18 w1794345252
+Z19 8../src/rasterizer.v
+Z20 F../src/rasterizer.v
 !i122 2
 L0 3 22
 R7
@@ -80,7 +103,7 @@ R3
 !s100 4:<c^AK?:d3ZLh:1_631g0
 I40]3BZ8CY=39GkmBNX]5N0
 R1
-w1792968341
+w1792978744
 8../src/framebuffer.v
 F../src/framebuffer.v
 !i122 2
@@ -97,7 +120,7 @@ R11
 R12
 R13
 vframebuffer_ram
-Z17 2./framebuffer_ram.v|./triangle_rom.v|./vertex_rom.v
+R14
 R3
 !i10b 1
 !s100 DG[40PmGKbD:YE3UcS0dn2
@@ -113,9 +136,9 @@ R8
 r1
 !s85 0
 31
-R9
-Z18 !s107 ./vertex_rom.v|./triangle_rom.v|./framebuffer_ram.v|
-Z19 !s90 ./framebuffer_ram.v|./triangle_rom.v|./vertex_rom.v|
+R15
+R16
+R17
 !i113 0
 R12
 R13
@@ -146,14 +169,14 @@ vrasterizer
 R2
 R3
 !i10b 1
-!s100 mTfoMCK8JgAY_dCP4bz_G2
-IEl>=DCJ^8m6JQ?C2]`Tl?2
+!s100 ;6CW<57We41aPeVQj5iM43
+I6G0zbW[FF<TWzeSH@aU5i3
 R1
-R14
-R15
-R16
+R18
+R19
+R20
 !i122 2
-L0 26 146
+L0 26 200
 R7
 R8
 r1
@@ -169,14 +192,14 @@ vrender_controller
 R2
 R3
 !i10b 1
-!s100 =zdFim?Sl0>Y[Wk81JkY_3
-ICX;BC0H1aRBzHg@Y>gfYa2
+!s100 32kB38m_f=YzYJC^f0FST0
+IPXicKb5]3o1@WA`=T9bBc1
 R1
-w1792975851
+w1794343571
 8../src/render_controller.v
 F../src/render_controller.v
 !i122 2
-L0 1 115
+L0 1 117
 R7
 R8
 r1
@@ -195,7 +218,7 @@ R3
 !s100 <D0L;Lo=:8NL6ZL<TaXHR2
 IZ9_56EZlif;hNKEkB`B6A3
 R1
-w1792796122
+w1794344348
 8../tb/tb.v
 F../tb/tb.v
 !i122 1
@@ -218,7 +241,7 @@ R3
 !s100 3iDz_e:8mbnkgSPN5lO:l1
 Icamb63VGIk;KQ4L29lhIA3
 R1
-w1792966330
+w1794344270
 8../src/top.v
 F../src/top.v
 !i122 2
@@ -238,14 +261,14 @@ vtriangle_loader
 R2
 R3
 !i10b 1
-!s100 Z?f]<zBczeMgNDF=[0Xc21
-IA:CEPMBX<8km;ZOL4CUV<0
+!s100 T;9W;EG9kLo;1O80nn_dM3
+IUjSLDK8PoM@Y=8E;idGVh3
 R1
-w1792975840
+w1794341991
 8../src/triangle_loader.v
 F../src/triangle_loader.v
 !i122 2
-L0 1 100
+L0 1 102
 R7
 R8
 r1
@@ -258,13 +281,13 @@ R11
 R12
 R13
 vtriangle_rom
-R17
+R14
 R3
 !i10b 1
-!s100 gjV0A0WRNMe81H0=^9fSX1
-I`QIdD:VOnE>f@bikh:d1_0
+!s100 6[YY6XanGEoFlATFiAQJ70
+I6`ZKR8RJ@Q>^]=oJ4`ML00
 R1
-w1792963473
+w1794345333
 8./triangle_rom.v
 F./triangle_rom.v
 !i122 0
@@ -274,20 +297,20 @@ R8
 r1
 !s85 0
 31
-R9
-R18
-R19
+R15
+R16
+R17
 !i113 0
 R12
 R13
 vvertex_rom
-R17
+R14
 R3
 !i10b 1
 !s100 UBP5@cVebKhN3a?;jlkmH3
 I=A`6Uac]I?23;VjmUaZZ?2
 R1
-w1792967728
+w1792977565
 8./vertex_rom.v
 F./vertex_rom.v
 !i122 0
@@ -297,9 +320,9 @@ R8
 r1
 !s85 0
 31
-R9
-R18
-R19
+R15
+R16
+R17
 !i113 0
 R12
 R13

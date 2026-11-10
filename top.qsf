@@ -43,8 +43,6 @@ set_global_assignment -name TOP_LEVEL_ENTITY top
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 25.1STD.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "14:05:38  OCTOBER 23, 2026"
 set_global_assignment -name LAST_QUARTUS_VERSION "25.1std.0 Lite Edition"
-set_global_assignment -name VERILOG_FILE src/vga.v
-set_global_assignment -name VERILOG_FILE src/top.v
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
@@ -897,6 +895,9 @@ set_global_assignment -name EDA_TEST_BENCH_NAME testbench -section_id eda_simula
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id testbench
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME testbench -section_id testbench
 set_global_assignment -name EDA_TEST_BENCH_FILE ModelSim/testbench.v -section_id testbench
-set_global_assignment -name QIP_FILE src/framebuffer_ram/framebuffer_ram.qip
+set_global_assignment -name QIP_FILE framebuffer_ram.qip
+set_global_assignment -name VERILOG_FILE src/vga.v
+set_global_assignment -name VERILOG_FILE src/top.v
 set_global_assignment -name QIP_FILE vertex_rom.qip
 set_global_assignment -name QIP_FILE triangle_rom.qip
+set_global_assignment -name QIP_FILE divider.qip
