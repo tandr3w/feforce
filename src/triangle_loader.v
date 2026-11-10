@@ -11,6 +11,7 @@ module triangle_loader (
     output reg [15:0] color1,
     output reg [15:0] color2,
 
+    output is_final, // marks if the input is 0, so we should stop reading
     output reg valid // marks if the triangle is loaded and ready to be used
 );
     wire [71:0] triangle_data;
@@ -43,6 +44,7 @@ module triangle_loader (
         .q(vertex_data)
     );
 
+    assign is_final = (triangle_data == 0);
 
     always @(*) begin
         case (state)
@@ -68,6 +70,9 @@ module triangle_loader (
                     end
                 end
                 LOAD_TRI: begin
+                    if (is_final) begin
+                        state <= IDLE;
+                    end
                     color0 <= triangle_data[71:56];
                     color1 <= triangle_data[55:40];
                     color2 <= triangle_data[39:24];

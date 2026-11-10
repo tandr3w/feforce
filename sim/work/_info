@@ -1,15 +1,13 @@
 m255
 K4
 z2
-!s12c _opt
-Z0 !s99 nomlopt
-!s11f vlog 2025.2 2025.05, May 31 2025
 13
 !s112 1.1
 !i10d 8192
 !i10e 25
 !i10f 100
 cModel Technology
+<<<<<<< HEAD
 Z1 dC:/Users/every/Documents/Programming/feforce/sim
 T_opt
 !i145 1
@@ -30,20 +28,25 @@ OL;O;2025.2;82
 vdisplay
 Z2 2../src/framebuffer.v|../src/rasterizer.v|../src/render_controller.v|../src/top.v|../src/triangle_loader.v|../src/vga.v
 Z3 !s110 1794345336
+=======
+Z0 dC:/Users/tanandr4/feforce/sim
+vdisplay
+Z1 !s110 1793737349
+>>>>>>> 6a86d317103acdac2865ba308c12bff2b75cf89c
 !i10b 1
-!s100 I]6e;<Mk;zz2^cJl4E`f83
-I8C7Gfo=]fo6gZ_56@@L]Q2
-R1
-Z4 w1792964542
-Z5 8../src/vga.v
-Z6 F../src/vga.v
-!i122 2
-L0 21 45
-Z7 VDg1SIo80bB@j0V0VzS_@n1
-Z8 OL;L;2025.2;82
+!s100 U9EHJRR`K12>Pm15JziP62
+I7nmC:9JVn4LP=6:5oMBi01
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+Z3 w1793735409
+Z4 8../src/vga.v
+Z5 F../src/vga.v
+L0 21
+Z6 OV;L;10.5b;63
 r1
 !s85 0
 31
+<<<<<<< HEAD
 Z9 !s108 1794345336.000000
 Z10 !s107 ../src/vga.v|../src/triangle_loader.v|../src/top.v|../src/render_controller.v|../src/rasterizer.v|../src/framebuffer.v|
 Z11 !s90 ../src/framebuffer.v|../src/rasterizer.v|../src/render_controller.v|../src/top.v|../src/triangle_loader.v|../src/vga.v|
@@ -73,99 +76,124 @@ Z17 !s90 ./divider.v|./framebuffer_ram.v|./triangle_rom.v|./vertex_rom.v|
 !i113 0
 R12
 R13
+=======
+Z7 !s108 1793737349.000000
+Z8 !s107 ../src/vga.v|../src/triangle_loader.v|../src/top.v|../src/render_controller.v|../src/rasterizer.v|../src/framebuffer.v|
+Z9 !s90 ../src/framebuffer.v|../src/rasterizer.v|../src/render_controller.v|../src/top.v|../src/triangle_loader.v|../src/vga.v|
+!i113 1
+Z10 tCvgOpt 0
+>>>>>>> 6a86d317103acdac2865ba308c12bff2b75cf89c
 vedge_function
-R2
-R3
-!i10b 1
-!s100 9]VK6G7_MXbg]73?8Sm3=0
-IbWHBm]o67:fXL9?A:fZa82
 R1
+<<<<<<< HEAD
 Z18 w1794345252
 Z19 8../src/rasterizer.v
 Z20 F../src/rasterizer.v
 !i122 2
 L0 3 22
-R7
-R8
+=======
+!i10b 1
+!s100 _Ug=349YTFK2LD_G[8?hG2
+I;aj:]j79WlKmKbk:YGok<3
+R2
+R0
+Z11 w1793736689
+Z12 8../src/rasterizer.v
+Z13 F../src/rasterizer.v
+L0 3
+R6
 r1
 !s85 0
 31
+>>>>>>> 6a86d317103acdac2865ba308c12bff2b75cf89c
+R7
+R8
 R9
+!i113 1
 R10
-R11
-!i113 0
-R12
-R13
 vframebuffer
-R2
-R3
-!i10b 1
-!s100 4:<c^AK?:d3ZLh:1_631g0
-I40]3BZ8CY=39GkmBNX]5N0
 R1
+<<<<<<< HEAD
 w1792978744
+=======
+!i10b 1
+!s100 7M:]ccAdV3gl15;<do7ji3
+IF<S@Qg?Fkz7gWdJH[HF]41
+R2
+R0
+Z14 w1793729315
+>>>>>>> 6a86d317103acdac2865ba308c12bff2b75cf89c
 8../src/framebuffer.v
 F../src/framebuffer.v
-!i122 2
-L0 3 41
-R7
-R8
+L0 3
+R6
 r1
 !s85 0
 31
+R7
+R8
 R9
+!i113 1
 R10
-R11
-!i113 0
-R12
-R13
 vframebuffer_ram
+<<<<<<< HEAD
 R14
 R3
 !i10b 1
 !s100 DG[40PmGKbD:YE3UcS0dn2
 IL4:zn2:`i5Kz^b;z`SEf71
+=======
+>>>>>>> 6a86d317103acdac2865ba308c12bff2b75cf89c
 R1
-w1792963493
+!i10b 1
+!s100 WlhL9Xl851C?d>EXPfJ2J3
+I:XlWI?NkAL26b7e@oIEP_2
+R2
+R0
+R14
 8./framebuffer_ram.v
 F./framebuffer_ram.v
-!i122 0
-L0 3 23
-R7
-R8
+L0 3
+R6
 r1
 !s85 0
 31
+<<<<<<< HEAD
 R15
 R16
 R17
 !i113 0
 R12
 R13
+=======
+R7
+Z15 !s107 ./vertex_rom.v|./triangle_rom.v|./framebuffer_ram.v|
+Z16 !s90 ./framebuffer_ram.v|./triangle_rom.v|./vertex_rom.v|
+!i113 1
+R10
+>>>>>>> 6a86d317103acdac2865ba308c12bff2b75cf89c
 vpixel_clock
-R2
-R3
-!i10b 1
-!s100 UK[dFUJiEKbJaoBX1jlM01
-IRB5l:WA]PH9e:iOzfUzcD3
 R1
+!i10b 1
+!s100 beKlDSGo87KaEYFXQYnz;3
+I>6AC<AlD1QK^DDL4g@WNV3
+R2
+R0
+R3
 R4
 R5
+L0 3
 R6
-!i122 2
-L0 3 17
-R7
-R8
 r1
 !s85 0
 31
+R7
+R8
 R9
+!i113 1
 R10
-R11
-!i113 0
-R12
-R13
 vrasterizer
+<<<<<<< HEAD
 R2
 R3
 !i10b 1
@@ -179,16 +207,29 @@ R20
 L0 26 200
 R7
 R8
+=======
+R1
+!i10b 1
+!s100 hR<mPRNR^_VfTHKK>LW2f2
+IcT=5;[^b]7;7;WkNTcN>h3
+R2
+R0
+R11
+R12
+R13
+L0 26
+R6
+>>>>>>> 6a86d317103acdac2865ba308c12bff2b75cf89c
 r1
 !s85 0
 31
+R7
+R8
 R9
+!i113 1
 R10
-R11
-!i113 0
-R12
-R13
 vrender_controller
+<<<<<<< HEAD
 R2
 R3
 !i10b 1
@@ -202,62 +243,77 @@ F../src/render_controller.v
 L0 1 117
 R7
 R8
+=======
+R1
+!i10b 1
+!s100 HB<?mch@<[:JfnaVARR2Y1
+IDozi2_:1;UgL27P3^kJO>2
+R2
+R0
+w1793737242
+8../src/render_controller.v
+F../src/render_controller.v
+L0 1
+R6
+>>>>>>> 6a86d317103acdac2865ba308c12bff2b75cf89c
 r1
 !s85 0
 31
+R7
+R8
 R9
+!i113 1
 R10
-R11
-!i113 0
-R12
-R13
 vtb
-2../tb/tb.v
-R3
-!i10b 1
-!s100 <D0L;Lo=:8NL6ZL<TaXHR2
-IZ9_56EZlif;hNKEkB`B6A3
 R1
+<<<<<<< HEAD
 w1794344348
+=======
+!i10b 1
+!s100 _]2ej5RRj`LZ2JA^MgeP;2
+IH:T>9Jc<Z_;XJ99[Ie0Be1
+R2
+R0
+w1793736454
+>>>>>>> 6a86d317103acdac2865ba308c12bff2b75cf89c
 8../tb/tb.v
 F../tb/tb.v
-!i122 1
-L0 7 93
-R7
-R8
+L0 7
+R6
 r1
 !s85 0
 31
-R9
+R7
 !s107 ../tb/tb.v|
 !s90 ../tb/tb.v|
-!i113 0
-R12
-R13
+!i113 1
+R10
 vtop
-R2
-R3
-!i10b 1
-!s100 3iDz_e:8mbnkgSPN5lO:l1
-Icamb63VGIk;KQ4L29lhIA3
 R1
+<<<<<<< HEAD
 w1794344270
+=======
+!i10b 1
+!s100 UF=;EM28_Ml8hPI4I<7L`1
+I07iQNFW5:f`b_iWDoceP33
+R2
+R0
+w1793736639
+>>>>>>> 6a86d317103acdac2865ba308c12bff2b75cf89c
 8../src/top.v
 F../src/top.v
-!i122 2
-L0 3 93
-R7
-R8
+L0 3
+R6
 r1
 !s85 0
 31
+R7
+R8
 R9
+!i113 1
 R10
-R11
-!i113 0
-R12
-R13
 vtriangle_loader
+<<<<<<< HEAD
 R2
 R3
 !i10b 1
@@ -271,16 +327,29 @@ F../src/triangle_loader.v
 L0 1 102
 R7
 R8
+=======
+R1
+!i10b 1
+!s100 o?if]QJWzz`T:0BIn9=XG2
+IBC8Q[A@@:`jgF0_4d8@gg0
+R2
+R0
+w1793737138
+8../src/triangle_loader.v
+F../src/triangle_loader.v
+L0 1
+R6
+>>>>>>> 6a86d317103acdac2865ba308c12bff2b75cf89c
 r1
 !s85 0
 31
+R7
+R8
 R9
+!i113 1
 R10
-R11
-!i113 0
-R12
-R13
 vtriangle_rom
+<<<<<<< HEAD
 R14
 R3
 !i10b 1
@@ -288,15 +357,23 @@ R3
 I6`ZKR8RJ@Q>^]=oJ4`ML00
 R1
 w1794345333
+=======
+R1
+!i10b 1
+!s100 98S?ULK<EOEbN^fWJ0KO[2
+Ih6bZ_[7ES9e=GUW[ac>Tg0
+R2
+R0
+w1793737347
+>>>>>>> 6a86d317103acdac2865ba308c12bff2b75cf89c
 8./triangle_rom.v
 F./triangle_rom.v
-!i122 0
-L0 3 25
-R7
-R8
+L0 3
+R6
 r1
 !s85 0
 31
+<<<<<<< HEAD
 R15
 R16
 R17
@@ -311,18 +388,39 @@ R3
 I=A`6Uac]I?23;VjmUaZZ?2
 R1
 w1792977565
+=======
+R7
+R15
+R16
+!i113 1
+R10
+vvertex_rom
+R1
+!i10b 1
+!s100 fLQh[[kGE=J6e6BJ9^Xd10
+IA38eTzdDheW2VFGa=OJj]0
+R2
+R0
+w1793736469
+>>>>>>> 6a86d317103acdac2865ba308c12bff2b75cf89c
 8./vertex_rom.v
 F./vertex_rom.v
-!i122 0
-L0 2 21
-R7
-R8
+L0 2
+R6
 r1
 !s85 0
 31
+<<<<<<< HEAD
 R15
 R16
 R17
 !i113 0
 R12
 R13
+=======
+R7
+R15
+R16
+!i113 1
+R10
+>>>>>>> 6a86d317103acdac2865ba308c12bff2b75cf89c
