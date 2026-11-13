@@ -9,29 +9,25 @@
 // );
 // endmodule
 
-module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based off depth
+module vertex_projector ( // i should output new coords x0,y0 ... to x2,y2 based off depth
 
 // output 4 points, x,y,z,w
     input clk,
     input rst,
     input start,
-    input [15:0] color, 
 
     // input 3d points(transformed)
     input signed [15:0] x0, y0, z0,
     input signed [15:0] x1, y1, z1,
     input signed [15:0] x2, y2, z2,
 
-
     //output projected points
-    output reg [15:0] x0_out, x1_out, x2_out,
-    output reg [15:0] y0_out, y1_out, y2_out,
-    // calculated depth?
-    output reg [15:0] color_out,
-    output reg [15:0] z0_out, z1_out, z2_out, // z
-    output reg [15:0] w0_out, w1_out, w2_out, // w
+    output reg signed [15:0] x0_out, x1_out, x2_out,
+    output reg signed [15:0] y0_out, y1_out, y2_out,
 
-    output reg [15:0] w0_out_recip, w1_out_recip, w2_out_recip, // w out
+    // calculated depth?
+    output reg signed [15:0] z0_out, z1_out, z2_out, // z
+
 
     output reg is_done
     // fixed point check later
@@ -41,21 +37,21 @@ module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based 
     //output reg valid // marks if the triangle is loaded and ready to be used
 
 );
+    parameter signed [15:0] n = 10 * 256;
+    // tb and lr have to have the same 3:4 aspect ratio as the framebuffer
+    parameter signed [15:0] r = 2 * 256;
+    parameter signed [15:0] l = -2 * 256;
+    parameter signed [15:0] t = 1.5 * 256; 
+    parameter signed [15:0] b = -1.5 * 256;
+    parameter signed [15:0] f = 4'd15 * 256; 
 
-    parameter [15:0] n = 10 * 256;
-    parameter [15:0] r = 5 * 256;
-    parameter [15:0] l = -5 * 256;
-    parameter [15:0] t = 5 * 256; 
-    parameter [15:0] b = -5 * 256;
-    parameter [15:0] f = 4'd15 * 256; 
-
-    parameter [15:0] a1 = (2 * n) / (r - l) * 256; // double check
-    parameter [15:0] b2 = (2 * n) / (t - b) * 256; // double check
-    parameter [15:0] c1 = -(r + l) / (r - l) * 256; // set these to be really nice numbers, otherwise manually simplify
-    parameter [15:0] c2 = -(t + b) / (t - b) * 256;
-    parameter [15:0] c3 = (f + n) / (f - n) * 256;
-    parameter [15:0] c4 = 1 * 256; 
-    parameter [15:0] d3 = (-2 * f * n) / (f - n); // fine maybe
+    parameter signed [15:0] a1 = (2 * n * 256) / (r - l); // double check
+    parameter signed [15:0] b2 = (2 * n * 256) / (t - b); // double check
+    parameter signed [15:0] c1 = -((r + l) * 256) / (r - l); // set these to be really nice numbers, otherwise manually simplify
+    parameter signed [15:0] c2 = -((t + b) * 256) / (t - b);
+    parameter signed [15:0] c3 = ((f + n) * 256) / (f - n);
+    parameter signed [15:0] c4 = 1 * 256; 
+    parameter signed [15:0] d3 = (-2 * f * n) / (f - n); // fine maybe
 
     parameter IDLE = 3'b000;
     parameter LOAD_W0 = 3'b001;
@@ -64,17 +60,18 @@ module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based 
     parameter COMPUTE = 3'b100;
     parameter DONE = 3'b101; 
 
-    reg [3:0] state; 
-
-
+    reg [3:0] state;
+    reg [15:0] w0_out, w1_out, w2_out; // w
+    reg [15:0] w0_out_recip, w1_out_recip, w2_out_recip; // w out
     
-// camera space 
-// perspective divide
-// screen space
-// remap to NDC(normailised device coords [-1,1] coord range)
-// NDC space to raster space
+    // camera space 
+    // perspective divide
+    // screen space
+    // remap to NDC(normailised device coords [-1,1] coord range)
+    // NDC space to raster space
 
-// just use a matrix ig
+    // just use a matrix ig
+
     // how do i do synthsiable division
     // these are given in NDC space
 
@@ -95,25 +92,40 @@ module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based 
     wire signed [15:0] x0_val, x1_val, x2_val;
     wire signed [15:0] y0_val, y1_val, y2_val;
     wire signed [15:0] z0_val, z1_val, z2_val;
+
+    wire signed [32:0] x0_sum, x1_sum, x2_sum;
+    wire signed [32:0] y0_sum, y1_sum, y2_sum;
+    wire signed [32:0] z0_sum, z1_sum, z2_sum;
+
     // bruh
-    assign x0_val = x0 * a1 + z0 * c1; 
-    assign y0_val = y0 * b2 * z0 * c2; 
-    assign z0_val = z0 * c3 + d3; 
+    assign x0_sum = x0 * a1 + z0 * c1; 
+    assign y0_sum = y0 * b2 + z0 * c2; 
+    assign z0_sum = z0 * c3 + d3 << 8; 
     assign w0_val = z0; 
 
-    assign x1_val = x1 * a1 + z1 * c1; 
-    assign y1_val = y1 * b2 * z1 * c2; 
-    assign z1_val = z1 * c3 + d3; 
+    assign x1_sum = x1 * a1 + z1 * c1; 
+    assign y1_sum = y1 * b2 + z1 * c2; 
+    assign z1_sum = z1 * c3 + d3 << 8; 
     assign w1_val = z1; 
 
-    assign x2_val = x2 * a1 + z2 * c1; 
-    assign y2_val = y2 * b2 * z2 * c2; 
-    assign z2_val = z2 * c3 + d3; 
+    assign x2_sum = x2 * a1 + z2 * c1; 
+    assign y2_sum = y2 * b2 + z2 * c2; 
+    assign z2_sum = z2 * c3 + d3 << 8; 
     assign w2_val = z2; 
 
-    //assign color_out = color; 
+    assign x0_val = x0_sum >> 8;
+    assign y0_val = y0_sum >> 8;
+    assign z0_val = z0_sum >> 8;
 
-    depth_rom depth_LUT(w_addr, clk, w_data); // takes 1 clock cycle
+    assign x1_val = x1_sum >> 8;
+    assign y1_val = y1_sum >> 8;
+    assign z1_val = z1_sum >> 8;
+
+    assign x2_val = x2_sum >> 8;
+    assign y2_val = y2_sum >> 8;
+    assign z2_val = z2_sum >> 8;
+
+    depth_rom depth_LUT(w_addr[14:3], clk, w_data); // takes 1 clock cycle
     // depth_rom depth_LUT(w1_addr, clk, w1_data); 
     // depth_rom depth_LUT(w2_addr, clk, w2_data); 
 
@@ -121,13 +133,13 @@ module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based 
         // fsm
 
         case (state) 
-        LOAD_W0: begin 
+        IDLE: begin 
             w_addr <= w0_val; 
         end
-        LOAD_W1: begin
+        LOAD_W0: begin
             w_addr <= w1_val; 
         end
-        LOAD_W2: begin 
+        LOAD_W1: begin 
             w_addr <= w2_val; 
         end
 
@@ -138,12 +150,25 @@ module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based 
 
     end
 
+    // store intermediate products to ensure bit widths are correct
+    wire signed [32:0] product_x0, product_x1, product_x2;
+    wire signed [32:0] product_y0, product_y1, product_y2;
+    wire signed [32:0] product_z0, product_z1, product_z2;
+
+    assign product_x0 = (x0_val * $signed({1'b0, w0_out_recip}));
+    assign product_x1 = (x1_val * $signed({1'b0, w1_out_recip}));
+    assign product_x2 = (x2_val * $signed({1'b0, w2_out_recip}));
+    assign product_y0 = (y0_val * $signed({1'b0, w0_out_recip}));
+    assign product_y1 = (y1_val * $signed({1'b0, w1_out_recip}));
+    assign product_y2 = (y2_val * $signed({1'b0, w2_out_recip}));
+    assign product_z0 = (z0_val * $signed({1'b0, w0_out_recip}));
+    assign product_z1 = (z1_val * $signed({1'b0, w1_out_recip}));
+    assign product_z2 = (z2_val * $signed({1'b0, w2_out_recip}));
+
     always @ (posedge clk or posedge rst) begin
         if  (rst) begin
             is_done <= 0; 
             state <= IDLE; 
-
-
         end 
         else begin 
             case (state)
@@ -170,21 +195,18 @@ module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based 
 
             end
 
-            COMPUTE: begin 
-                x0_out <= x0_val * w0_out_recip;
-                x1_out <= x1_val * w1_out_recip;
-                x2_out <= x2_val * w2_out_recip; 
+            COMPUTE: begin
+                x0_out <= product_x0 >> 13;
+                x1_out <= product_x1 >> 13;
+                x2_out <= product_x2 >> 13; 
 
-                y0_out <= y0_val * w0_out_recip;
-                y1_out <= y1_val * w1_out_recip;
-                y2_out <= y2_val * w2_out_recip; 
+                y0_out <= product_y0 >> 13;
+                y1_out <= product_y1 >> 13;
+                y2_out <= product_y2 >> 13; 
 
-                z0_out <= z0_val * w0_out_recip;
-                z1_out <= z1_val * w1_out_recip;
-                z2_out <= z2_val * w2_out_recip;
-
-                color_out <= color; // temp 
-
+                z0_out <= product_z0 >> 13;
+                z1_out <= product_z1 >> 13;
+                z2_out <= product_z2 >> 13;
                 state <= DONE; 
 
             end

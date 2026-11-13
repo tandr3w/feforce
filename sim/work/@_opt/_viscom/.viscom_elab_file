@@ -1,1 +1,1 @@
-C:/altera_lite/25.1std/questa_fse/win64/VisualizerRls/bin/viscom.exe -nolock -quiet -jmem_size 541104 work.tb -quiet -work work -Lf 220model -Lf altera_mf_ver -Lf verilog -allow_unnamed -o _opt -id 1-24b2b99b94c9-6af3897b-1f2-4364
+C:/altera_lite/25.1std/questa_fse/win64/VisualizerRls/bin/viscom.exe -nolock -quiet -jmem_size 5111808 work.tb -quiet -work work -Lf 220model -Lf altera_mf_ver -Lf verilog -allow_unnamed -o _opt -id 1-24b2b99b94c9-6af78f55-383-d3c
