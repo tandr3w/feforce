@@ -9,29 +9,25 @@
 // );
 // endmodule
 
-module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based off depth
+module vertex_projector ( // i should output new coords x0,y0 ... to x2,y2 based off depth
 
 // output 4 points, x,y,z,w
     input clk,
     input rst,
     input start,
-    input [15:0] color, 
 
     // input 3d points(transformed)
     input signed [15:0] x0, y0, z0,
     input signed [15:0] x1, y1, z1,
     input signed [15:0] x2, y2, z2,
 
-
     //output projected points
-    output reg [15:0] x0_out, x1_out, x2_out,
-    output reg [15:0] y0_out, y1_out, y2_out,
-    // calculated depth?
-    output reg [15:0] color_out,
-    output reg [15:0] z0_out, z1_out, z2_out, // z
-    output reg [15:0] w0_out, w1_out, w2_out, // w
+    output reg signed [15:0] x0_out, x1_out, x2_out,
+    output reg signed [15:0] y0_out, y1_out, y2_out,
 
-    output reg [15:0] w0_out_recip, w1_out_recip, w2_out_recip, // w out
+    // calculated depth?
+    output reg signed [15:0] z0_out, z1_out, z2_out, // z
+
 
     output reg is_done
     // fixed point check later
@@ -41,7 +37,6 @@ module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based 
     //output reg valid // marks if the triangle is loaded and ready to be used
 
 );
-
     parameter [15:0] n = 10 * 256;
     parameter [15:0] r = 5 * 256;
     parameter [15:0] l = -5 * 256;
@@ -64,9 +59,9 @@ module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based 
     parameter COMPUTE = 3'b100;
     parameter DONE = 3'b101; 
 
-    reg [3:0] state; 
-
-
+    reg [3:0] state;
+    reg [15:0] w0_out, w1_out, w2_out; // w
+    reg [15:0] w0_out_recip, w1_out_recip, w2_out_recip; // w out
     
 // camera space 
 // perspective divide
@@ -111,8 +106,6 @@ module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based 
     assign z2_val = z2 * c3 + d3; 
     assign w2_val = z2; 
 
-    //assign color_out = color; 
-
     depth_rom depth_LUT(w_addr, clk, w_data); // takes 1 clock cycle
     // depth_rom depth_LUT(w1_addr, clk, w1_data); 
     // depth_rom depth_LUT(w2_addr, clk, w2_data); 
@@ -138,12 +131,25 @@ module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based 
 
     end
 
+    // store intermediate products to ensure bit widths are correct
+    wire signed [32:0] product_x0, product_x1, product_x2;
+    wire signed [32:0] product_y0, product_y1, product_y2;
+    wire signed [32:0] product_z0, product_z1, product_z2;
+
+    assign product_x0 = (x0_val * $signed({1'b0, w0_out_recip}));
+    assign product_x1 = (x1_val * $signed({1'b0, w1_out_recip}));
+    assign product_x2 = (x2_val * $signed({1'b0, w2_out_recip}));
+    assign product_y0 = (y0_val * $signed({1'b0, w0_out_recip}));
+    assign product_y1 = (y1_val * $signed({1'b0, w1_out_recip}));
+    assign product_y2 = (y2_val * $signed({1'b0, w2_out_recip}));
+    assign product_z0 = (z0_val * $signed({1'b0, w0_out_recip}));
+    assign product_z1 = (z1_val * $signed({1'b0, w1_out_recip}));
+    assign product_z2 = (z2_val * $signed({1'b0, w2_out_recip}));
+
     always @ (posedge clk or posedge rst) begin
         if  (rst) begin
             is_done <= 0; 
             state <= IDLE; 
-
-
         end 
         else begin 
             case (state)
@@ -170,21 +176,18 @@ module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based 
 
             end
 
-            COMPUTE: begin 
-                x0_out <= x0_val * w0_out_recip;
-                x1_out <= x1_val * w1_out_recip;
-                x2_out <= x2_val * w2_out_recip; 
+            COMPUTE: begin
+                x0_out <= product_x0 >> 13;
+                x1_out <= product_x1 >> 13;
+                x2_out <= product_x2 >> 13; 
 
-                y0_out <= y0_val * w0_out_recip;
-                y1_out <= y1_val * w1_out_recip;
-                y2_out <= y2_val * w2_out_recip; 
+                y0_out <= product_y0 >> 13;
+                y1_out <= product_y1 >> 13;
+                y2_out <= product_y2 >> 13; 
 
-                z0_out <= z0_val * w0_out_recip;
-                z1_out <= z1_val * w1_out_recip;
-                z2_out <= z2_val * w2_out_recip;
-
-                color_out <= color; // temp 
-
+                z0_out <= product_z0 >> 13;
+                z1_out <= product_z1 >> 13;
+                z2_out <= product_z2 >> 13;
                 state <= DONE; 
 
             end
