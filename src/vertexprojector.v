@@ -90,23 +90,40 @@ module vertex_projector ( // i should output new coords x0,y0 ... to x2,y2 based
     wire signed [15:0] x0_val, x1_val, x2_val;
     wire signed [15:0] y0_val, y1_val, y2_val;
     wire signed [15:0] z0_val, z1_val, z2_val;
+
+    wire signed [32:0] x0_sum, x1_sum, x2_sum;
+    wire signed [32:0] y0_sum, y1_sum, y2_sum;
+    wire signed [32:0] z0_sum, z1_sum, z2_sum;
+
     // bruh
-    assign x0_val = x0 * a1 + z0 * c1; 
-    assign y0_val = y0 * b2 * z0 * c2; 
-    assign z0_val = z0 * c3 + d3; 
+    assign x0_sum = x0 * a1 + z0 * c1; 
+    assign y0_sum = y0 * b2 + z0 * c2; 
+    assign z0_sum = z0 * c3 + d3; 
     assign w0_val = z0; 
 
-    assign x1_val = x1 * a1 + z1 * c1; 
-    assign y1_val = y1 * b2 * z1 * c2; 
-    assign z1_val = z1 * c3 + d3; 
+    assign x1_sum = x1 * a1 + z1 * c1; 
+    assign y1_sum = y1 * b2 + z1 * c2; 
+    assign z1_sum = z1 * c3 + d3; 
     assign w1_val = z1; 
 
-    assign x2_val = x2 * a1 + z2 * c1; 
-    assign y2_val = y2 * b2 * z2 * c2; 
-    assign z2_val = z2 * c3 + d3; 
+    assign x2_sum = x2 * a1 + z2 * c1; 
+    assign y2_sum = y2 * b2 + z2 * c2; 
+    assign z2_sum = z2 * c3 + d3; 
     assign w2_val = z2; 
 
-    depth_rom depth_LUT(w_addr, clk, w_data); // takes 1 clock cycle
+    assign x0_val = x0_sum >> 8;
+    assign y0_val = y0_sum >> 8;
+    assign z0_val = z0_sum >> 8;
+
+    assign x1_val = x1_sum >> 8;
+    assign y1_val = y1_sum >> 8;
+    assign z1_val = z1_sum >> 8;
+
+    assign x2_val = x2_sum >> 8;
+    assign y2_val = y2_sum >> 8;
+    assign z2_val = z2_sum >> 8;
+
+    depth_rom depth_LUT(w_addr[14:3], clk, w_data); // takes 1 clock cycle
     // depth_rom depth_LUT(w1_addr, clk, w1_data); 
     // depth_rom depth_LUT(w2_addr, clk, w2_data); 
 
@@ -114,13 +131,13 @@ module vertex_projector ( // i should output new coords x0,y0 ... to x2,y2 based
         // fsm
 
         case (state) 
-        LOAD_W0: begin 
+        IDLE: begin 
             w_addr <= w0_val; 
         end
-        LOAD_W1: begin
+        LOAD_W0: begin
             w_addr <= w1_val; 
         end
-        LOAD_W2: begin 
+        LOAD_W1: begin 
             w_addr <= w2_val; 
         end
 

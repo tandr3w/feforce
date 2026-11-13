@@ -13,7 +13,7 @@ module render_controller (
     parameter RASTER = 3'b011;
     parameter DONE   = 3'b100;
 
-    reg [1:0] state;
+    reg [2:0] state;
 
     reg [7:0] curr_triangle;
 
@@ -67,18 +67,18 @@ module render_controller (
     wire [7:0] projected_y0, projected_y1, projected_y2;
 
     assign proj_product_x0 = (160 * x0_out);
-    assign proj_product_x1 = (120 * y0_out);
-    assign proj_product_x2 = (160 * x1_out);
-    assign proj_product_y0 = (120 * y1_out);
-    assign proj_product_y1 = (160 * x2_out);
+    assign proj_product_x1 = (120 * x1_out);
+    assign proj_product_x2 = (160 * x2_out);
+    assign proj_product_y0 = (120 * y0_out);
+    assign proj_product_y1 = (160 * y1_out);
     assign proj_product_y2 = (120 * y2_out);
 
-    // assign projected_x0 = proj_product_x0 >> 8 + 160;
-    // assign projected_y0 = proj_product_x0 >> 8 + 120;
-    // assign projected_x1 = proj_product_x0 >> 8 + 160;
-    // assign projected_y1 = proj_product_x0 >> 8 + 120;
-    // assign projected_x2 = proj_product_x0 >> 8 + 160;
-    // assign projected_y2 = proj_product_x0 >> 8 + 120;
+    assign projected_x0 = (proj_product_x0 >> 8) + 160;
+    assign projected_y0 = (proj_product_x0 >> 8) + 120;
+    assign projected_x1 = (proj_product_x0 >> 8) + 160;
+    assign projected_y1 = (proj_product_x0 >> 8) + 120;
+    assign projected_x2 = (proj_product_x0 >> 8) + 160;
+    assign projected_y2 = (proj_product_x0 >> 8) + 120;
 
     // assign projected_x0 = (x0 >> 2) + 160;
     // assign projected_y0 = (y0 >> 2) + 120;
