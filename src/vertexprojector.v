@@ -47,9 +47,9 @@ module vertex_projector ( // i should output new coords x0,y0 ... to x2,y2 based
 
     parameter signed [15:0] a1 = (2 * n * 256) / (r - l); // double check
     parameter signed [15:0] b2 = (2 * n * 256) / (t - b); // double check
-    parameter signed [15:0] c1 = -(r + l * 256) / (r - l); // set these to be really nice numbers, otherwise manually simplify
-    parameter signed [15:0] c2 = -(t + b * 256) / (t - b);
-    parameter signed [15:0] c3 = (f + n * 256) / (f - n);
+    parameter signed [15:0] c1 = -((r + l) * 256) / (r - l); // set these to be really nice numbers, otherwise manually simplify
+    parameter signed [15:0] c2 = -((t + b) * 256) / (t - b);
+    parameter signed [15:0] c3 = ((f + n) * 256) / (f - n);
     parameter signed [15:0] c4 = 1 * 256; 
     parameter signed [15:0] d3 = (-2 * f * n) / (f - n); // fine maybe
 
