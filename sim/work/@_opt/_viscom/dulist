@@ -1,0 +1,15 @@
+1 11 pixel_clock 4 fast 53 C:/Users/every/Documents/Programming/feforce/sim/work 0 0 0 0 24 0
+1 7 display 4 fast 53 C:/Users/every/Documents/Programming/feforce/sim/work 0 0 0 0 89 0
+1 12 triangle_rom 4 fast 53 C:/Users/every/Documents/Programming/feforce/sim/work 0 0 0 0 38 0
+1 10 vertex_rom 4 fast 53 C:/Users/every/Documents/Programming/feforce/sim/work 0 0 0 0 30 0
+1 15 triangle_loader 4 fast 53 C:/Users/every/Documents/Programming/feforce/sim/work 0 0 131072 0 258 0
+1 9 depth_rom 4 fast 53 C:/Users/every/Documents/Programming/feforce/sim/work 0 0 1703936 0 8206 0
+1 16 vertex_projector 4 fast 53 C:/Users/every/Documents/Programming/feforce/sim/work 0 0 1703936 0 8657 0
+1 13 edge_function 4 fast 53 C:/Users/every/Documents/Programming/feforce/sim/work 0 0 131072 0 64 0
+1 7 divider 4 fast 53 C:/Users/every/Documents/Programming/feforce/sim/work 0 0 0 0 79 0
+1 10 rasterizer 4 fast 53 C:/Users/every/Documents/Programming/feforce/sim/work 0 0 524288 0 899 0
+1 17 render_controller 4 fast 53 C:/Users/every/Documents/Programming/feforce/sim/work 0 0 2359296 0 10079 0
+1 15 framebuffer_ram 4 fast 53 C:/Users/every/Documents/Programming/feforce/sim/work 0 0 0 0 35 0
+1 11 framebuffer 4 fast 53 C:/Users/every/Documents/Programming/feforce/sim/work 0 0 0 0 88 0
+1 3 top 4 fast 53 C:/Users/every/Documents/Programming/feforce/sim/work 0 0 2359296 0 10418 0
+1 2 tb 4 fast 53 C:/Users/every/Documents/Programming/feforce/sim/work 0 0 2539520 0 10579 0
