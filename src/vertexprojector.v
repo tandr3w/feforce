@@ -14,6 +14,7 @@ module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based 
 // output 4 points, x,y,z,w
     input clk,
     input rst,
+    input start,
     input [15:0] color, 
 
     // input 3d points(transformed)
@@ -23,36 +24,50 @@ module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based 
 
 
     //output projected points
-    output [15:0] x0_out, x1_out, x2_out,
-    output [15:0] y0_out, y1_out, y2_out,
+    output reg [15:0] x0_out, x1_out, x2_out,
+    output reg [15:0] y0_out, y1_out, y2_out,
     // calculated depth?
-    output [15:0] color_out,
-    output [15:0] z0_out, z1_out, z2_out, // z
-    output [15:0] w0_out, w1_out, w2_out, // w
+    output reg [15:0] color_out,
+    output reg [15:0] z0_out, z1_out, z2_out, // z
+    output reg [15:0] w0_out, w1_out, w2_out, // w
 
-    output [15:0] w0_out_recip, w1_out_recip, w2_out_recip, // w
+    output reg [15:0] w0_out_recip, w1_out_recip, w2_out_recip, // w out
+
+    output reg is_done
     // fixed point check later
 
    
 
-    output reg valid // marks if the triangle is loaded and ready to be used
+    //output reg valid // marks if the triangle is loaded and ready to be used
 
 );
 
-    parameter [15:0] n = 10 * 256,
-    parameter [15:0] r = 5 * 256,
-    parameter [15:0] l = -5 * 256,
-    parameter [15:0] t = 5 * 256, 
-    parameter [15:0] b = -5 * 256,
-    parameter [15:0] f = 4'd15 * 256, 
+    parameter [15:0] n = 10 * 256;
+    parameter [15:0] r = 5 * 256;
+    parameter [15:0] l = -5 * 256;
+    parameter [15:0] t = 5 * 256; 
+    parameter [15:0] b = -5 * 256;
+    parameter [15:0] f = 4'd15 * 256; 
 
-    parameter [15:0] a1 = (2 * n) / (r - l) * 256, // double check
-    parameter [15:0] b2 = (2 * n) / (t - b) * 256, // double check
-    parameter [15:0] c1 = -(r + l) / (r - l) * 256, // set these to be really nice numbers, otherwise manually simplify
-    parameter [15:0] c2 = -(t + b) / (t - b) * 256,
-    parameter [15:0] c3 = (f + n) / (f - n) * 256,
-    parameter [15:0] c4 = 1 * 256, 
-    parameter [15:0] d3 = (-2 * f * n) / (f - n), // fine maybe
+    parameter [15:0] a1 = (2 * n) / (r - l) * 256; // double check
+    parameter [15:0] b2 = (2 * n) / (t - b) * 256; // double check
+    parameter [15:0] c1 = -(r + l) / (r - l) * 256; // set these to be really nice numbers, otherwise manually simplify
+    parameter [15:0] c2 = -(t + b) / (t - b) * 256;
+    parameter [15:0] c3 = (f + n) / (f - n) * 256;
+    parameter [15:0] c4 = 1 * 256; 
+    parameter [15:0] d3 = (-2 * f * n) / (f - n); // fine maybe
+
+    parameter IDLE = 3'b000;
+    parameter LOAD_W0 = 3'b001;
+    parameter LOAD_W1 = 3'b010;
+    parameter LOAD_W2 = 3'b011;
+    parameter COMPUTE = 3'b100;
+    parameter DONE = 3'b101; 
+
+    reg [3:0] state; 
+
+
+    
 // camera space 
 // perspective divide
 // screen space
@@ -64,26 +79,129 @@ module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based 
     // these are given in NDC space
 
     // w not actually outputted or smth, just directly calculate 
-    assign x0_out = x0 * a1 ; 
-    assign y0_out = y0 * b2; 
-    assign z0_out = z0 * (c1 + c2 + c3 + 1);
-    assign w0_out = 1 * d3;  
 
-    assign x1_out = x1 * a1; 
-    assign y1_out = y1 * b2; 
-    assign z1_out = z1 * (c1 + c2 + c3 + 1);
-    assign w1_out = 1 * d3;  
+    // do not do this prob
 
-    assign x2_out = x2 * a1 ; 
-    assign y2_out = y2 * b2; 
-    assign z2_out = z2 * (c1 + c2 + c3 + 1);
-    assign w2_out = 1 * d3;  
 
-    assign color_out = color; 
+    wire [15:0] w0_val, w1_val, w2_val;
 
-    depth_rom depth_LUT(w0_out, clk, w0_out_recip); 
-    depth_rom depth_LUT(w1_out, clk, w1_out_recip); 
-    depth_rom depth_LUT(w2_out, clk, w2_out_recip); 
+    //reg [15:0] w0_addr, w1_addr, w2_addr;
+    
+    reg [15:0] w_addr; 
+    //wire [15:0] w0_data, w1_data, w2_data;
+
+    wire [15:0] w_data; 
+
+    wire signed [15:0] x0_val, x1_val, x2_val;
+    wire signed [15:0] y0_val, y1_val, y2_val;
+    wire signed [15:0] z0_val, z1_val, z2_val;
+    // bruh
+    assign x0_val = x0 * a1 + z0 * c1; 
+    assign y0_val = y0 * b2 * z0 * c2; 
+    assign z0_val = z0 * c3 + d3; 
+    assign w0_val = z0; 
+
+    assign x1_val = x1 * a1 + z1 * c1; 
+    assign y1_val = y1 * b2 * z1 * c2; 
+    assign z1_val = z1 * c3 + d3; 
+    assign w1_val = z1; 
+
+    assign x2_val = x2 * a1 + z2 * c1; 
+    assign y2_val = y2 * b2 * z2 * c2; 
+    assign z2_val = z2 * c3 + d3; 
+    assign w2_val = z2; 
+
+    //assign color_out = color; 
+
+    depth_rom depth_LUT(w_addr, clk, w_data); // takes 1 clock cycle
+    // depth_rom depth_LUT(w1_addr, clk, w1_data); 
+    // depth_rom depth_LUT(w2_addr, clk, w2_data); 
+
+    always @ (*) begin 
+        // fsm
+
+        case (state) 
+        LOAD_W0: begin 
+            w_addr <= w0_val; 
+        end
+        LOAD_W1: begin
+            w_addr <= w1_val; 
+        end
+        LOAD_W2: begin 
+            w_addr <= w2_val; 
+        end
+
+        default: begin 
+            w_addr <= 16'b0; 
+        end
+        endcase
+
+    end
+
+    always @ (posedge clk or posedge rst) begin
+        if  (rst) begin
+            is_done <= 0; 
+            state <= IDLE; 
+
+
+        end 
+        else begin 
+            case (state)
+            IDLE: begin 
+                is_done <= 0;
+                if (start) begin 
+                    state <= LOAD_W0;
+                end
+            end 
+
+            LOAD_W0: begin
+                w0_out_recip <= w_data;  
+                state <= LOAD_W1;
+            end
+
+            LOAD_W1: begin 
+                w1_out_recip <= w_data;
+                state <= LOAD_W2; 
+            end
+
+            LOAD_W2: begin 
+                w2_out_recip <= w_data;
+                state <= COMPUTE; 
+
+            end
+
+            COMPUTE: begin 
+                x0_out <= x0_val * w0_out_recip;
+                x1_out <= x1_val * w1_out_recip;
+                x2_out <= x2_val * w2_out_recip; 
+
+                y0_out <= y0_val * w0_out_recip;
+                y1_out <= y1_val * w1_out_recip;
+                y2_out <= y2_val * w2_out_recip; 
+
+                z0_out <= z0_val * w0_out_recip;
+                z1_out <= z1_val * w1_out_recip;
+                z2_out <= z2_val * w2_out_recip;
+
+                color_out <= color; // temp 
+
+                state <= DONE; 
+
+            end
+
+            DONE: begin 
+                is_done <= 1;
+                state <= IDLE; // may be completely uneeded
+            end   
+            endcase
+        end
+
+    end
+
+    
+
+
+    // put in fsm
 
 
     // lookup table thing
@@ -93,4 +211,4 @@ module vertexProjector ( // i should output new coords x0,y0 ... to x2,y2 based 
 
     
 
-endmodule; 
+endmodule

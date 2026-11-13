@@ -22,12 +22,14 @@ module render_controller (
     wire [15:0] color;
     wire loader_valid, raster_done;
     reg loader_start, raster_start;
+    wire is_final; // are we at the last triangle?
 
     triangle_loader loader (
         .clk(clk),
         .rst(rst),
         .start(loader_start),
         .triangle_number(curr_triangle),
+        .is_final(is_final),
 
         .x0(x0), .y0(y0), .z0(z0),
         .x1(x1), .y1(y1), .z1(z1),
@@ -95,7 +97,7 @@ module render_controller (
                 RASTER: begin
                     raster_start <= 0;
                     if (raster_done) begin
-                        if (curr_triangle < NUM_TRIANGLES - 1) begin
+                        if (!is_final) begin
                             curr_triangle <= curr_triangle + 1; // start loading the next triangle
                             loader_start <= 1;
                             state <= LOAD; // Load next triangle
