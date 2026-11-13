@@ -37,20 +37,21 @@ module vertex_projector ( // i should output new coords x0,y0 ... to x2,y2 based
     //output reg valid // marks if the triangle is loaded and ready to be used
 
 );
-    parameter [15:0] n = 10 * 256;
-    parameter [15:0] r = 5 * 256;
-    parameter [15:0] l = -5 * 256;
-    parameter [15:0] t = 5 * 256; 
-    parameter [15:0] b = -5 * 256;
-    parameter [15:0] f = 4'd15 * 256; 
+    parameter signed [15:0] n = 10 * 256;
+    // tb and lr have to have the same 3:4 aspect ratio as the framebuffer
+    parameter signed [15:0] r = 5 * 256;
+    parameter signed [15:0] l = -5 * 256;
+    parameter signed [15:0] t = 3.75 * 256; 
+    parameter signed [15:0] b = -3.75 * 256;
+    parameter signed [15:0] f = 4'd15 * 256; 
 
-    parameter [15:0] a1 = (2 * n) / (r - l) * 256; // double check
-    parameter [15:0] b2 = (2 * n) / (t - b) * 256; // double check
-    parameter [15:0] c1 = -(r + l) / (r - l) * 256; // set these to be really nice numbers, otherwise manually simplify
-    parameter [15:0] c2 = -(t + b) / (t - b) * 256;
-    parameter [15:0] c3 = (f + n) / (f - n) * 256;
-    parameter [15:0] c4 = 1 * 256; 
-    parameter [15:0] d3 = (-2 * f * n) / (f - n); // fine maybe
+    parameter signed [15:0] a1 = (2 * n * 256) / (r - l); // double check
+    parameter signed [15:0] b2 = (2 * n * 256) / (t - b); // double check
+    parameter signed [15:0] c1 = -(r + l * 256) / (r - l); // set these to be really nice numbers, otherwise manually simplify
+    parameter signed [15:0] c2 = -(t + b * 256) / (t - b);
+    parameter signed [15:0] c3 = (f + n * 256) / (f - n);
+    parameter signed [15:0] c4 = 1 * 256; 
+    parameter signed [15:0] d3 = (-2 * f * n) / (f - n); // fine maybe
 
     parameter IDLE = 3'b000;
     parameter LOAD_W0 = 3'b001;
@@ -98,17 +99,17 @@ module vertex_projector ( // i should output new coords x0,y0 ... to x2,y2 based
     // bruh
     assign x0_sum = x0 * a1 + z0 * c1; 
     assign y0_sum = y0 * b2 + z0 * c2; 
-    assign z0_sum = z0 * c3 + d3; 
+    assign z0_sum = z0 * c3 + d3 << 8; 
     assign w0_val = z0; 
 
     assign x1_sum = x1 * a1 + z1 * c1; 
     assign y1_sum = y1 * b2 + z1 * c2; 
-    assign z1_sum = z1 * c3 + d3; 
+    assign z1_sum = z1 * c3 + d3 << 8; 
     assign w1_val = z1; 
 
     assign x2_sum = x2 * a1 + z2 * c1; 
     assign y2_sum = y2 * b2 + z2 * c2; 
-    assign z2_sum = z2 * c3 + d3; 
+    assign z2_sum = z2 * c3 + d3 << 8; 
     assign w2_val = z2; 
 
     assign x0_val = x0_sum >> 8;
