@@ -7,12 +7,14 @@ module triangle_loader (
     output reg signed [15:0] x0, y0, z0,
     output reg signed [15:0] x1, y1, z1,
     output reg signed [15:0] x2, y2, z2,
-    output reg [15:0] color,
+    output reg [15:0] color0,
+    output reg [15:0] color1,
+    output reg [15:0] color2,
 
     output is_final, // marks if the input is 0, so we should stop reading
     output reg valid // marks if the triangle is loaded and ready to be used
 );
-    wire [39:0] triangle_data;
+    wire [71:0] triangle_data;
 
     reg [7:0] vertex_address;
     wire [47:0] vertex_data;
@@ -71,7 +73,9 @@ module triangle_loader (
                     if (is_final) begin
                         state <= IDLE;
                     end
-                    color <= triangle_data[39:24];
+                    color0 <= triangle_data[71:56];
+                    color1 <= triangle_data[55:40];
+                    color2 <= triangle_data[39:24];
                     state <= LOAD_V0;
                 end
                 LOAD_V0: begin

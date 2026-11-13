@@ -19,7 +19,7 @@ module render_controller (
     reg [7:0] curr_triangle;
 
     wire signed [15:0] x0, y0, z0, x1, y1, z1, x2, y2, z2;
-    wire [15:0] color;
+    wire [15:0] color0, color1, color2;
     wire loader_valid, raster_done;
     reg loader_start, raster_start;
     wire is_final; // are we at the last triangle?
@@ -34,7 +34,7 @@ module render_controller (
         .x0(x0), .y0(y0), .z0(z0),
         .x1(x1), .y1(y1), .z1(z1),
         .x2(x2), .y2(y2), .z2(z2),
-        .color(color),
+        .color0(color0), .color1(color1), .color2(color2),
 
         .valid(loader_valid)
     );
@@ -53,7 +53,9 @@ module render_controller (
     rasterizer raster (
         .clk(clk),
         .rst(rst),
-        .color_in(color),
+        .color0_in(color0),
+        .color1_in(color1),
+        .color2_in(color2),
 
         .x0_in(projected_x0),
         .y0_in(projected_y0),

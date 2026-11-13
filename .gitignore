@@ -220,10 +220,14 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+sim/transcript
 db/
 incremental_db/
 output_files/
 greybox_tmp/
 hc_output/
 hps_isw_handoff/
+sim/vish_stacktrace.vstf
 sys_description/
+
+greybox_tmp
