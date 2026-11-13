@@ -39,10 +39,10 @@ module vertex_projector ( // i should output new coords x0,y0 ... to x2,y2 based
 );
     parameter signed [15:0] n = 10 * 256;
     // tb and lr have to have the same 3:4 aspect ratio as the framebuffer
-    parameter signed [15:0] r = 5 * 256;
-    parameter signed [15:0] l = -5 * 256;
-    parameter signed [15:0] t = 3.75 * 256; 
-    parameter signed [15:0] b = -3.75 * 256;
+    parameter signed [15:0] r = 2 * 256;
+    parameter signed [15:0] l = -2 * 256;
+    parameter signed [15:0] t = 1.5 * 256; 
+    parameter signed [15:0] b = -1.5 * 256;
     parameter signed [15:0] f = 4'd15 * 256; 
 
     parameter signed [15:0] a1 = (2 * n * 256) / (r - l); // double check
@@ -64,13 +64,14 @@ module vertex_projector ( // i should output new coords x0,y0 ... to x2,y2 based
     reg [15:0] w0_out, w1_out, w2_out; // w
     reg [15:0] w0_out_recip, w1_out_recip, w2_out_recip; // w out
     
-// camera space 
-// perspective divide
-// screen space
-// remap to NDC(normailised device coords [-1,1] coord range)
-// NDC space to raster space
+    // camera space 
+    // perspective divide
+    // screen space
+    // remap to NDC(normailised device coords [-1,1] coord range)
+    // NDC space to raster space
 
-// just use a matrix ig
+    // just use a matrix ig
+
     // how do i do synthsiable division
     // these are given in NDC space
 
