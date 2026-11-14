@@ -221,7 +221,8 @@ __marimo__/
 .streamlit/secrets.toml
 
 sim/transcript
-sim/work
+*/work
+*/*/work
 db/
 incremental_db/
 output_files/
