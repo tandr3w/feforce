@@ -220,7 +220,6 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-sim/transcript
 */work
 */*/work
 db/
@@ -233,3 +232,8 @@ sim/vish_stacktrace.vstf
 sys_description/
 
 greybox_tmp
+*.vstf
+*/transcript
+*/*/transcript
+*/*/*.vstf
+greybox_tmp/

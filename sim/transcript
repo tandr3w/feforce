@@ -1,8 +1,7 @@
 # ** Note: (vsim-220) 'C:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
 # vsim -pli "C:\Users\every\Documents\Programming\ece241\DESim\questa.vpi" -Lf 220model -Lf altera_mf_ver -Lf verilog -t 1ns -c -do "run -all" tb -no_autoacc 
-# Start time: 17:42:24 on Nov 13,2026
-# ** Note: (vsim-3812) Design is being optimized...
-# ** Note: (vopt-220) 'C:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
+# Start time: 21:21:28 on Nov 13,2026
+# ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Altera Starter FPGA Edition-64
 # //  Version 2025.2 win64 May 31 2025
 # //
