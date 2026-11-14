@@ -11,7 +11,7 @@
 
 module vertex_projector ( // i should output new coords x0,y0 ... to x2,y2 based off depth
 
-// output 4 points, x,y,z,w
+    // output 4 points, x,y,z,w
     input clk,
     input rst,
     input start,
@@ -27,7 +27,6 @@ module vertex_projector ( // i should output new coords x0,y0 ... to x2,y2 based
 
     // calculated depth?
     output reg signed [15:0] z0_out, z1_out, z2_out, // z
-
 
     output reg is_done
     // fixed point check later
@@ -218,19 +217,6 @@ module vertex_projector ( // i should output new coords x0,y0 ... to x2,y2 based
             endcase
         end
 
-    end
-
-    
-
-
-    // put in fsm
-
-
-    // lookup table thing
-    // divide by w to do division
-    // need fsm 
-
-
-    
+    end    
 
 endmodule

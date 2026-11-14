@@ -3,7 +3,7 @@
 module testbench ( );
 
 	reg clk = 0;
-	reg rst = 0;
+	reg [3:0] KEY = 0;
     wire [7:0] VGA_R;
     wire [7:0] VGA_G;
     wire [7:0] VGA_B;
@@ -15,9 +15,9 @@ module testbench ( );
 
 	initial begin
 		#20;
-		rst <= 1;
+		KEY[0] <= 0;
 		#100;
-		rst <= 0;
+		KEY[0] <= 1;
         #17000000;
         $stop;
 	end // initial
@@ -27,7 +27,7 @@ module testbench ( );
 
     top U1 (
         .clk(clk),
-		.rst(rst),
+		.KEY(KEY),
         .VGA_R(VGA_R),
         .VGA_G(VGA_G),
         .VGA_B(VGA_B),
