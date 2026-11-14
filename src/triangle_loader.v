@@ -73,30 +73,32 @@ module triangle_loader (
                     if (is_final) begin
                         state <= IDLE;
                     end
-                    color0 <= triangle_data[71:56];
-                    color1 <= triangle_data[55:40];
-                    color2 <= triangle_data[39:24];
-                    state <= LOAD_V0;
+                    else begin
+                        color0 <= triangle_data[71:56];
+                        color1 <= triangle_data[55:40];
+                        color2 <= triangle_data[39:24];
+                        state <= LOAD_V0;
+                    end
                 end
                 LOAD_V0: begin
                     // save vertex 0 data
                     x0 <= vertex_data[47:32];
                     y0 <= vertex_data[31:16];
-                    z0 <= vertex_data[15:0];
+                    z0 <= vertex_data[15:0] + 16'd3072;
                     state <= LOAD_V1;
                 end
                 LOAD_V1: begin
                     // save vertex 1 data
                     x1 <= vertex_data[47:32];
                     y1 <= vertex_data[31:16];
-                    z1 <= vertex_data[15:0];
+                    z1 <= vertex_data[15:0] + 16'd3072;
                     state <= LOAD_V2;
                 end
                 LOAD_V2: begin
                     // save vertex 2 data
                     x2 <= vertex_data[47:32];
                     y2 <= vertex_data[31:16];
-                    z2 <= vertex_data[15:0];
+                    z2 <= vertex_data[15:0] + 16'd3072;
                     state <= IDLE;
                     valid <= 1;
                 end

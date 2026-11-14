@@ -8,26 +8,46 @@ z2
 !i10f 100
 cModel Technology
 Z0 dC:/Users/henry/Documents/Github/feforce/sim
-vdisplay
-Z1 !s110 1794595088
+vdepth_rom
+Z1 !s110 1794615495
 !i10b 1
-!s100 U9EHJRR`K12>Pm15JziP62
-I7nmC:9JVn4LP=6:5oMBi01
+!s100 ;PQ`g]b]VcmziHo6<GH_z2
+I57g>26gSkI9FB?[gCXI3@1
 Z2 VDg1SIo80bB@j0V0VzS_@n1
 R0
-Z3 w1793240767
-Z4 8../src/vga.v
-Z5 F../src/vga.v
-L0 21
-Z6 OV;L;10.5b;63
+Z3 w1794615397
+8./depth_rom.v
+F./depth_rom.v
+L0 1
+Z4 OV;L;10.5b;63
 r1
 !s85 0
 31
-Z7 !s108 1794595088.000000
-Z8 !s107 ../src/vga.v|../src/vertexwindowspace.v|../src/vertextransformer.v|../src/vertexprojector.v|../src/triangle_loader.v|../src/top.v|../src/render_controller.v|../src/rasterizer.v|../src/framebuffer.v|
-Z9 !s90 ../src/framebuffer.v|../src/rasterizer.v|../src/render_controller.v|../src/top.v|../src/triangle_loader.v|../src/vertexprojector.v|../src/vertextransformer.v|../src/vertexwindowspace.v|../src/vga.v|
+Z5 !s108 1794615495.000000
+Z6 !s107 ./vertex_rom.v|./triangle_rom.v|./framebuffer_ram.v|./divider.v|./depth_rom.v|
+Z7 !s90 ./depth_rom.v|./divider.v|./framebuffer_ram.v|./triangle_rom.v|./vertex_rom.v|
 !i113 1
-Z10 tCvgOpt 0
+Z8 tCvgOpt 0
+vdisplay
+R1
+!i10b 1
+!s100 U9EHJRR`K12>Pm15JziP62
+I7nmC:9JVn4LP=6:5oMBi01
+R2
+R0
+Z9 w1793240767
+Z10 8../src/vga.v
+Z11 F../src/vga.v
+L0 21
+R4
+r1
+!s85 0
+31
+R5
+Z12 !s107 ../src/vga.v|../src/vertextransformer.v|../src/vertexprojector.v|../src/triangle_loader.v|../src/top.v|../src/render_controller.v|../src/rasterizer.v|../src/framebuffer.v|
+Z13 !s90 ../src/framebuffer.v|../src/rasterizer.v|../src/render_controller.v|../src/top.v|../src/triangle_loader.v|../src/vertexprojector.v|../src/vertextransformer.v|../src/vga.v|
+!i113 1
+R8
 vdivider
 R1
 !i10b 1
@@ -35,19 +55,19 @@ R1
 I6STX1AM6QXnHoEl5oGd7C0
 R2
 R0
-Z11 w1794595003
+Z14 w1794595003
 8./divider.v
 F./divider.v
 L0 1
-R6
+R4
 r1
 !s85 0
 31
+R5
+R6
 R7
-Z12 !s107 ./vertex_rom.v|./triangle_rom.v|./framebuffer_ram.v|./divider.v|
-Z13 !s90 ./divider.v|./framebuffer_ram.v|./triangle_rom.v|./vertex_rom.v|
 !i113 1
-R10
+R8
 vedge_function
 R1
 !i10b 1
@@ -55,19 +75,19 @@ R1
 I;aj:]j79WlKmKbk:YGok<3
 R2
 R0
-R11
-Z14 8../src/rasterizer.v
-Z15 F../src/rasterizer.v
+R14
+Z15 8../src/rasterizer.v
+Z16 F../src/rasterizer.v
 L0 3
-R6
+R4
 r1
 !s85 0
 31
-R7
-R8
-R9
+R5
+R12
+R13
 !i113 1
-R10
+R8
 vframebuffer
 R1
 !i10b 1
@@ -75,19 +95,19 @@ R1
 IF<S@Qg?Fkz7gWdJH[HF]41
 R2
 R0
-R3
+R9
 8../src/framebuffer.v
 F../src/framebuffer.v
 L0 3
-R6
+R4
 r1
 !s85 0
 31
-R7
-R8
-R9
+R5
+R12
+R13
 !i113 1
-R10
+R8
 vframebuffer_ram
 R1
 !i10b 1
@@ -95,19 +115,19 @@ R1
 I:XlWI?NkAL26b7e@oIEP_2
 R2
 R0
-R3
+R9
 8./framebuffer_ram.v
 F./framebuffer_ram.v
 L0 3
-R6
+R4
 r1
 !s85 0
 31
+R5
+R6
 R7
-R12
-R13
 !i113 1
-R10
+R8
 vpixel_clock
 R1
 !i10b 1
@@ -115,19 +135,19 @@ R1
 I>6AC<AlD1QK^DDL4g@WNV3
 R2
 R0
-R3
-R4
-R5
+R9
+R10
+R11
 L0 3
-R6
+R4
 r1
 !s85 0
 31
-R7
-R8
-R9
+R5
+R12
+R13
 !i113 1
-R10
+R8
 vrasterizer
 R1
 !i10b 1
@@ -135,39 +155,39 @@ R1
 I9Smk6_zaIVZTQSH@cA5Q82
 R2
 R0
-R11
 R14
 R15
+R16
 L0 26
-R6
+R4
 r1
 !s85 0
 31
-R7
-R8
-R9
+R5
+R12
+R13
 !i113 1
-R10
+R8
 vrender_controller
 R1
 !i10b 1
-!s100 =n>IYT^[AfnDFS6mUSHKE1
-IJ4QcJ<gQS_M[lZaMzC;RP1
+!s100 SeL53gh<_R_BgPGa0V1h33
+I3LL5i=Q`>SdzOfBf1f9mn1
 R2
 R0
-R11
+R3
 8../src/render_controller.v
 F../src/render_controller.v
 L0 1
-R6
+R4
 r1
 !s85 0
 31
-R7
-R8
-R9
+R5
+R12
+R13
 !i113 1
-R10
+R8
 vtb
 R1
 !i10b 1
@@ -175,19 +195,19 @@ R1
 IH:T>9Jc<Z_;XJ99[Ie0Be1
 R2
 R0
-Z16 w1794338117
+Z17 w1794338117
 8../tb/tb.v
 F../tb/tb.v
 L0 7
-R6
+R4
 r1
 !s85 0
 31
-R7
+R5
 !s107 ../tb/tb.v|
 !s90 ../tb/tb.v|
 !i113 1
-R10
+R8
 vtop
 R1
 !i10b 1
@@ -195,97 +215,96 @@ R1
 I07iQNFW5:f`b_iWDoceP33
 R2
 R0
-R16
+R17
 8../src/top.v
 F../src/top.v
 L0 3
-R6
+R4
 r1
 !s85 0
 31
-R7
-R8
-R9
-!i113 1
-R10
-vtriangle_loader
-R1
-!i10b 1
-!s100 UNW:]dJV6C:gg31icX^]I3
-IEeAf:==1ij;hnaiS[fGXT0
-R2
-R0
-R11
-8../src/triangle_loader.v
-F../src/triangle_loader.v
-L0 1
-R6
-r1
-!s85 0
-31
-R7
-R8
-R9
-!i113 1
-R10
-vtriangle_rom
-R1
-!i10b 1
-!s100 Vg7kN1^R2mm3zBedJX@eS1
-IS14>85:IKz_21aK82GD]k1
-R2
-R0
-R11
-8./triangle_rom.v
-F./triangle_rom.v
-L0 3
-R6
-r1
-!s85 0
-31
-R7
+R5
 R12
 R13
 !i113 1
-R10
+R8
+vtriangle_loader
+R1
+!i10b 1
+!s100 hNhG<8d_T5i6feinPgHE>1
+IRECK_f2nTh6XDkDlImbiO3
+R2
+R0
+R3
+8../src/triangle_loader.v
+F../src/triangle_loader.v
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+R12
+R13
+!i113 1
+R8
+vtriangle_rom
+R1
+!i10b 1
+!s100 SF@J1Y1j^HQJ3^65=Vc`z3
+Il[Ph68UamkhXX2Mi=3]V@2
+R2
+R0
+R3
+8./triangle_rom.v
+F./triangle_rom.v
+L0 3
+R4
+r1
+!s85 0
+31
+R5
+R6
+R7
+!i113 1
+R8
+vvertex_projector
+R1
+!i10b 1
+!s100 JnaA6g9dSDFTZ8g2NehiM1
+IF0dAZGi_:j?;1Pa=BT<^o3
+R2
+R0
+R3
+8../src/vertexprojector.v
+F../src/vertexprojector.v
+L0 12
+R4
+r1
+!s85 0
+31
+R5
+R12
+R13
+!i113 1
+R8
 vvertex_rom
 R1
 !i10b 1
-!s100 fLQh[[kGE=J6e6BJ9^Xd10
-IA38eTzdDheW2VFGa=OJj]0
+!s100 <i?z<:LV`8oS:;G]gT6`n1
+IVKH?1ZDY?::lzD5h^_?DJ0
 R2
 R0
 R3
 8./vertex_rom.v
 F./vertex_rom.v
 L0 2
-R6
+R4
 r1
 !s85 0
 31
+R5
+R6
 R7
-R12
-R13
 !i113 1
-R10
-vvertexProjector
-R1
-!i10b 1
-!s100 a?jX@3F9ZD[6UVe_6HFB=3
-I>3GWmjTUhmK[ZVk4G[4Vk0
-R2
-R0
-w1794594229
-8../src/vertexprojector.v
-F../src/vertexprojector.v
-L0 12
-R6
-r1
-!s85 0
-31
-R7
 R8
-R9
-!i113 1
-R10
-nvertex@projector
