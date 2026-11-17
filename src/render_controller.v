@@ -157,6 +157,7 @@ module render_controller (
                 DONE: begin
                     loader_start <= 0;
                     raster_start <= 0;
+                    state <= IDLE;
                 end
             endcase
         end
