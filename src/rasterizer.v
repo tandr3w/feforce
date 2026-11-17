@@ -124,7 +124,7 @@ module rasterizer (
     assign write_y = curr_y;
     assign write_enable = (state == RASTER) && inside && depth_write_enable;
 
-    assign valid = (min_x <= max_x) && (min_y <= max_y) && (t_area != 0);
+    assign valid = (min_x <= max_x) && (min_y <= max_y) && (t_area < 0);
 
     // color interpolation based on https://codeplea.com/triangular-interpolation
     // https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle//barycentric-coordinates.html
