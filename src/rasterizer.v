@@ -31,7 +31,6 @@ module rasterizer (
     input [7:0] y0_in, y1_in, y2_in,
     input [15:0] depth_recip0, depth_recip1, depth_recip2, // w out
 
-
     input start, // signal to tell the rasterizer to start rasterizing the current triangle
 
     output [8:0] write_x,
@@ -52,6 +51,7 @@ module rasterizer (
     
     reg [8:0] x0, x1, x2;
     reg [7:0] y0, y1, y2;
+    reg [15:0] depth0, depth1, depth2;
     reg [15:0] color0, color1, color2;
     wire signed [25:0] t_area_recip; // signed fixed point 1.24
     wire [20:0] remain;
@@ -169,13 +169,13 @@ module rasterizer (
     assign write_color = {redout, greenout, blueout};
 
     // depth interpolation using same method
-    wire signed [36:0] depth_sum;
-    wire signed [60:0] depth_scaled;
+    wire signed [39:0] depth_sum;
+    wire signed [65:0] depth_scaled;
     wire [15:0] depth_out;
 
-    assign depth_sum = edge1 * $signed({1'b0, depth_recip0}) + 
-                       edge2 * $signed({1'b0, depth_recip1}) + 
-                       edge0 * $signed({1'b0, depth_recip2});
+    assign depth_sum = edge1 * $signed({1'b0, depth0}) + 
+                       edge2 * $signed({1'b0, depth1}) + 
+                       edge0 * $signed({1'b0, depth2});
 
     assign depth_scaled = depth_sum * t_area_recip;
 
@@ -183,26 +183,32 @@ module rasterizer (
 
     wire [15:0] stored_depth;
 
-    assign depth_write_enable = (depth_out > stored_depth);
+    assign depth_write_enable = (state == RASTER) && inside && (depth_out > stored_depth);
 
     reg [8:0] curr_x_next;
     reg [7:0] curr_y_next;
 
-    always @(curr_x, curr_y) begin
-        if (curr_x < max_x) begin
-            curr_x_next <= curr_x + 1;
+    always @(*) begin
+        if (state == SETUP) begin
+            curr_x_next = min_x;
+            curr_y_next = min_y;
+        end
+        else if (curr_x < max_x) begin
+            curr_x_next = curr_x + 1;
+            curr_y_next = curr_y;
         end else if (curr_y < max_y) begin
-            curr_x_next <= min_x;
-            curr_y_next <= curr_y + 1;
+            curr_x_next = min_x;
+            curr_y_next = curr_y + 1;
         end else begin
-            curr_x_next <= 0;
-            curr_y_next <= 0;
+            curr_x_next = 0;
+            curr_y_next = 0;
         end
     end
 
-    depth_buffer_ram depth_buffer(
-        .address(curr_y_next * 17'd320 + curr_x_next),
+    depthbuffer_ram depth_buffer(
         .clock(clk),
+        .rdaddress(curr_y_next * 17'd320 + curr_x_next),
+        .wraddress(curr_y * 17'd320 + curr_x),
         .data(depth_out),
         .wren(depth_write_enable),
         .q(stored_depth)
@@ -225,9 +231,14 @@ module rasterizer (
                         y0 <= y0_in;
                         y1 <= y1_in;
                         y2 <= y2_in;
+
                         color0 <= color0_in;
                         color1 <= color1_in;
                         color2 <= color2_in;
+
+                        depth0 <= depth_recip0;
+                        depth1 <= depth_recip1;
+                        depth2 <= depth_recip2;
 
                         divider_counter <= 0;
                         state <= SETUP;
