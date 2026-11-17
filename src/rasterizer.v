@@ -133,7 +133,7 @@ module rasterizer (
     divider div (
         .clock(clk),
         .numer(26'd16777216), // 1.0 in signed fixed point 1.24 is 2^24
-        .denom(t_area), // use unsigned area since it's already checked using inside
+        .denom(t_area), // signed area
         .quotient(t_area_recip),
         .remain(remain)
     );
@@ -141,6 +141,8 @@ module rasterizer (
     wire [4:0] redout, blueout;
     wire [5:0] greenout;
 
+    // use signed values because the sign of the edge function will cancel out the sign of the t_area_recip if it is negative
+    // so we don't have to add any extra logic
     wire signed [28:0] red_sum, blue_sum;
     wire signed [29:0] green_sum;
     wire signed [54:0] red_scaled, blue_scaled;

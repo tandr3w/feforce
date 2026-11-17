@@ -23,7 +23,6 @@ module vertex_rom (
             8'd5: q <= 48'h015E_FEEF_0C00;
             8'd6: q <= 48'h015E_00D1_0CB0;
             8'd7: q <= 48'h005E_0168_0B0F;
-            
             default: q <= 48'd0;
         endcase
     end
