@@ -40,7 +40,7 @@ module render_controller (
 
     wire signed [15:0] x0_out, x1_out, x2_out;
     wire signed [15:0] y0_out, y1_out, y2_out;
-    wire signed [15:0] z0_out, z1_out, z2_out;
+    wire [15:0] w_recip_0, w_recip_1, w_recip_2; // stores depth of the vertex
     wire projector_done;
     reg projector_start;
 
@@ -56,7 +56,7 @@ module render_controller (
         .x0_out(x0_out), .x1_out(x1_out), .x2_out(x2_out),
         .y0_out(y0_out), .y1_out(y1_out), .y2_out(y2_out),
 
-        .z0_out(z0_out), .z1_out(z1_out), .z2_out(z2_out),
+        .w0_out_recip(w_recip_0), .w1_out_recip(w_recip_1), .w2_out_recip(w_recip_2),
         .is_done(projector_done)
     );
 
@@ -102,6 +102,10 @@ module render_controller (
 
         .x2_in(projected_x2),
         .y2_in(projected_y2),
+
+        .depth_recip0(w_recip_0),
+        .depth_recip1(w_recip_1),
+        .depth_recip2(w_recip_2),
 
         .start(raster_start),
         .done(raster_done),

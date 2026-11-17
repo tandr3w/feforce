@@ -29,6 +29,8 @@ module rasterizer (
     input [15:0] color0_in, color1_in, color2_in,
     input [8:0] x0_in, x1_in, x2_in,
     input [7:0] y0_in, y1_in, y2_in,
+    input [15:0] depth_recip0, depth_recip1, depth_recip2, // w out
+
 
     input start, // signal to tell the rasterizer to start rasterizing the current triangle
 
@@ -43,8 +45,8 @@ module rasterizer (
     parameter SETUP = 2'b01; // Setup bounding box and initial position
     parameter RASTER = 2'b10; // Rasterizing the triangle
     
-    // parameter DIVIDER_CYCLES = 8;
-    // reg [2:0] divider_counter; // counts how many cycles the divider has been running for
+    parameter DIVIDER_CYCLES = 8;
+    reg [2:0] divider_counter; // counts how many cycles the divider has been running for
 
     reg [1:0] state;
     
@@ -112,13 +114,15 @@ module rasterizer (
         .edge_func(edge2)
     );
 
+    wire depth_write_enable;
+
     // All edge functions need to be the same sign for the pixel to be inside the triangle
     assign inside = (edge0 >= 0) && (edge1 >= 0) && (edge2 >= 0)
                     || (edge0 <= 0) && (edge1 <= 0) && (edge2 <= 0);
 
     assign write_x = curr_x;
     assign write_y = curr_y;
-    assign write_enable = (state == RASTER) && inside;
+    assign write_enable = (state == RASTER) && inside && depth_write_enable;
 
     assign valid = (min_x <= max_x) && (min_y <= max_y) && (t_area != 0);
 
@@ -126,50 +130,89 @@ module rasterizer (
     // https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle//barycentric-coordinates.html
     // barycentric coordinates = area(BCP) / area(ABC) for a point P (areas are unsigned)
 
-    // divider div (
-    //     .clock(clk),
-    //     .numer(26'd16777216), // 1.0 in signed fixed point 1.24 is 2^24
-    //     .denom(t_area), // use unsigned area since it's already checked using inside
-    //     .quotient(t_area_recip),
-    //     .remain(remain)
-    // );
+    divider div (
+        .clock(clk),
+        .numer(26'd16777216), // 1.0 in signed fixed point 1.24 is 2^24
+        .denom(t_area), // use unsigned area since it's already checked using inside
+        .quotient(t_area_recip),
+        .remain(remain)
+    );
 
-    // wire [4:0] redout, blueout;
-    // wire [5:0] greenout;
+    wire [4:0] redout, blueout;
+    wire [5:0] greenout;
 
-    // wire signed [28:0] red_sum, blue_sum;
-    // wire signed [29:0] green_sum;
-    // wire signed [54:0] red_scaled, blue_scaled;
-    // wire signed [55:0] green_scaled;
+    wire signed [28:0] red_sum, blue_sum;
+    wire signed [29:0] green_sum;
+    wire signed [54:0] red_scaled, blue_scaled;
+    wire signed [55:0] green_scaled;
 
-    // assign red_sum = edge1 * $signed({1'b0, color0[15:11]}) + 
-    //                  edge2 * $signed({1'b0, color1[15:11]}) + 
-    //                  edge0 * $signed({1'b0, color2[15:11]});
+    assign red_sum = edge1 * $signed({1'b0, color0[15:11]}) + 
+                     edge2 * $signed({1'b0, color1[15:11]}) + 
+                     edge0 * $signed({1'b0, color2[15:11]});
 
-    // assign green_sum = edge1 * $signed({1'b0, color0[10:5]}) +
-    //                    edge2 * $signed({1'b0, color1[10:5]}) + 
-    //                    edge0 * $signed({1'b0, color2[10:5]});
+    assign green_sum = edge1 * $signed({1'b0, color0[10:5]}) +
+                       edge2 * $signed({1'b0, color1[10:5]}) + 
+                       edge0 * $signed({1'b0, color2[10:5]});
 
-    // assign blue_sum = edge1 * $signed({1'b0, color0[4:0]}) +
-    //                   edge2 * $signed({1'b0, color1[4:0]}) + 
-    //                   edge0 * $signed({1'b0, color2[4:0]});
+    assign blue_sum = edge1 * $signed({1'b0, color0[4:0]}) +
+                      edge2 * $signed({1'b0, color1[4:0]}) + 
+                      edge0 * $signed({1'b0, color2[4:0]});
 
-    // assign red_scaled = red_sum * t_area_recip;
-    // assign green_scaled = green_sum * t_area_recip;
-    // assign blue_scaled = blue_sum * t_area_recip;
+    assign red_scaled = red_sum * t_area_recip;
+    assign green_scaled = green_sum * t_area_recip;
+    assign blue_scaled = blue_sum * t_area_recip;
 
-    // assign redout = red_scaled >> 24;
-    // assign greenout = green_scaled >> 24;
-    // assign blueout = blue_scaled >> 24;
+    assign redout = red_scaled >> 24;
+    assign greenout = green_scaled >> 24;
+    assign blueout = blue_scaled >> 24;
     
-    // assign write_color = {redout, greenout, blueout};
-    assign write_color = color0_in; // just use first vertex's color for now
+    assign write_color = {redout, greenout, blueout};
+
+    // depth interpolation using same method
+    wire signed [36:0] depth_sum;
+    wire signed [60:0] depth_scaled;
+    wire [15:0] depth_out;
+
+    assign depth_sum = edge1 * $signed({1'b0, depth_recip0}) + 
+                       edge2 * $signed({1'b0, depth_recip1}) + 
+                       edge0 * $signed({1'b0, depth_recip2});
+
+    assign depth_scaled = depth_sum * t_area_recip;
+
+    assign depth_out = depth_scaled >> 24;
+
+    wire [15:0] stored_depth;
+
+    assign depth_write_enable = (depth_out > stored_depth);
+
+    reg [8:0] curr_x_next;
+    reg [7:0] curr_y_next;
+
+    always @(curr_x, curr_y) begin
+        if (curr_x < max_x) begin
+            curr_x_next <= curr_x + 1;
+        end else if (curr_y < max_y) begin
+            curr_x_next <= min_x;
+            curr_y_next <= curr_y + 1;
+        end else begin
+            curr_x_next <= 0;
+            curr_y_next <= 0;
+        end
+    end
+
+    depth_buffer_ram depth_buffer(
+        .address(curr_y_next * 17'd320 + curr_x_next),
+        .clock(clk),
+        .data(depth_out),
+        .wren(depth_write_enable),
+        .q(stored_depth)
+    );
 
     always @(posedge clk or posedge rst) begin
         if (rst) begin
             state <= IDLE;
             done <= 0;
-            // divider_counter <= 0;
+            divider_counter <= 0;
         end else begin
             case (state)
                 IDLE: begin
@@ -186,7 +229,7 @@ module rasterizer (
                         color1 <= color1_in;
                         color2 <= color2_in;
 
-                        // divider_counter <= 0;
+                        divider_counter <= 0;
                         state <= SETUP;
                     end
                 end
@@ -197,15 +240,12 @@ module rasterizer (
                         done <= 1;
                         state <= IDLE;
                     end else begin
-                        // divider_counter <= divider_counter + 1;
-                        // if (divider_counter == DIVIDER_CYCLES - 1) begin
-                        //     curr_x <= min_x;
-                        //     curr_y <= min_y;
-                        //     state <= RASTER;    
-                        // end
-                        curr_x <= min_x;
-                        curr_y <= min_y;
-                        state <= RASTER;    
+                        divider_counter <= divider_counter + 1;
+                        if (divider_counter == DIVIDER_CYCLES - 1) begin
+                            curr_x <= min_x;
+                            curr_y <= min_y;
+                            state <= RASTER;
+                        end
                     end
                 end
 

@@ -40,6 +40,8 @@ module testbench ( );
         .x2_in(9'h20),
         .y2_in(8'h20),
 
+
+
         .start(1'b1), // signal to tell the rasterizer to start rasterizing the current triangle
 
         .write_x(write_x),
