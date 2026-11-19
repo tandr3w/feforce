@@ -10,12 +10,18 @@ module testbench ( );
     wire write_enable;
     wire done;
     reg rst;
+    reg start;
 
 	initial begin
+		start <= 0;
 		#20;
 		rst <= 1;
 		#40;
 		rst <= 0;
+        #20;
+        start <= 1;
+        #20;
+        start <= 0;
         #17000000;
         $stop;
 	end // initial
@@ -27,28 +33,41 @@ module testbench ( );
     rasterizer DUT (
         .clk(clk),
         .rst(rst),
-        .color0_in(16'hF800),
-        .color1_in(16'hF800),
-        .color2_in(16'hF800),
+
+        .normal_x_in(16'd16384),
+        .normal_y_in(16'd0),
+        .normal_z_in(16'd0),
+
+        .u0_in(6'd0),
+        .v0_in(6'd0),
+        .u1_in(6'd63),
+        .v1_in(6'd63),
+        .u2_in(6'd0),
+        .v2_in(6'd63),
 
         .x0_in(9'h16),
         .y0_in(8'h16),
 
-        .x1_in(9'h16),
+        .x1_in(9'h20),
         .y1_in(8'h20),
 
-        .x2_in(9'h20),
+        .x2_in(9'h16),
         .y2_in(8'h20),
 
+        .depth_recip0(16'd700),
+        .depth_recip1(16'd700),
+        .depth_recip2(16'd700),
 
+        .start(start),
 
-        .start(1'b1), // signal to tell the rasterizer to start rasterizing the current triangle
+        .clear(1'b0),
+        .clear_addr(17'd0),
 
         .write_x(write_x),
         .write_y(write_y),
         .write_color(write_color),
-        .write_enable(write_enable), // should we actually write to this pixel?
-        .done(done) // signal to tell the render controller that we are done rasterizing this triangle
+        .write_enable(write_enable),
+        .done(done)
     );
 
 endmodule

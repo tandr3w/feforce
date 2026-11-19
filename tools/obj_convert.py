@@ -1,6 +1,8 @@
+# inspiration taken from https://github.com/kohterai/OBJ-Parser
+
 import math
 
-OBJ = "monkey.obj"
+OBJ = "assets/monkey.obj"
 
 verts = []
 uvs = []
@@ -8,32 +10,33 @@ tris = []
 
 # read obj
 for line in open(OBJ):
-    p = line.split()
+    args = line.split()
 
-    if not p:
+    if not args:
         continue
 
-    if p[0] == "v":
-        verts.append(tuple(map(float, p[1:4])))
+    if args[0] == "v":
+        verts.append(tuple(map(float, args[1:4])))
 
-    elif p[0] == "vt":
-        uvs.append(tuple(map(float, p[1:3])))
+    elif args[0] == "vt":
+        uvs.append(tuple(map(float, args[1:3])))
 
-    elif p[0] == "f":
+    elif args[0] == "f":
         face = []
-        for x in p[1:]:
-            s = x.split("/")
-            vi = int(s[0]) - 1
-            ti = int(s[1]) - 1 if len(s) > 1 and s[1] else 0
-            face.append((vi, ti))
+        for x in args[1:]:
+            indices = x.split("/")
+            vertex_index = int(indices[0]) - 1
+            texture_index = int(indices[1]) - 1 if len(indices) > 1 and indices[1] else 0
+            face.append((vertex_index, texture_index))
 
-        tris.append((face[0], face[1], face[2]))
+        # for non-triangle faces, create n-2 triangles by looping through every group of 3 vertices sequentially
+        for i in range(1, len(face) - 1):
+            tris.append((face[0], face[i], face[i + 1]))
 
-
-def q88(x):
+def q88(x): # convert x to q8.8 fixed point
     return int(round(x * 256)) & 0xffff
 
-def q114(x):
+def q114(x): # convert x to (signed) q1.14 fixed point
     return int(round(x * (1 << 14))) & 0xffff
 
 out = """WIDTH=48;
@@ -49,18 +52,7 @@ with open("../sim/vertices.hex", "w") as f:
 
 out += f"    [{len(verts)}..4095] : 0;\nEND;\n"
 
-open("../vertices.mif", "w").write(out)
-
-
-# triangles.mif
-# 108 bits:
-# normal x : 16
-# normal y : 16
-# normal z : 16
-# u0 v0 : 6 + 6
-# u1 v1 : 6 + 6
-# u2 v2 : 6 + 6
-# vertex0 vertex1 vertex2 : 8 each
+open("../ip/vertices.mif", "w").write(out)
 
 out = """WIDTH=120;
 DEPTH=4096;
@@ -127,10 +119,10 @@ with open("../sim/triangles.hex", "w") as f:
         out += f"    {n} : {value:030X};\n"
         f.write(f"{value:030X}\n")
     f.write("0" * 30 + "\n")
-# zero = end-of-model marker like you already use
+
 out += f"    [{len(tris)}..4095] : 0;\nEND;\n"
 
-open("../triangles.mif", "w").write(out)
+open("../ip/triangles.mif", "w").write(out)
 
 print(len(verts), "vertices")
 print(len(tris), "triangles")

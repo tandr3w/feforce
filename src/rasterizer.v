@@ -213,10 +213,6 @@ module rasterizer (
     wire [4:0] red_out, blue_out;
     wire [5:0] green_out;
 
-    // change to match the actual colors later
-    // assign red_product = 5'h1F * brightness;
-    // assign green_product = 6'h00 * brightness;
-    // assign blue_product = 5'h00 * brightness;
     assign red_product = texture_color[15:11] * brightness;
     assign green_product = texture_color[10:5] * brightness;
     assign blue_product = texture_color[4:0] * brightness;

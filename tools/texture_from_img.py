@@ -28,5 +28,5 @@ with open("../sim/texture.hex", "w") as f:
 
 out += "END;\n"
 
-open("../texture.mif", "w").write(out)
+open("../ip/texture.mif", "w").write(out)
 
