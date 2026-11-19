@@ -72,17 +72,20 @@ module tb();
         VGA_X_d <= DUT.sx;
         VGA_Y_d <= DUT.sy[8:0];
     end
+    
+    parameter downscale_factor = 0;
+    parameter slice_size = downscale_factor == 0 ? 1 : downscale_factor - 1;
 
-    assign VGA_X = VGA_X_d >> 2;
-    assign VGA_Y = VGA_Y_d >> 2;
+    assign VGA_X = VGA_X_d >> downscale_factor;
+    assign VGA_Y = VGA_Y_d >> downscale_factor;
 
     assign VGA_COLOR = {VGA_R, VGA_G, VGA_B};
 
     // only draw one pixel from each block (top left corner)
-    assign plot = VGA_BLANK_N &&
-        (VGA_X_d[1:0] == 2'b00) &&
-        (VGA_Y_d[1:0] == 2'b00);
-
+    assign plot = downscale_factor == 0 ? VGA_BLANK_N : VGA_BLANK_N &&
+        (VGA_X_d[slice_size:0] == {slice_size{1'b0}}) &&
+        (VGA_Y_d[slice_size:0] == {slice_size{1'b0}});
+    
     top DUT (
         .CLOCK_50(CLOCK_50),
         // .rst(rst),

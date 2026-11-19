@@ -7,7 +7,7 @@ module triangle_loader (
     output reg signed [15:0] x0, y0, z0,
     output reg signed [15:0] x1, y1, z1,
     output reg signed [15:0] x2, y2, z2,
-    output reg [15:0] normal_x, normal_y, normal_z,
+    output reg signed [15:0] normal_x, normal_y, normal_z,
     output reg [5:0] u0, u1, u2, // 0 to 63
     output reg [5:0] v0, v1, v2,
 
