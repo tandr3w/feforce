@@ -55,7 +55,6 @@ module top(
         end
     end
 
-    // ------ Code to draw to the framebuffer -------
     wire [8:0] raster_x;
     wire [7:0] raster_y;
     wire [15:0] raster_color;
@@ -95,7 +94,6 @@ module top(
         .read_y(sy),
         .read_color(fb_color)
     );
-    // -------------
 
     assign VGA_CLK = pixel_clk;
     assign VGA_BLANK_N = de_d;

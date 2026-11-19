@@ -50,9 +50,9 @@ module triangle_loader (
         case (state)
             // When vertex_address is set, the vertex_data will update in the next cycle
             LOAD_TRI: vertex_address = triangle_data[35:24]; // start a request for vertex 0 data
-            LOAD_V0:  vertex_address = triangle_data[23:12];  // start a request for vertex 1 data
-            LOAD_V1:  vertex_address = triangle_data[11:0];   // start a request for vertex 2 data
-            default:  vertex_address = 12'd0;
+            LOAD_V0: vertex_address = triangle_data[23:12]; // start a request for vertex 1 data
+            LOAD_V1: vertex_address = triangle_data[11:0]; // start a request for vertex 2 data
+            default: vertex_address = 12'd0;
         endcase
     end
 

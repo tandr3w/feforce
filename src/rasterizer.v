@@ -43,20 +43,20 @@ module rasterizer (
     output write_enable, // should we actually write to this pixel?
     output done // signal to tell the render controller that we are done rasterizing this triangle
 );
-
     parameter IDLE = 2'b00; // Ready to accept a new triangle
     parameter SETUP = 2'b01; // Setup bounding box and initial position
     parameter RASTER = 2'b10; // Rasterizing the triangle
     
-    parameter DIVIDER_CYCLES = 8;
+    parameter DIVIDER_CYCLES = 8; // number of cycles it takes to go from divider input to output (configured in ip)
 
+    // direction of diffuse lighting
     parameter signed [15:0] LIGHT_X = 10084; // signed Q1.14
     parameter signed [15:0] LIGHT_Y = 0;
     parameter signed [15:0] LIGHT_Z = -4000;
 
+    // default ambient light applied to every pixel, to avoid pixels being completely black
     parameter [15:0] LIGHT_AMBIENT = 1000;
 
-    
     reg [2:0] divider_counter; // counts how many cycles the divider has been running for
 
     reg [1:0] state;
@@ -72,12 +72,6 @@ module rasterizer (
     wire signed [25:0] t_area_recip; // signed fixed point 1.24
     wire [20:0] remain;
 
-    wire [8:0] min_x_raw, max_x_raw;
-    wire [7:0] min_y_raw, max_y_raw;
-    wire [8:0] min_x, max_x;
-    wire [7:0] min_y, max_y;
-    wire valid; // Is this triangle actually valid and on the screen?)
-
     reg [8:0] curr_x;
     reg [7:0] curr_y;
 
@@ -88,6 +82,12 @@ module rasterizer (
     reg valid_d1;
     reg done_d0;
     reg done_d1;
+
+    wire [8:0] min_x_raw, max_x_raw;
+    wire [7:0] min_y_raw, max_y_raw;
+    wire [8:0] min_x, max_x;
+    wire [7:0] min_y, max_y;
+    wire valid; // Is this triangle actually valid and on the screen?)
 
     assign min_x_raw = (x0 < x1) ? ((x0 < x2) ? x0 : x2) : ((x1 < x2) ? x1 : x2);
     assign min_y_raw = (y0 < y1) ? ((y0 < y2) ? y0 : y2) : ((y1 < y2) ? y1 : y2);
@@ -294,10 +294,6 @@ module rasterizer (
                         y0 <= y0_in;
                         y1 <= y1_in;
                         y2 <= y2_in;
-
-                        // color0 <= color0_in;
-                        // color1 <= color1_in;
-                        // color2 <= color2_in;
 
                         normal_x <= normal_x_in;
                         normal_y <= normal_y_in;
