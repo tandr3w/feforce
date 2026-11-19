@@ -49,6 +49,14 @@ module rasterizer (
     parameter RASTER = 2'b10; // Rasterizing the triangle
     
     parameter DIVIDER_CYCLES = 8;
+
+    parameter signed [15:0] LIGHT_X = 10084; // signed Q1.14
+    parameter signed [15:0] LIGHT_Y = 0;
+    parameter signed [15:0] LIGHT_Z = -4000;
+
+    parameter [15:0] LIGHT_AMBIENT = 1000;
+
+    
     reg [2:0] divider_counter; // counts how many cycles the divider has been running for
 
     reg [1:0] state;
@@ -72,6 +80,13 @@ module rasterizer (
 
     reg [8:0] curr_x;
     reg [7:0] curr_y;
+
+    // delay the output by 1 cycle
+    reg [8:0] x_d1;
+    reg [7:0] y_d1;
+    reg [15:0] depth_d1;
+    reg valid_d1;
+    reg done_d0;
 
     assign min_x_raw = (x0 < x1) ? ((x0 < x2) ? x0 : x2) : ((x1 < x2) ? x1 : x2);
     assign min_y_raw = (y0 < y1) ? ((y0 < y2) ? y0 : y2) : ((y1 < y2) ? y1 : y2);
@@ -122,19 +137,11 @@ module rasterizer (
         .edge_func(edge2)
     );
 
-
-    // All edge functions need to be the same sign for the pixel to be inside the triangle
-    assign inside = (edge0 >= 0) && (edge1 >= 0) && (edge2 >= 0)
-                    || (edge0 <= 0) && (edge1 <= 0) && (edge2 <= 0);
-
-    assign write_x = curr_x;
-    assign write_y = curr_y;
-
-    assign valid = (min_x <= max_x) && (min_y <= max_y) && (t_area > 0);
-
-    // color interpolation based on https://codeplea.com/triangular-interpolation
+    // divider to get reciprocal of area for barycentric coordinates
+    // barycentric coordinates = area(BCP) / area(ABC) for a point P (areas should be unsigned)
+    // https://codeplea.com/triangular-interpolation
     // https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle//barycentric-coordinates.html
-    // barycentric coordinates = area(BCP) / area(ABC) for a point P (areas are unsigned)
+
 
     divider div (
         .clock(clk),
@@ -144,54 +151,61 @@ module rasterizer (
         .remain(remain)
     );
 
-    // wire [4:0] redout, blueout;
-    // wire [5:0] greenout;
+    // All edge functions need to be the same sign for the pixel to be inside the triangle
+    assign inside = (edge0 >= 0) && (edge1 >= 0) && (edge2 >= 0)
+                    || (edge0 <= 0) && (edge1 <= 0) && (edge2 <= 0);
 
-    // // use signed values because the sign of the edge function will cancel out the sign of the t_area_recip if it is negative
-    // // so we don't have to add any extra logic
-    // wire signed [28:0] red_sum, blue_sum;
-    // wire signed [29:0] green_sum;
-    // wire signed [54:0] red_scaled, blue_scaled;
-    // wire signed [55:0] green_scaled;
+    assign valid = (min_x <= max_x) && (min_y <= max_y) && (t_area > 0);
 
-    // assign red_sum = edge1 * $signed({1'b0, color0[15:11]}) + 
-    //                  edge2 * $signed({1'b0, color1[15:11]}) + 
-    //                  edge0 * $signed({1'b0, color2[15:11]});
+    // textures (should probably move this stuff to a new module)
+    // affine textures: just interpolate uv coords
+    // https://gabrielgambetta.com/computer-graphics-from-scratch/14-textures.html
+    // https://m.youtube.com/watch?t=1747&v=nBzCS-Y0FcY&feature=youtu.be
 
-    // assign green_sum = edge1 * $signed({1'b0, color0[10:5]}) +
-    //                    edge2 * $signed({1'b0, color1[10:5]}) + 
-    //                    edge0 * $signed({1'b0, color2[10:5]});
+    wire signed [29:0] u_sum, v_sum;
+    wire signed [55:0] u_scaled, v_scaled;
+    wire [5:0] u_coord, v_coord;
 
-    // assign blue_sum = edge1 * $signed({1'b0, color0[4:0]}) +
-    //                   edge2 * $signed({1'b0, color1[4:0]}) + 
-    //                   edge0 * $signed({1'b0, color2[4:0]});
+    assign u_sum = edge1 * $signed({1'b0, u0}) +
+                edge2 * $signed({1'b0, u1}) +
+                edge0 * $signed({1'b0, u2});
 
-    // assign red_scaled = red_sum * t_area_recip;
-    // assign green_scaled = green_sum * t_area_recip;
-    // assign blue_scaled = blue_sum * t_area_recip;
+    assign v_sum = edge1 * $signed({1'b0, v0}) +
+                edge2 * $signed({1'b0, v1}) +
+                edge0 * $signed({1'b0, v2});
 
-    // assign redout = red_scaled >> 24;
-    // assign greenout = green_scaled >> 24;
-    // assign blueout = blue_scaled >> 24;
-    
-    // textures (should probably move this stuff to a new momdule)
+    assign u_scaled = u_sum * t_area_recip;
+    assign v_scaled = v_sum * t_area_recip;
+
+    assign u_coord = u_scaled >>> 24;
+    assign v_coord = v_scaled >>> 24;
+
+    wire [15:0] texture_color;
+
+    texture_rom texture (
+        .address({v_coord, u_coord}), // 64 * v_coord + u_coord
+        .clock(clk),
+        .q(texture_color)
+    );
 
     // lighting
     // defines 1 directional light source
-    parameter signed [15:0] LIGHT_X = 0; // signed Q1.14
-    parameter signed [15:0] LIGHT_Y = 0;
-    parameter signed [15:0] LIGHT_Z = -16384;
+    // should add up to 16384 so brightness ranges from 0 to 1
+    // brightness multiplier is just dot product of normal and light source
 
     wire signed [31:0] brightness_sum; // intermediate product
     wire signed [15:0] brightness_raw;
+    wire signed [15:0] brightness_directional;
+
     wire [15:0] brightness;
 
     assign brightness_sum = (normal_x * LIGHT_X) + (normal_y * LIGHT_Y) + (normal_z * LIGHT_Z);
 
     assign brightness_raw = brightness_sum >> 14;
 
-    // clamp the brightness between 0 and 1 to ensure colors stay in the valid range
-    assign brightness = (brightness_raw < 0) ? 0 : (brightness_raw > 16384) ? 16384 : brightness_raw;
+    // clamp the brightness between 0 and 1 to ensure colors stay in the valid range, and add ambient light
+    assign brightness_directional = ((brightness_raw < 0) ? 0 : brightness_raw) + LIGHT_AMBIENT; // make sure above 0
+    assign brightness = (brightness_directional > 16384) ? 16384 : brightness_directional; // clamp to 1.0
 
     wire [31:0] red_product, green_product, blue_product; // intermediate variables
 
@@ -199,16 +213,17 @@ module rasterizer (
     wire [5:0] green_out;
 
     // change to match the actual colors later
-    assign red_product = 5'h1F * brightness;
-    assign green_product = 6'h00 * brightness;
-    assign blue_product = 5'h00 * brightness;
+    // assign red_product = 5'h1F * brightness;
+    // assign green_product = 6'h00 * brightness;
+    // assign blue_product = 5'h00 * brightness;
+    assign red_product = texture_color[15:11] * brightness;
+    assign green_product = texture_color[10:5] * brightness;
+    assign blue_product = texture_color[4:0] * brightness;
 
     // correct for q1.14
     assign red_out = red_product >> 14;
     assign green_out = green_product >> 14;
     assign blue_out = blue_product >> 14;
-
-    assign write_color = {red_out, green_out, blue_out};
 
     // depth interpolation using barycentric coordinates
     wire signed [39:0] depth_sum;
@@ -225,46 +240,55 @@ module rasterizer (
 
     wire [15:0] stored_depth;
 
-    reg [8:0] curr_x_next;
-    reg [7:0] curr_y_next;
-
-    assign write_enable = (state == RASTER) && inside && (depth_out > stored_depth);
-
-    always @(*) begin
-        if (state == SETUP) begin
-            curr_x_next = min_x;
-            curr_y_next = min_y;
-        end
-        else if (curr_x < max_x) begin
-            curr_x_next = curr_x + 1;
-            curr_y_next = curr_y;
-        end else if (curr_y < max_y) begin
-            curr_x_next = min_x;
-            curr_y_next = curr_y + 1;
-        end else begin
-            curr_x_next = 0;
-            curr_y_next = 0;
-        end
-    end
+    wire write_enable_d1;
+    assign write_enable_d1 = valid_d1 && (depth_d1 > stored_depth);
 
     depthbuffer_ram depth_buffer(
         .clock(clk),
-        .rdaddress(curr_y_next * 17'd320 + curr_x_next),
-        .wraddress(clear ? clear_addr : curr_y * 17'd320 + curr_x),
-        .data(clear ? 16'b0 : depth_out),
-        .wren(clear | write_enable),
+        .rdaddress(curr_y * 17'd320 + curr_x),
+        .wraddress(clear ? clear_addr : y_d1 * 17'd320 + x_d1),
+        .data(clear ? 16'b0 : depth_d1),
+        .wren(clear | write_enable_d1),
         .q(stored_depth)
     );
 
+    assign write_color = {red_out, green_out, blue_out};
+    assign write_x = x_d1;
+    assign write_y = y_d1;
+    assign write_enable = write_enable_d1;
+    assign done = done_d1;
+
+    // pipeline logic
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            x_d1 <= 0;
+            y_d1 <= 0;
+            depth_d1 <= 0;
+            valid_d1 <= 0;
+            done_d0 <= 0;
+            done_d1 <= 0;
+        end
+        else begin
+            // stored_depth and texture_color are delayed by 1 cycle, which we need to set the write_color and write_enable
+            // so, we track the x, y, depth, and valid signals for the previous cycle and use those for the output instead
+            // so it corresponds with the delayed write_color and write_enable.
+            x_d1 <= curr_x;
+            y_d1 <= curr_y;
+            depth_d1 <= depth_out;
+            valid_d1 <= (state == RASTER) && !done_d0 && inside;
+            done_d1 <= done_d0;
+            done_d0 <= 0;
+        end
+    end
+
+    // fsm logic
     always @(posedge clk or posedge rst) begin
         if (rst) begin
             state <= IDLE;
-            done <= 0;
             divider_counter <= 0;
         end else begin
             case (state)
                 IDLE: begin
-                    done <= 0;
                     if (start) begin
                         // Store triangle in a register so we don't need to worry about inputs changing
                         x0 <= x0_in;
@@ -301,7 +325,7 @@ module rasterizer (
                 SETUP: begin
                     if (!valid) begin
                         // Skip this triangle
-                        done <= 1;
+                        done_d0 <= 1;
                         state <= IDLE;
                     end else begin
                         divider_counter <= divider_counter + 1;
@@ -321,8 +345,12 @@ module rasterizer (
                         curr_x <= min_x;
                         curr_y <= curr_y + 1;
                     end else begin
-                        state <= IDLE; // Done all pixels in bounding box, go back to idle
-                        done <= 1;
+                        if (done_d0) begin
+                            state <= IDLE; // Done all pixels in bounding box, go back to idle
+                        end
+                        else begin 
+                            done_d0 <= 1;
+                        end
                     end
                 end
             endcase

@@ -42,13 +42,14 @@ ADDRESS_RADIX=UNS;
 DATA_RADIX=HEX;
 CONTENT BEGIN
 """
-
-for i, (x, y, z) in enumerate(verts):
-    out += f"    {i} : {q88(x):04X}{q88(y):04X}{q88(z):04X};\n"
+with open("../sim/vertices.hex", "w") as f:
+    for i, (x, y, z) in enumerate(verts):
+        out += f"    {i} : {q88(x):04X}{q88(y):04X}{q88(z):04X};\n"
+        f.write(f"{q88(x):04X}{q88(y):04X}{q88(z):04X}\n")
 
 out += f"    [{len(verts)}..255] : 0;\nEND;\n"
 
-open("vertices.mif", "w").write(out)
+open("../vertices.mif", "w").write(out)
 
 
 # triangles.mif
@@ -67,67 +68,69 @@ ADDRESS_RADIX=UNS;
 DATA_RADIX=HEX;
 CONTENT BEGIN
 """
+with open("../sim/triangles.hex", "w") as f:
 
-for n, tri in enumerate(tris):
-    (i0, t0), (i1, t1), (i2, t2) = tri
+    for n, tri in enumerate(tris):
+        (i0, t0), (i1, t1), (i2, t2) = tri
 
-    a = verts[i0]
-    b = verts[i1]
-    c = verts[i2]
+        a = verts[i0]
+        b = verts[i1]
+        c = verts[i2]
 
-    # face normal = (B-A) x (C-A)
-    ax, ay, az = b[0]-a[0], b[1]-a[1], b[2]-a[2]
-    bx, by, bz = c[0]-a[0], c[1]-a[1], c[2]-a[2]
+        # face normal = (B-A) x (C-A)
+        ax, ay, az = b[0]-a[0], b[1]-a[1], b[2]-a[2]
+        bx, by, bz = c[0]-a[0], c[1]-a[1], c[2]-a[2]
 
-    nx = ay*bz - az*by
-    ny = az*bx - ax*bz
-    nz = ax*by - ay*bx
+        nx = ay*bz - az*by
+        ny = az*bx - ax*bz
+        nz = ax*by - ay*bx
 
-    length = math.sqrt(nx*nx + ny*ny + nz*nz)
+        length = math.sqrt(nx*nx + ny*ny + nz*nz)
 
-    nx /= length
-    ny /= length
-    nz /= length
+        nx /= length
+        ny /= length
+        nz /= length
 
-    # convert obj uv from 0-1 to texture coordinate from 0-64
-    uv = []
+        # convert obj uv from 0-1 to texture coordinate from 0-64
+        uv = []
 
-    for t in (t0, t1, t2):
-        u, v = uvs[t]
-        
-        u = round(u * 63)
-        v = round((1-v) * 63)
+        for t in (t0, t1, t2):
+            u, v = uvs[t]
 
-        u = max(0, min(63, u))
-        v = max(0, min(63, v))
+            u = round(u * 63)
+            v = round((1-v) * 63)
 
-        uv.append((u, v))
+            u = max(0, min(63, u))
+            v = max(0, min(63, v))
 
-    u0, v0 = uv[0]
-    u1, v1 = uv[1]
-    u2, v2 = uv[2]
+            uv.append((u, v))
 
-    value = q114(nx)
-    value = (value << 16) | q114(ny)
-    value = (value << 16) | q114(nz)
+        u0, v0 = uv[0]
+        u1, v1 = uv[1]
+        u2, v2 = uv[2]
 
-    value = (value << 6) | u0
-    value = (value << 6) | v0
-    value = (value << 6) | u1
-    value = (value << 6) | v1
-    value = (value << 6) | u2
-    value = (value << 6) | v2
+        value = q114(nx)
+        value = (value << 16) | q114(ny)
+        value = (value << 16) | q114(nz)
 
-    value = (value << 8) | i0
-    value = (value << 8) | i1
-    value = (value << 8) | i2
+        value = (value << 6) | u0
+        value = (value << 6) | v0
+        value = (value << 6) | u1
+        value = (value << 6) | v1
+        value = (value << 6) | u2
+        value = (value << 6) | v2
 
-    out += f"    {n} : {value:027X};\n"
+        value = (value << 8) | i0
+        value = (value << 8) | i1
+        value = (value << 8) | i2
+
+        out += f"    {n} : {value:027X};\n"
+        f.write(f"{value:027X}\n")
 
 # zero = end-of-model marker like you already use
 out += f"    [{len(tris)}..255] : 0;\nEND;\n"
 
-open("triangles.mif", "w").write(out)
+open("../triangles.mif", "w").write(out)
 
 print(len(verts), "vertices")
 print(len(tris), "triangles")
