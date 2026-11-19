@@ -19,7 +19,7 @@ module render_controller (
 
     reg [2:0] state;
 
-    reg [7:0] curr_triangle;
+    reg [11:0] curr_triangle;
 
     wire signed [15:0] x0, y0, z0, x1, y1, z1, x2, y2, z2;
     wire [5:0] u0, u1, u2, v0, v1, v2;

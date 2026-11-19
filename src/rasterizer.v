@@ -41,7 +41,7 @@ module rasterizer (
     output [7:0] write_y,
     output [15:0] write_color,
     output write_enable, // should we actually write to this pixel?
-    output reg done // signal to tell the render controller that we are done rasterizing this triangle
+    output done // signal to tell the render controller that we are done rasterizing this triangle
 );
 
     parameter IDLE = 2'b00; // Ready to accept a new triangle
@@ -84,9 +84,10 @@ module rasterizer (
     // delay the output by 1 cycle
     reg [8:0] x_d1;
     reg [7:0] y_d1;
-    reg [15:0] depth_d1;
+    reg [9:0] depth_d1;
     reg valid_d1;
     reg done_d0;
+    reg done_d1;
 
     assign min_x_raw = (x0 < x1) ? ((x0 < x2) ? x0 : x2) : ((x1 < x2) ? x1 : x2);
     assign min_y_raw = (y0 < y1) ? ((y0 < y2) ? y0 : y2) : ((y1 < y2) ? y1 : y2);
@@ -238,7 +239,7 @@ module rasterizer (
 
     assign depth_out = depth_scaled >> 24;
 
-    wire [15:0] stored_depth;
+    wire [9:0] stored_depth;
 
     wire write_enable_d1;
     assign write_enable_d1 = valid_d1 && (depth_d1 > stored_depth);
@@ -247,7 +248,7 @@ module rasterizer (
         .clock(clk),
         .rdaddress(curr_y * 17'd320 + curr_x),
         .wraddress(clear ? clear_addr : y_d1 * 17'd320 + x_d1),
-        .data(clear ? 16'b0 : depth_d1),
+        .data(clear ? 10'b0 : depth_d1),
         .wren(clear | write_enable_d1),
         .q(stored_depth)
     );
@@ -265,7 +266,6 @@ module rasterizer (
             y_d1 <= 0;
             depth_d1 <= 0;
             valid_d1 <= 0;
-            done_d0 <= 0;
             done_d1 <= 0;
         end
         else begin
@@ -274,10 +274,9 @@ module rasterizer (
             // so it corresponds with the delayed write_color and write_enable.
             x_d1 <= curr_x;
             y_d1 <= curr_y;
-            depth_d1 <= depth_out;
+            depth_d1 <= depth_out[9:0];
             valid_d1 <= (state == RASTER) && !done_d0 && inside;
             done_d1 <= done_d0;
-            done_d0 <= 0;
         end
     end
 
@@ -286,9 +285,11 @@ module rasterizer (
         if (rst) begin
             state <= IDLE;
             divider_counter <= 0;
+            done_d0 <= 0;
         end else begin
             case (state)
                 IDLE: begin
+                    done_d0 <= 0;
                     if (start) begin
                         // Store triangle in a register so we don't need to worry about inputs changing
                         x0 <= x0_in;
@@ -346,6 +347,7 @@ module rasterizer (
                         curr_y <= curr_y + 1;
                     end else begin
                         if (done_d0) begin
+                            done_d0 <= 0;
                             state <= IDLE; // Done all pixels in bounding box, go back to idle
                         end
                         else begin 

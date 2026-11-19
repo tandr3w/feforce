@@ -2,7 +2,7 @@ module triangle_loader (
     input clk,
     input rst,
     input start,
-    input [7:0] triangle_number,
+    input [11:0] triangle_number,
 
     output reg signed [15:0] x0, y0, z0,
     output reg signed [15:0] x1, y1, z1,
@@ -14,9 +14,9 @@ module triangle_loader (
     output is_final, // marks if the input is 0, so we should stop reading
     output reg valid // marks if the triangle is loaded and ready to be used
 );
-    wire [107:0] triangle_data;
+    wire [119:0] triangle_data;
 
-    reg [7:0] vertex_address;
+    reg [11:0] vertex_address;
     wire [47:0] vertex_data;
 
     // ROM takes 1 cycle to read, so we need to wait 1 cycle after setting the address before saving the data
@@ -49,10 +49,10 @@ module triangle_loader (
     always @(*) begin
         case (state)
             // When vertex_address is set, the vertex_data will update in the next cycle
-            LOAD_TRI: vertex_address = triangle_data[23:16]; // start a request for vertex 0 data
-            LOAD_V0:  vertex_address = triangle_data[15:8];  // start a request for vertex 1 data
-            LOAD_V1:  vertex_address = triangle_data[7:0];   // start a request for vertex 2 data
-            default:  vertex_address = 8'd0;
+            LOAD_TRI: vertex_address = triangle_data[35:24]; // start a request for vertex 0 data
+            LOAD_V0:  vertex_address = triangle_data[23:12];  // start a request for vertex 1 data
+            LOAD_V1:  vertex_address = triangle_data[11:0];   // start a request for vertex 2 data
+            default:  vertex_address = 12'd0;
         endcase
     end
 
@@ -74,15 +74,16 @@ module triangle_loader (
                         state <= IDLE;
                     end
                     else begin
-                        normal_x <= triangle_data[107:92];
-                        normal_y <= triangle_data[91:76];
-                        normal_z <= triangle_data[75:60];
-                        u0 <= triangle_data[59:54];
-                        v0 <= triangle_data[53:48];
-                        u1 <= triangle_data[47:42];
-                        v1 <= triangle_data[41:36];
-                        u2 <= triangle_data[35:30];
-                        v2 <= triangle_data[29:24];
+                        normal_x <= triangle_data[119:104];
+                        normal_y <= triangle_data[103:88];
+                        normal_z <= triangle_data[87:72];
+
+                        u0 <= triangle_data[71:66];
+                        v0 <= triangle_data[65:60];
+                        u1 <= triangle_data[59:54];
+                        v1 <= triangle_data[53:48];
+                        u2 <= triangle_data[47:42];
+                        v2 <= triangle_data[41:36];
                         state <= LOAD_V0;
                     end
                 end

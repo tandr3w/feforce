@@ -41,11 +41,11 @@ module depthbuffer_ram (
 	q);
 
 	input	  clock;
-	input	[15:0]  data;
+	input	[9:0]  data;
 	input	[16:0]  rdaddress;
 	input	[16:0]  wraddress;
 	input	  wren;
-	output	[15:0]  q;
+	output	[9:0]  q;
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_off
 `endif
@@ -90,7 +90,7 @@ endmodule
 // Retrieval info: PRIVATE: JTAG_ENABLED NUMERIC "0"
 // Retrieval info: PRIVATE: JTAG_ID STRING "NONE"
 // Retrieval info: PRIVATE: MAXIMUM_DEPTH NUMERIC "0"
-// Retrieval info: PRIVATE: MEMSIZE NUMERIC "1228800"
+// Retrieval info: PRIVATE: MEMSIZE NUMERIC "768000"
 // Retrieval info: PRIVATE: MEM_IN_BITS NUMERIC "0"
 // Retrieval info: PRIVATE: MIFfilename STRING "depth_buffer.mif"
 // Retrieval info: PRIVATE: OPERATION_MODE NUMERIC "2"
@@ -110,10 +110,10 @@ endmodule
 // Retrieval info: PRIVATE: USE_DIFF_CLKEN NUMERIC "0"
 // Retrieval info: PRIVATE: UseDPRAM NUMERIC "1"
 // Retrieval info: PRIVATE: VarWidth NUMERIC "0"
-// Retrieval info: PRIVATE: WIDTH_READ_A NUMERIC "16"
-// Retrieval info: PRIVATE: WIDTH_READ_B NUMERIC "16"
-// Retrieval info: PRIVATE: WIDTH_WRITE_A NUMERIC "16"
-// Retrieval info: PRIVATE: WIDTH_WRITE_B NUMERIC "16"
+// Retrieval info: PRIVATE: WIDTH_READ_A NUMERIC "10"
+// Retrieval info: PRIVATE: WIDTH_READ_B NUMERIC "10"
+// Retrieval info: PRIVATE: WIDTH_WRITE_A NUMERIC "10"
+// Retrieval info: PRIVATE: WIDTH_WRITE_B NUMERIC "10"
 // Retrieval info: PRIVATE: WRADDR_ACLR_B NUMERIC "0"
 // Retrieval info: PRIVATE: WRADDR_REG_B NUMERIC "0"
 // Retrieval info: PRIVATE: WRCTRL_ACLR_B NUMERIC "0"
@@ -137,21 +137,21 @@ endmodule
 // Retrieval info: CONSTANT: READ_DURING_WRITE_MODE_MIXED_PORTS STRING "DONT_CARE"
 // Retrieval info: CONSTANT: WIDTHAD_A NUMERIC "17"
 // Retrieval info: CONSTANT: WIDTHAD_B NUMERIC "17"
-// Retrieval info: CONSTANT: WIDTH_A NUMERIC "16"
-// Retrieval info: CONSTANT: WIDTH_B NUMERIC "16"
+// Retrieval info: CONSTANT: WIDTH_A NUMERIC "10"
+// Retrieval info: CONSTANT: WIDTH_B NUMERIC "10"
 // Retrieval info: CONSTANT: WIDTH_BYTEENA_A NUMERIC "1"
 // Retrieval info: USED_PORT: clock 0 0 0 0 INPUT VCC "clock"
-// Retrieval info: USED_PORT: data 0 0 16 0 INPUT NODEFVAL "data[15..0]"
-// Retrieval info: USED_PORT: q 0 0 16 0 OUTPUT NODEFVAL "q[15..0]"
+// Retrieval info: USED_PORT: data 0 0 10 0 INPUT NODEFVAL "data[9..0]"
+// Retrieval info: USED_PORT: q 0 0 10 0 OUTPUT NODEFVAL "q[9..0]"
 // Retrieval info: USED_PORT: rdaddress 0 0 17 0 INPUT NODEFVAL "rdaddress[16..0]"
 // Retrieval info: USED_PORT: wraddress 0 0 17 0 INPUT NODEFVAL "wraddress[16..0]"
 // Retrieval info: USED_PORT: wren 0 0 0 0 INPUT GND "wren"
 // Retrieval info: CONNECT: @address_a 0 0 17 0 wraddress 0 0 17 0
 // Retrieval info: CONNECT: @address_b 0 0 17 0 rdaddress 0 0 17 0
 // Retrieval info: CONNECT: @clock0 0 0 0 0 clock 0 0 0 0
-// Retrieval info: CONNECT: @data_a 0 0 16 0 data 0 0 16 0
+// Retrieval info: CONNECT: @data_a 0 0 10 0 data 0 0 10 0
 // Retrieval info: CONNECT: @wren_a 0 0 0 0 wren 0 0 0 0
-// Retrieval info: CONNECT: q 0 0 16 0 @q_b 0 0 16 0
+// Retrieval info: CONNECT: q 0 0 10 0 @q_b 0 0 10 0
 // Retrieval info: GEN_FILE: TYPE_NORMAL depthbuffer_ram.v TRUE
 // Retrieval info: GEN_FILE: TYPE_NORMAL depthbuffer_ram.inc FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL depthbuffer_ram.cmp FALSE

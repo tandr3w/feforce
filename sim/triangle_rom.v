@@ -1,12 +1,12 @@
 // Example memory for a cube for DESim testing
 
 module triangle_rom (
-    input [7:0] address,
+    input [11:0] address,
     input clock,
-    output reg [107:0] q
+    output reg [119:0] q
 );
 
-    reg [107:0] memory [0:4095];
+    reg [119:0] memory [0:4095];
     initial begin
         $readmemh("triangles.hex", memory);
     end
