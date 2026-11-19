@@ -26,7 +26,8 @@ endmodule
 module rasterizer (
     input clk,
     input rst,
-    input [15:0] color0_in, color1_in, color2_in,
+    input signed [15:0] normal_x_in, normal_y_in, normal_z_in,
+    input [5:0] u0_in, u1_in, u2_in, v0_in, v1_in, v2_in,
     input [8:0] x0_in, x1_in, x2_in,
     input [7:0] y0_in, y1_in, y2_in,
     input [15:0] depth_recip0, depth_recip1, depth_recip2, // w out
@@ -55,7 +56,11 @@ module rasterizer (
     reg [8:0] x0, x1, x2;
     reg [7:0] y0, y1, y2;
     reg [15:0] depth0, depth1, depth2;
-    reg [15:0] color0, color1, color2;
+
+    reg signed [15:0] normal_x, normal_y, normal_z;
+    reg [5:0] u0, u1, u2, v0, v1, v2;
+
+    // reg [15:0] color0, color1, color2;
     wire signed [25:0] t_area_recip; // signed fixed point 1.24
     wire [20:0] remain;
 
@@ -124,9 +129,8 @@ module rasterizer (
 
     assign write_x = curr_x;
     assign write_y = curr_y;
-    assign write_enable = (state == RASTER) && inside && (depth_out > stored_depth);
 
-    assign valid = (min_x <= max_x) && (min_y <= max_y) && (t_area < 0);
+    assign valid = (min_x <= max_x) && (min_y <= max_y) && (t_area > 0);
 
     // color interpolation based on https://codeplea.com/triangular-interpolation
     // https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle//barycentric-coordinates.html
@@ -140,39 +144,73 @@ module rasterizer (
         .remain(remain)
     );
 
-    wire [4:0] redout, blueout;
-    wire [5:0] greenout;
+    // wire [4:0] redout, blueout;
+    // wire [5:0] greenout;
 
-    // use signed values because the sign of the edge function will cancel out the sign of the t_area_recip if it is negative
-    // so we don't have to add any extra logic
-    wire signed [28:0] red_sum, blue_sum;
-    wire signed [29:0] green_sum;
-    wire signed [54:0] red_scaled, blue_scaled;
-    wire signed [55:0] green_scaled;
+    // // use signed values because the sign of the edge function will cancel out the sign of the t_area_recip if it is negative
+    // // so we don't have to add any extra logic
+    // wire signed [28:0] red_sum, blue_sum;
+    // wire signed [29:0] green_sum;
+    // wire signed [54:0] red_scaled, blue_scaled;
+    // wire signed [55:0] green_scaled;
 
-    assign red_sum = edge1 * $signed({1'b0, color0[15:11]}) + 
-                     edge2 * $signed({1'b0, color1[15:11]}) + 
-                     edge0 * $signed({1'b0, color2[15:11]});
+    // assign red_sum = edge1 * $signed({1'b0, color0[15:11]}) + 
+    //                  edge2 * $signed({1'b0, color1[15:11]}) + 
+    //                  edge0 * $signed({1'b0, color2[15:11]});
 
-    assign green_sum = edge1 * $signed({1'b0, color0[10:5]}) +
-                       edge2 * $signed({1'b0, color1[10:5]}) + 
-                       edge0 * $signed({1'b0, color2[10:5]});
+    // assign green_sum = edge1 * $signed({1'b0, color0[10:5]}) +
+    //                    edge2 * $signed({1'b0, color1[10:5]}) + 
+    //                    edge0 * $signed({1'b0, color2[10:5]});
 
-    assign blue_sum = edge1 * $signed({1'b0, color0[4:0]}) +
-                      edge2 * $signed({1'b0, color1[4:0]}) + 
-                      edge0 * $signed({1'b0, color2[4:0]});
+    // assign blue_sum = edge1 * $signed({1'b0, color0[4:0]}) +
+    //                   edge2 * $signed({1'b0, color1[4:0]}) + 
+    //                   edge0 * $signed({1'b0, color2[4:0]});
 
-    assign red_scaled = red_sum * t_area_recip;
-    assign green_scaled = green_sum * t_area_recip;
-    assign blue_scaled = blue_sum * t_area_recip;
+    // assign red_scaled = red_sum * t_area_recip;
+    // assign green_scaled = green_sum * t_area_recip;
+    // assign blue_scaled = blue_sum * t_area_recip;
 
-    assign redout = red_scaled >> 24;
-    assign greenout = green_scaled >> 24;
-    assign blueout = blue_scaled >> 24;
+    // assign redout = red_scaled >> 24;
+    // assign greenout = green_scaled >> 24;
+    // assign blueout = blue_scaled >> 24;
     
-    assign write_color = {redout, greenout, blueout};
+    // textures (should probably move this stuff to a new momdule)
 
-    // depth interpolation using same method
+    // lighting
+    // defines 1 directional light source
+    parameter signed [15:0] LIGHT_X = 0; // signed Q1.14
+    parameter signed [15:0] LIGHT_Y = 0;
+    parameter signed [15:0] LIGHT_Z = -16384;
+
+    wire signed [31:0] brightness_sum; // intermediate product
+    wire signed [15:0] brightness_raw;
+    wire [15:0] brightness;
+
+    assign brightness_sum = (normal_x * LIGHT_X) + (normal_y * LIGHT_Y) + (normal_z * LIGHT_Z);
+
+    assign brightness_raw = brightness_sum >> 14;
+
+    // clamp the brightness between 0 and 1 to ensure colors stay in the valid range
+    assign brightness = (brightness_raw < 0) ? 0 : (brightness_raw > 16384) ? 16384 : brightness_raw;
+
+    wire [31:0] red_product, green_product, blue_product; // intermediate variables
+
+    wire [4:0] red_out, blue_out;
+    wire [5:0] green_out;
+
+    // change to match the actual colors later
+    assign red_product = 5'h1F * brightness;
+    assign green_product = 6'h00 * brightness;
+    assign blue_product = 5'h00 * brightness;
+
+    // correct for q1.14
+    assign red_out = red_product >> 14;
+    assign green_out = green_product >> 14;
+    assign blue_out = blue_product >> 14;
+
+    assign write_color = {red_out, green_out, blue_out};
+
+    // depth interpolation using barycentric coordinates
     wire signed [39:0] depth_sum;
     wire signed [65:0] depth_scaled;
     wire [15:0] depth_out;
@@ -189,6 +227,8 @@ module rasterizer (
 
     reg [8:0] curr_x_next;
     reg [7:0] curr_y_next;
+
+    assign write_enable = (state == RASTER) && inside && (depth_out > stored_depth);
 
     always @(*) begin
         if (state == SETUP) begin
@@ -211,7 +251,7 @@ module rasterizer (
         .clock(clk),
         .rdaddress(curr_y_next * 17'd320 + curr_x_next),
         .wraddress(clear ? clear_addr : curr_y * 17'd320 + curr_x),
-        .data(clear ? 0 : depth_out),
+        .data(clear ? 16'b0 : depth_out),
         .wren(clear | write_enable),
         .q(stored_depth)
     );
@@ -234,9 +274,20 @@ module rasterizer (
                         y1 <= y1_in;
                         y2 <= y2_in;
 
-                        color0 <= color0_in;
-                        color1 <= color1_in;
-                        color2 <= color2_in;
+                        // color0 <= color0_in;
+                        // color1 <= color1_in;
+                        // color2 <= color2_in;
+
+                        normal_x <= normal_x_in;
+                        normal_y <= normal_y_in;
+                        normal_z <= normal_z_in;
+
+                        u0 <= u0_in;
+                        u1 <= u1_in;
+                        u2 <= u2_in;
+                        v0 <= v0_in;
+                        v1 <= v1_in;
+                        v2 <= v2_in;
 
                         depth0 <= depth_recip0;
                         depth1 <= depth_recip1;

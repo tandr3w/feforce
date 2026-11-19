@@ -22,7 +22,8 @@ module render_controller (
     reg [7:0] curr_triangle;
 
     wire signed [15:0] x0, y0, z0, x1, y1, z1, x2, y2, z2;
-    wire [15:0] color0, color1, color2;
+    wire [5:0] u0, u1, u2, v0, v1, v2;
+    wire [15:0] normal_x, normal_y, normal_z;
     wire loader_valid, raster_done;
     reg loader_start, raster_start;
     wire is_final; // are we at the last triangle?
@@ -37,7 +38,10 @@ module render_controller (
         .x0(x0), .y0(y0), .z0(z0),
         .x1(x1), .y1(y1), .z1(z1),
         .x2(x2), .y2(y2), .z2(z2),
-        .color0(color0), .color1(color1), .color2(color2),
+
+        .normal_x(normal_x), .normal_y(normal_y), .normal_z(normal_z),
+        .u0(u0), .u1(u1), .u2(u2),
+        .v0(v0), .v1(v1), .v2(v2),
 
         .valid(loader_valid)
     );
@@ -77,21 +81,23 @@ module render_controller (
     assign proj_product_y1 = (120 * y1_out);
     assign proj_product_y2 = (120 * y2_out);
 
+    // note that y is inverted because the VGA coordinate system has y increasing downwards
     assign projected_x0 = (proj_product_x0 >> 8) + 160;
-    assign projected_y0 = (proj_product_y0 >> 8) + 120;
     assign projected_x1 = (proj_product_x1 >> 8) + 160;
-    assign projected_y1 = (proj_product_y1 >> 8) + 120;
     assign projected_x2 = (proj_product_x2 >> 8) + 160;
-    assign projected_y2 = (proj_product_y2 >> 8) + 120;
+    assign projected_y0 = 120 - (proj_product_y0 >> 8);
+    assign projected_y1 = 120 - (proj_product_y1 >> 8);
+    assign projected_y2 = 120 - (proj_product_y2 >> 8);
 
     assign clear = (state == CLEAR);
 
     rasterizer raster (
         .clk(clk),
         .rst(rst),
-        .color0_in(color0),
-        .color1_in(color1),
-        .color2_in(color2),
+
+        .normal_x_in(normal_x), .normal_y_in(normal_y), .normal_z_in(normal_z),
+        .u0_in(u0), .u1_in(u1), .u2_in(u2),
+        .v0_in(v0), .v1_in(v1), .v2_in(v2),
 
         .x0_in(projected_x0),
         .y0_in(projected_y0),
