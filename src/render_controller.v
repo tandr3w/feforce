@@ -5,13 +5,17 @@ module render_controller (
     output [8:0] write_x,
     output [7:0] write_y,
     output [15:0] write_color,
-    output write_enable
+    output write_enable,
+
+    output clear,
+    output reg [16:0] clear_addr
 );
     parameter IDLE = 3'b000;
     parameter LOAD = 3'b001;
     parameter TRANSFORM = 3'b010;
     parameter RASTER = 3'b011;
-    parameter DONE   = 3'b100;
+    parameter CLEAR = 3'b100; 
+    parameter DONE = 3'b101;
 
     reg [2:0] state;
 
@@ -80,12 +84,7 @@ module render_controller (
     assign projected_x2 = (proj_product_x2 >> 8) + 160;
     assign projected_y2 = (proj_product_y2 >> 8) + 120;
 
-    // assign projected_x0 = (x0 >> 2) + 160;
-    // assign projected_y0 = (y0 >> 2) + 120;
-    // assign projected_x1 = (x1 >> 2) + 160;
-    // assign projected_y1 = (y1 >> 2) + 120;
-    // assign projected_x2 = (x2 >> 2) + 160;
-    // assign projected_y2 = (y2 >> 2) + 120;
+    assign clear = (state == CLEAR);
 
     rasterizer raster (
         .clk(clk),
@@ -113,17 +112,20 @@ module render_controller (
         .write_x(write_x),
         .write_y(write_y),
         .write_color(write_color),
-        .write_enable(write_enable)
+        .write_enable(write_enable),
+
+        .clear(clear),
+        .clear_addr(clear_addr)
     );
-
-
 
     always @(posedge clk or posedge rst) begin
         if (rst) begin
             curr_triangle <= 0;
             raster_start <= 0;
             loader_start <= 0;
-            state <= IDLE;
+            projector_start <= 0;
+            clear_addr <= 0;
+            state <= CLEAR;
         end else begin
             case (state)
                 IDLE: begin
@@ -134,7 +136,9 @@ module render_controller (
                 end
                 LOAD: begin
                     loader_start <= 0;
-                    if (loader_valid) begin
+                    if (is_final) begin
+                        state <= DONE;
+                    end else if (loader_valid) begin
                         state <= TRANSFORM;
                         projector_start <= 1;
                     end
@@ -149,19 +153,22 @@ module render_controller (
                 RASTER: begin
                     raster_start <= 0;
                     if (raster_done) begin
-                        if (!is_final) begin
-                            curr_triangle <= curr_triangle + 1; // start loading the next triangle
-                            loader_start <= 1;
-                            state <= LOAD; // Load next triangle
-                        end else begin
-                            state <= DONE; // Finish
-                        end
+                        curr_triangle <= curr_triangle + 1; // start loading the next triangle
+                        loader_start <= 1;
+                        state <= LOAD; // Load next triangle
+                    end
+                end
+                CLEAR: begin
+                    if (clear_addr < 17'd76799) begin
+                        clear_addr <= clear_addr + 1;
+                    end else begin
+                        clear_addr <= 0;
+                        state <= IDLE;
                     end
                 end
                 DONE: begin
                     loader_start <= 0;
                     raster_start <= 0;
-                    state <= IDLE;
                 end
             endcase
         end

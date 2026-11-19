@@ -8,11 +8,14 @@ module framebuffer (
     input [7:0] write_y,
     input [15:0] write_color,
     input write_enable,
+    input clear,
+    input [16:0] clear_addr,
 
     input [9:0] read_x,
     input [9:0] read_y,
     output [15:0] read_color
 );
+    parameter [15:0] BGCOLOR = 16'h0000; // black
 
     wire [16:0] write_address;
 
@@ -33,9 +36,9 @@ module framebuffer (
     framebuffer_ram memory (
         .rdclock   (clk_read),
         .wrclock   (clk_write),
-        .data      (write_color),
-        .wraddress (write_address),
-        .wren      (write_enable),
+        .data      (clear ? BGCOLOR : write_color),
+        .wraddress (clear ? clear_addr : write_address),
+        .wren      (clear | write_enable),
         .rdaddress (read_address),
         .q         (read_color)
     );

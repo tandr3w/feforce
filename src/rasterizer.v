@@ -33,6 +33,9 @@ module rasterizer (
 
     input start, // signal to tell the rasterizer to start rasterizing the current triangle
 
+    input clear,
+    input [16:0] clear_addr,
+
     output [8:0] write_x,
     output [7:0] write_y,
     output [15:0] write_color,
@@ -114,7 +117,6 @@ module rasterizer (
         .edge_func(edge2)
     );
 
-    wire depth_write_enable;
 
     // All edge functions need to be the same sign for the pixel to be inside the triangle
     assign inside = (edge0 >= 0) && (edge1 >= 0) && (edge2 >= 0)
@@ -122,7 +124,7 @@ module rasterizer (
 
     assign write_x = curr_x;
     assign write_y = curr_y;
-    assign write_enable = (state == RASTER) && inside && depth_write_enable;
+    assign write_enable = (state == RASTER) && inside && (depth_out > stored_depth);
 
     assign valid = (min_x <= max_x) && (min_y <= max_y) && (t_area < 0);
 
@@ -185,8 +187,6 @@ module rasterizer (
 
     wire [15:0] stored_depth;
 
-    assign depth_write_enable = (state == RASTER) && inside && (depth_out > stored_depth);
-
     reg [8:0] curr_x_next;
     reg [7:0] curr_y_next;
 
@@ -210,9 +210,9 @@ module rasterizer (
     depthbuffer_ram depth_buffer(
         .clock(clk),
         .rdaddress(curr_y_next * 17'd320 + curr_x_next),
-        .wraddress(curr_y * 17'd320 + curr_x),
-        .data(depth_out),
-        .wren(depth_write_enable),
+        .wraddress(clear ? clear_addr : curr_y * 17'd320 + curr_x),
+        .data(clear ? 0 : depth_out),
+        .wren(clear | write_enable),
         .q(stored_depth)
     );
 
