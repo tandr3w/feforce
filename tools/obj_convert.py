@@ -2,7 +2,7 @@
 
 import math
 
-OBJ = "assets/donut.obj"
+OBJ = "assets/monkey.obj"
 
 verts = []
 uvs = []
