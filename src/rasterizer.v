@@ -162,24 +162,55 @@ module rasterizer (
     // affine textures: just interpolate uv coords
     // https://gabrielgambetta.com/computer-graphics-from-scratch/14-textures.html
     // https://m.youtube.com/watch?t=1747&v=nBzCS-Y0FcY&feature=youtu.be
+    // for perspective correct textures, need to divide each coord by w, interpolate, then divide the interpolated value by 1/w
+    // we already have 1/w as an input so we just need to implement an extra rom to divide by 1/w --> need another pipeline cycle and rom going from 1/w to w
 
-    wire signed [29:0] u_sum, v_sum;
-    wire signed [55:0] u_scaled, v_scaled;
+    function [39:0] batery_scale;
+
+    endfunction
+
+    function [5:0] color_scale;
+        
+    endfunction
+
+    wire [21:0] uow0, uow1, uow2, vow0, vow1, vow2; // u over w, v over w
+
+    // todo make a function or something to make the intermediate products less messy
+
+    // depth recips are Q3.13
+    assign uow0 = (u0 * depth_recip0) >>> 13;
+    assign uow1 = (u1 * depth_recip1) >>> 13;
+    assign uow2 = (u2 * depth_recip2) >>> 13;
+
+    assign vow0 = (v0 * depth_recip0) >>> 13;
+    assign vow1 = (v1 * depth_recip1) >>> 13;
+    assign vow2 = (v2 * depth_recip2) >>> 13;
+
+    wire signed [43:0] uow_sum, vow_sum;
+
+    assign uow_sum = edge1 * $signed({1'b0, uow0}) +
+                     edge2 * $signed({1'b0, uow1}) +
+                     edge0 * $signed({1'b0, uow2});
+
+    assign vow_sum = edge1 * $signed({1'b0, vow0}) +
+                     edge2 * $signed({1'b0, vow1}) +
+                     edge0 * $signed({1'b0, vow2});
+
+    wire signed [69:0] uow_scaled, vow_scaled;
     wire [5:0] u_coord, v_coord;
 
-    assign u_sum = edge1 * $signed({1'b0, u0}) +
-                edge2 * $signed({1'b0, u1}) +
-                edge0 * $signed({1'b0, u2});
+    wire [15:0] interp_depth; // todo get this from lookup table by doing 1/(1/w), q8.8
+    // need to delay uow_scaled and vow_scaled by 1 cycle, and all the ouputs by 2 cycles in total
+    wire signed [85:0] u_scaled, v_scaled;
 
-    assign v_sum = edge1 * $signed({1'b0, v0}) +
-                edge2 * $signed({1'b0, v1}) +
-                edge0 * $signed({1'b0, v2});
+    assign uow_scaled = (uow_sum * t_area_recip) >>> 24;
+    assign vow_scaled = (vow_sum * t_area_recip) >>> 24;
 
-    assign u_scaled = u_sum * t_area_recip;
-    assign v_scaled = v_sum * t_area_recip;
+    assign u_scaled = uow_scaled * interp_depth;
+    assign v_scaled = vow_scaled * interp_depth;
 
-    assign u_coord = u_scaled >>> 24;
-    assign v_coord = v_scaled >>> 24;
+    assign u_coord = u_scaled >>> 8;
+    assign v_coord = v_scaled >>> 8;
 
     wire [15:0] texture_color;
 
