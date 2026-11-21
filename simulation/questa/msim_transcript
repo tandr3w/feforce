@@ -27,29 +27,29 @@
 # 
 # vlog  -work work +incdir+C:/Users/every/Documents/Programming/feforce/ip {C:/Users/every/Documents/Programming/feforce/ip/depth_rom.v}
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:06:00 on Nov 19,2026
+# Start time: 19:13:44 on Nov 20,2026
 # vlog -reportprogress 300 -work work "+incdir+C:/Users/every/Documents/Programming/feforce/ip" C:/Users/every/Documents/Programming/feforce/ip/depth_rom.v 
 # ** Note: (vlog-220) 'modelsim.ini' is used as the ini file.
 # -- Compiling module depth_rom
 # 
 # Top level modules:
 # 	depth_rom
-# End time: 15:06:01 on Nov 19,2026, Elapsed time: 0:00:01
+# End time: 19:13:44 on Nov 20,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog  -work work +incdir+C:/Users/every/Documents/Programming/feforce/src {C:/Users/every/Documents/Programming/feforce/src/vertexprojector.v}
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:06:01 on Nov 19,2026
+# Start time: 19:13:44 on Nov 20,2026
 # vlog -reportprogress 300 -work work "+incdir+C:/Users/every/Documents/Programming/feforce/src" C:/Users/every/Documents/Programming/feforce/src/vertexprojector.v 
 # ** Note: (vlog-220) 'modelsim.ini' is used as the ini file.
 # -- Compiling module vertex_projector
 # 
 # Top level modules:
 # 	vertex_projector
-# End time: 15:06:01 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:13:44 on Nov 20,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog  -work work +incdir+C:/Users/every/Documents/Programming/feforce/src {C:/Users/every/Documents/Programming/feforce/src/vga.v}
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:06:01 on Nov 19,2026
+# Start time: 19:13:44 on Nov 20,2026
 # vlog -reportprogress 300 -work work "+incdir+C:/Users/every/Documents/Programming/feforce/src" C:/Users/every/Documents/Programming/feforce/src/vga.v 
 # ** Note: (vlog-220) 'modelsim.ini' is used as the ini file.
 # -- Compiling module pixel_clock
@@ -58,44 +58,44 @@
 # Top level modules:
 # 	pixel_clock
 # 	display
-# End time: 15:06:01 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:13:44 on Nov 20,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog  -work work +incdir+C:/Users/every/Documents/Programming/feforce/src {C:/Users/every/Documents/Programming/feforce/src/triangle_loader.v}
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:06:01 on Nov 19,2026
+# Start time: 19:13:44 on Nov 20,2026
 # vlog -reportprogress 300 -work work "+incdir+C:/Users/every/Documents/Programming/feforce/src" C:/Users/every/Documents/Programming/feforce/src/triangle_loader.v 
 # ** Note: (vlog-220) 'modelsim.ini' is used as the ini file.
 # -- Compiling module triangle_loader
 # 
 # Top level modules:
 # 	triangle_loader
-# End time: 15:06:01 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:13:44 on Nov 20,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog  -work work +incdir+C:/Users/every/Documents/Programming/feforce/src {C:/Users/every/Documents/Programming/feforce/src/top.v}
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:06:01 on Nov 19,2026
+# Start time: 19:13:45 on Nov 20,2026
 # vlog -reportprogress 300 -work work "+incdir+C:/Users/every/Documents/Programming/feforce/src" C:/Users/every/Documents/Programming/feforce/src/top.v 
 # ** Note: (vlog-220) 'modelsim.ini' is used as the ini file.
 # -- Compiling module top
 # 
 # Top level modules:
 # 	top
-# End time: 15:06:01 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:13:45 on Nov 20,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog  -work work +incdir+C:/Users/every/Documents/Programming/feforce/src {C:/Users/every/Documents/Programming/feforce/src/render_controller.v}
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:06:02 on Nov 19,2026
+# Start time: 19:13:45 on Nov 20,2026
 # vlog -reportprogress 300 -work work "+incdir+C:/Users/every/Documents/Programming/feforce/src" C:/Users/every/Documents/Programming/feforce/src/render_controller.v 
 # ** Note: (vlog-220) 'modelsim.ini' is used as the ini file.
 # -- Compiling module render_controller
 # 
 # Top level modules:
 # 	render_controller
-# End time: 15:06:02 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:13:45 on Nov 20,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog  -work work +incdir+C:/Users/every/Documents/Programming/feforce/src {C:/Users/every/Documents/Programming/feforce/src/rasterizer.v}
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:06:02 on Nov 19,2026
+# Start time: 19:13:45 on Nov 20,2026
 # vlog -reportprogress 300 -work work "+incdir+C:/Users/every/Documents/Programming/feforce/src" C:/Users/every/Documents/Programming/feforce/src/rasterizer.v 
 # ** Note: (vlog-220) 'modelsim.ini' is used as the ini file.
 # -- Compiling module edge_function
@@ -103,93 +103,94 @@
 # 
 # Top level modules:
 # 	rasterizer
-# End time: 15:06:02 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:13:45 on Nov 20,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog  -work work +incdir+C:/Users/every/Documents/Programming/feforce/src {C:/Users/every/Documents/Programming/feforce/src/framebuffer.v}
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:06:02 on Nov 19,2026
+# Start time: 19:13:45 on Nov 20,2026
 # vlog -reportprogress 300 -work work "+incdir+C:/Users/every/Documents/Programming/feforce/src" C:/Users/every/Documents/Programming/feforce/src/framebuffer.v 
 # ** Note: (vlog-220) 'modelsim.ini' is used as the ini file.
 # -- Compiling module framebuffer
 # 
 # Top level modules:
 # 	framebuffer
-# End time: 15:06:02 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:13:45 on Nov 20,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog  -work work +incdir+C:/Users/every/Documents/Programming/feforce/ip {C:/Users/every/Documents/Programming/feforce/ip/vertex_rom.v}
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:06:02 on Nov 19,2026
+# Start time: 19:13:46 on Nov 20,2026
 # vlog -reportprogress 300 -work work "+incdir+C:/Users/every/Documents/Programming/feforce/ip" C:/Users/every/Documents/Programming/feforce/ip/vertex_rom.v 
 # ** Note: (vlog-220) 'modelsim.ini' is used as the ini file.
 # -- Compiling module vertex_rom
 # 
 # Top level modules:
 # 	vertex_rom
-# End time: 15:06:02 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:13:46 on Nov 20,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog  -work work +incdir+C:/Users/every/Documents/Programming/feforce/ip {C:/Users/every/Documents/Programming/feforce/ip/triangle_rom.v}
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:06:02 on Nov 19,2026
+# Start time: 19:13:46 on Nov 20,2026
 # vlog -reportprogress 300 -work work "+incdir+C:/Users/every/Documents/Programming/feforce/ip" C:/Users/every/Documents/Programming/feforce/ip/triangle_rom.v 
 # ** Note: (vlog-220) 'modelsim.ini' is used as the ini file.
 # -- Compiling module triangle_rom
 # 
 # Top level modules:
 # 	triangle_rom
-# End time: 15:06:03 on Nov 19,2026, Elapsed time: 0:00:01
+# End time: 19:13:46 on Nov 20,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog  -work work +incdir+C:/Users/every/Documents/Programming/feforce/ip {C:/Users/every/Documents/Programming/feforce/ip/framebuffer_ram.v}
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:06:03 on Nov 19,2026
+# Start time: 19:13:46 on Nov 20,2026
 # vlog -reportprogress 300 -work work "+incdir+C:/Users/every/Documents/Programming/feforce/ip" C:/Users/every/Documents/Programming/feforce/ip/framebuffer_ram.v 
 # ** Note: (vlog-220) 'modelsim.ini' is used as the ini file.
 # -- Compiling module framebuffer_ram
 # 
 # Top level modules:
 # 	framebuffer_ram
-# End time: 15:06:03 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:13:46 on Nov 20,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog  -work work +incdir+C:/Users/every/Documents/Programming/feforce/ip {C:/Users/every/Documents/Programming/feforce/ip/divider.v}
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:06:03 on Nov 19,2026
+# Start time: 19:13:46 on Nov 20,2026
 # vlog -reportprogress 300 -work work "+incdir+C:/Users/every/Documents/Programming/feforce/ip" C:/Users/every/Documents/Programming/feforce/ip/divider.v 
 # ** Note: (vlog-220) 'modelsim.ini' is used as the ini file.
 # -- Compiling module divider
 # 
 # Top level modules:
 # 	divider
-# End time: 15:06:03 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:13:46 on Nov 20,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog  -work work +incdir+C:/Users/every/Documents/Programming/feforce/ip {C:/Users/every/Documents/Programming/feforce/ip/depthbuffer_ram.v}
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:06:03 on Nov 19,2026
+# Start time: 19:13:46 on Nov 20,2026
 # vlog -reportprogress 300 -work work "+incdir+C:/Users/every/Documents/Programming/feforce/ip" C:/Users/every/Documents/Programming/feforce/ip/depthbuffer_ram.v 
 # ** Note: (vlog-220) 'modelsim.ini' is used as the ini file.
 # -- Compiling module depthbuffer_ram
 # 
 # Top level modules:
 # 	depthbuffer_ram
-# End time: 15:06:03 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:13:47 on Nov 20,2026, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # vlog  -work work +incdir+C:/Users/every/Documents/Programming/feforce/ip {C:/Users/every/Documents/Programming/feforce/ip/texture_rom.v}
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:06:04 on Nov 19,2026
+# Start time: 19:13:47 on Nov 20,2026
 # vlog -reportprogress 300 -work work "+incdir+C:/Users/every/Documents/Programming/feforce/ip" C:/Users/every/Documents/Programming/feforce/ip/texture_rom.v 
 # ** Note: (vlog-220) 'modelsim.ini' is used as the ini file.
 # -- Compiling module texture_rom
 # 
 # Top level modules:
 # 	texture_rom
-# End time: 15:06:04 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:13:47 on Nov 20,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
-cd ../../ModelSim/rasterizer_tb
+cd ../../ModelSim
 # reading c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini
+cd rasterizer_tb
 do testbench.tcl
 # ** Warning: (vlib-34) Library already exists at "work".
 # Errors: 0, Warnings: 1
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:06:27 on Nov 19,2026
+# Start time: 19:13:59 on Nov 20,2026
 # vlog -reportprogress 300 ../../src/framebuffer.v ../../src/rasterizer.v ../../src/render_controller.v ../../src/top.v ../../src/triangle_loader.v ../../src/vertexprojector.v ../../src/vertextransformer.v ../../src/vga.v 
 # ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
 # -- Compiling module framebuffer
@@ -204,682 +205,102 @@ do testbench.tcl
 # 
 # Top level modules:
 # 	top
-# End time: 15:06:27 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:13:59 on Nov 20,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:06:27 on Nov 19,2026
+# Start time: 19:13:59 on Nov 20,2026
 # vlog -reportprogress 300 testbench.v 
 # ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
 # -- Compiling module testbench
 # 
 # Top level modules:
 # 	testbench
-# End time: 15:06:27 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# ** Note: (vsim-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# vsim work.testbench -voptargs="+acc" -Lf 220model -Lf altera_mf_ver -Lf verilog 
-# Start time: 15:06:27 on Nov 19,2026
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
-# ** Note: (vopt-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# ** Error: ../../src/rasterizer.v(247): Module 'depthbuffer_ram' is not defined.
-#  For instance 'depth_buffer' at path 'testbench.DUT'
-# ** Error: ../../src/rasterizer.v(186): Module 'texture_rom' is not defined.
-#  For instance 'texture' at path 'testbench.DUT'
-# ** Error: ../../src/rasterizer.v(147): Module 'divider' is not defined.
-#  For instance 'div' at path 'testbench.DUT'
-# Optimization failed
-# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=3, Warnings=1.
-# Error loading design
-# Error: Error loading design
-#        Pausing macro execution
-# MACRO ./testbench.tcl PAUSED at line 12
-do testbench.tcl
-# End time: 15:07:00 on Nov 19,2026, Elapsed time: 0:00:33
-# Errors: 3, Warnings: 1
-# ** Warning: (vlib-34) Library already exists at "work".
-# Errors: 0, Warnings: 1
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:07:00 on Nov 19,2026
-# vlog -reportprogress 300 ../../src/framebuffer.v ../../src/rasterizer.v ../../src/render_controller.v ../../src/top.v ../../src/triangle_loader.v ../../src/vertexprojector.v ../../src/vertextransformer.v ../../src/vga.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module framebuffer
-# -- Compiling module edge_function
-# -- Compiling module rasterizer
-# -- Compiling module render_controller
-# -- Compiling module top
-# -- Compiling module triangle_loader
-# -- Compiling module vertex_projector
-# -- Compiling module pixel_clock
-# -- Compiling module display
-# 
-# Top level modules:
-# 	top
-# End time: 15:07:00 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:13:59 on Nov 20,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:07:00 on Nov 19,2026
-# vlog -reportprogress 300 testbench.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module testbench
-# 
-# Top level modules:
-# 	testbench
-# End time: 15:07:00 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:07:00 on Nov 19,2026
-# vlog -reportprogress 300 ../../ip/depth_rom.v ../../ip/depth_rom_bb.v ../../ip/depthbuffer_ram.v ../../ip/depthbuffer_ram_bb.v ../../ip/divider.v ../../ip/divider_bb.v ../../ip/framebuffer_ram.v ../../ip/framebuffer_ram_bb.v ../../ip/texture_rom.v ../../ip/texture_rom_bb.v ../../ip/triangle_rom.v ../../ip/triangle_rom_bb.v ../../ip/vertex_rom.v ../../ip/vertex_rom_bb.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module depth_rom
-# -- Compiling module depth_rom
-# ** Warning: ../../ip/depth_rom_bb.v(35): (vlog-2275) Existing module 'depth_rom' at ../../ip/depth_rom.v(40) will be overwritten.
-# -- Compiling module depthbuffer_ram
-# -- Compiling module depthbuffer_ram
-# ** Warning: ../../ip/depthbuffer_ram_bb.v(35): (vlog-2275) Existing module 'depthbuffer_ram' at ../../ip/depthbuffer_ram.v(40) will be overwritten.
-# -- Compiling module divider
-# -- Compiling module divider
-# ** Warning: ../../ip/divider_bb.v(35): (vlog-2275) Existing module 'divider' at ../../ip/divider.v(40) will be overwritten.
-# -- Compiling module framebuffer_ram
-# -- Compiling module framebuffer_ram
-# ** Warning: ../../ip/framebuffer_ram_bb.v(35): (vlog-2275) Existing module 'framebuffer_ram' at ../../ip/framebuffer_ram.v(40) will be overwritten.
-# -- Compiling module texture_rom
-# -- Compiling module texture_rom
-# ** Warning: ../../ip/texture_rom_bb.v(35): (vlog-2275) Existing module 'texture_rom' at ../../ip/texture_rom.v(40) will be overwritten.
-# -- Compiling module triangle_rom
-# -- Compiling module triangle_rom
-# ** Warning: ../../ip/triangle_rom_bb.v(35): (vlog-2275) Existing module 'triangle_rom' at ../../ip/triangle_rom.v(40) will be overwritten.
-# -- Compiling module vertex_rom
-# -- Compiling module vertex_rom
-# ** Warning: ../../ip/vertex_rom_bb.v(35): (vlog-2275) Existing module 'vertex_rom' at ../../ip/vertex_rom.v(40) will be overwritten.
-# 
-# Top level modules:
-# 	depth_rom
-# 	depthbuffer_ram
-# 	divider
-# 	framebuffer_ram
-# 	texture_rom
-# 	triangle_rom
-# 	vertex_rom
-# End time: 15:07:00 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 7
-# ** Note: (vsim-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# vsim work.testbench -voptargs="+acc" -Lf 220model -Lf altera_mf_ver -Lf verilog 
-# Start time: 15:07:01 on Nov 19,2026
-# ** Note: (vsim-3812) Design is being optimized...
-# ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
-# ** Note: (vopt-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# ** Note: (vopt-143) Recognized 1 FSM in module "rasterizer(fast)".
-# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
-# Loading work.testbench(fast)
-# Loading work.rasterizer(fast)
-# Loading work.edge_function(fast)
-# Loading work.divider(fast)
-# Loading work.texture_rom(fast)
-# Loading work.depthbuffer_ram(fast)
-do testbench.tcl
-# End time: 15:07:51 on Nov 19,2026, Elapsed time: 0:00:50
-# Errors: 0, Warnings: 1
-# ** Warning: (vlib-34) Library already exists at "work".
-# Errors: 0, Warnings: 1
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:07:51 on Nov 19,2026
-# vlog -reportprogress 300 ../../src/framebuffer.v ../../src/rasterizer.v ../../src/render_controller.v ../../src/top.v ../../src/triangle_loader.v ../../src/vertexprojector.v ../../src/vertextransformer.v ../../src/vga.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module framebuffer
-# -- Compiling module edge_function
-# -- Compiling module rasterizer
-# -- Compiling module render_controller
-# -- Compiling module top
-# -- Compiling module triangle_loader
-# -- Compiling module vertex_projector
-# -- Compiling module pixel_clock
-# -- Compiling module display
-# 
-# Top level modules:
-# 	top
-# End time: 15:07:51 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:07:51 on Nov 19,2026
-# vlog -reportprogress 300 testbench.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module testbench
-# 
-# Top level modules:
-# 	testbench
-# End time: 15:07:51 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:07:51 on Nov 19,2026
-# vlog -reportprogress 300 ../../ip/depth_rom.v ../../ip/depth_rom_bb.v ../../ip/depthbuffer_ram.v ../../ip/depthbuffer_ram_bb.v ../../ip/divider.v ../../ip/divider_bb.v ../../ip/framebuffer_ram.v ../../ip/framebuffer_ram_bb.v ../../ip/texture_rom.v ../../ip/texture_rom_bb.v ../../ip/triangle_rom.v ../../ip/triangle_rom_bb.v ../../ip/vertex_rom.v ../../ip/vertex_rom_bb.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module depth_rom
-# -- Compiling module depth_rom
-# ** Warning: ../../ip/depth_rom_bb.v(35): (vlog-2275) Existing module 'depth_rom' at ../../ip/depth_rom.v(40) will be overwritten.
-# -- Compiling module depthbuffer_ram
-# -- Compiling module depthbuffer_ram
-# ** Warning: ../../ip/depthbuffer_ram_bb.v(35): (vlog-2275) Existing module 'depthbuffer_ram' at ../../ip/depthbuffer_ram.v(40) will be overwritten.
-# -- Compiling module divider
-# -- Compiling module divider
-# ** Warning: ../../ip/divider_bb.v(35): (vlog-2275) Existing module 'divider' at ../../ip/divider.v(40) will be overwritten.
-# -- Compiling module framebuffer_ram
-# -- Compiling module framebuffer_ram
-# ** Warning: ../../ip/framebuffer_ram_bb.v(35): (vlog-2275) Existing module 'framebuffer_ram' at ../../ip/framebuffer_ram.v(40) will be overwritten.
-# -- Compiling module texture_rom
-# -- Compiling module texture_rom
-# ** Warning: ../../ip/texture_rom_bb.v(35): (vlog-2275) Existing module 'texture_rom' at ../../ip/texture_rom.v(40) will be overwritten.
-# -- Compiling module triangle_rom
-# -- Compiling module triangle_rom
-# ** Warning: ../../ip/triangle_rom_bb.v(35): (vlog-2275) Existing module 'triangle_rom' at ../../ip/triangle_rom.v(40) will be overwritten.
-# -- Compiling module vertex_rom
-# -- Compiling module vertex_rom
-# ** Warning: ../../ip/vertex_rom_bb.v(35): (vlog-2275) Existing module 'vertex_rom' at ../../ip/vertex_rom.v(40) will be overwritten.
-# 
-# Top level modules:
-# 	depth_rom
-# 	depthbuffer_ram
-# 	divider
-# 	framebuffer_ram
-# 	texture_rom
-# 	triangle_rom
-# 	vertex_rom
-# End time: 15:07:51 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 7
-# ** Note: (vsim-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# vsim work.testbench -voptargs="+acc" -Lf 220model -Lf altera_mf_ver -Lf verilog 
-# Start time: 15:07:52 on Nov 19,2026
-# ** Note: (vsim-8009) Loading existing optimized design _opt1
-# Loading work.testbench(fast)
-# Loading work.rasterizer(fast)
-# Loading work.edge_function(fast)
-# Loading work.divider(fast)
-# Loading work.texture_rom(fast)
-# Loading work.depthbuffer_ram(fast)
-do testbench.tcl
-# End time: 15:10:20 on Nov 19,2026, Elapsed time: 0:02:28
-# Errors: 0, Warnings: 0
-# ** Warning: (vlib-34) Library already exists at "work".
-# Errors: 0, Warnings: 1
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:10:20 on Nov 19,2026
-# vlog -reportprogress 300 ../../src/framebuffer.v ../../src/rasterizer.v ../../src/render_controller.v ../../src/top.v ../../src/triangle_loader.v ../../src/vertexprojector.v ../../src/vertextransformer.v ../../src/vga.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module framebuffer
-# -- Compiling module edge_function
-# -- Compiling module rasterizer
-# -- Compiling module render_controller
-# -- Compiling module top
-# -- Compiling module triangle_loader
-# -- Compiling module vertex_projector
-# -- Compiling module pixel_clock
-# -- Compiling module display
-# 
-# Top level modules:
-# 	top
-# End time: 15:10:21 on Nov 19,2026, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:10:21 on Nov 19,2026
-# vlog -reportprogress 300 testbench.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module testbench
-# 
-# Top level modules:
-# 	testbench
-# End time: 15:10:21 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:10:21 on Nov 19,2026
-# vlog -reportprogress 300 ../../ip/depth_rom.v ../../ip/depth_rom_bb.v ../../ip/depthbuffer_ram.v ../../ip/depthbuffer_ram_bb.v ../../ip/divider.v ../../ip/divider_bb.v ../../ip/framebuffer_ram.v ../../ip/framebuffer_ram_bb.v ../../ip/texture_rom.v ../../ip/texture_rom_bb.v ../../ip/triangle_rom.v ../../ip/triangle_rom_bb.v ../../ip/vertex_rom.v ../../ip/vertex_rom_bb.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module depth_rom
-# -- Compiling module depth_rom
-# ** Warning: ../../ip/depth_rom_bb.v(35): (vlog-2275) Existing module 'depth_rom' at ../../ip/depth_rom.v(40) will be overwritten.
-# -- Compiling module depthbuffer_ram
-# -- Compiling module depthbuffer_ram
-# ** Warning: ../../ip/depthbuffer_ram_bb.v(35): (vlog-2275) Existing module 'depthbuffer_ram' at ../../ip/depthbuffer_ram.v(40) will be overwritten.
-# -- Compiling module divider
-# -- Compiling module divider
-# ** Warning: ../../ip/divider_bb.v(35): (vlog-2275) Existing module 'divider' at ../../ip/divider.v(40) will be overwritten.
-# -- Compiling module framebuffer_ram
-# -- Compiling module framebuffer_ram
-# ** Warning: ../../ip/framebuffer_ram_bb.v(35): (vlog-2275) Existing module 'framebuffer_ram' at ../../ip/framebuffer_ram.v(40) will be overwritten.
-# -- Compiling module texture_rom
-# -- Compiling module texture_rom
-# ** Warning: ../../ip/texture_rom_bb.v(35): (vlog-2275) Existing module 'texture_rom' at ../../ip/texture_rom.v(40) will be overwritten.
-# -- Compiling module triangle_rom
-# -- Compiling module triangle_rom
-# ** Warning: ../../ip/triangle_rom_bb.v(35): (vlog-2275) Existing module 'triangle_rom' at ../../ip/triangle_rom.v(40) will be overwritten.
-# -- Compiling module vertex_rom
-# -- Compiling module vertex_rom
-# ** Warning: ../../ip/vertex_rom_bb.v(35): (vlog-2275) Existing module 'vertex_rom' at ../../ip/vertex_rom.v(40) will be overwritten.
-# 
-# Top level modules:
-# 	depth_rom
-# 	depthbuffer_ram
-# 	divider
-# 	framebuffer_ram
-# 	texture_rom
-# 	triangle_rom
-# 	vertex_rom
-# End time: 15:10:21 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 7
-# ** Note: (vsim-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# vsim work.testbench -voptargs="+acc" -Lf 220model -Lf altera_mf_ver -Lf verilog 
-# Start time: 15:10:21 on Nov 19,2026
-# ** Note: (vsim-8009) Loading existing optimized design _opt1
-# Loading work.testbench(fast)
-# Loading work.rasterizer(fast)
-# Loading work.edge_function(fast)
-# Loading work.divider(fast)
-# Loading work.texture_rom(fast)
-# Loading work.depthbuffer_ram(fast)
-do testbench.tcl
-# End time: 15:11:51 on Nov 19,2026, Elapsed time: 0:01:30
-# Errors: 0, Warnings: 0
-# ** Warning: (vlib-34) Library already exists at "work".
-# Errors: 0, Warnings: 1
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:11:51 on Nov 19,2026
-# vlog -reportprogress 300 ../../src/framebuffer.v ../../src/rasterizer.v ../../src/render_controller.v ../../src/top.v ../../src/triangle_loader.v ../../src/vertexprojector.v ../../src/vertextransformer.v ../../src/vga.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module framebuffer
-# -- Compiling module edge_function
-# -- Compiling module rasterizer
-# -- Compiling module render_controller
-# -- Compiling module top
-# -- Compiling module triangle_loader
-# -- Compiling module vertex_projector
-# -- Compiling module pixel_clock
-# -- Compiling module display
-# 
-# Top level modules:
-# 	top
-# End time: 15:11:51 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:11:52 on Nov 19,2026
-# vlog -reportprogress 300 testbench.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module testbench
-# 
-# Top level modules:
-# 	testbench
-# End time: 15:11:52 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:11:52 on Nov 19,2026
-# vlog -reportprogress 300 ../../ip/depth_rom.v ../../ip/depth_rom_bb.v ../../ip/depthbuffer_ram.v ../../ip/depthbuffer_ram_bb.v ../../ip/divider.v ../../ip/divider_bb.v ../../ip/framebuffer_ram.v ../../ip/framebuffer_ram_bb.v ../../ip/texture_rom.v ../../ip/texture_rom_bb.v ../../ip/triangle_rom.v ../../ip/triangle_rom_bb.v ../../ip/vertex_rom.v ../../ip/vertex_rom_bb.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module depth_rom
-# -- Compiling module depth_rom
-# ** Warning: ../../ip/depth_rom_bb.v(35): (vlog-2275) Existing module 'depth_rom' at ../../ip/depth_rom.v(40) will be overwritten.
-# -- Compiling module depthbuffer_ram
-# -- Compiling module depthbuffer_ram
-# ** Warning: ../../ip/depthbuffer_ram_bb.v(35): (vlog-2275) Existing module 'depthbuffer_ram' at ../../ip/depthbuffer_ram.v(40) will be overwritten.
-# -- Compiling module divider
-# -- Compiling module divider
-# ** Warning: ../../ip/divider_bb.v(35): (vlog-2275) Existing module 'divider' at ../../ip/divider.v(40) will be overwritten.
-# -- Compiling module framebuffer_ram
-# -- Compiling module framebuffer_ram
-# ** Warning: ../../ip/framebuffer_ram_bb.v(35): (vlog-2275) Existing module 'framebuffer_ram' at ../../ip/framebuffer_ram.v(40) will be overwritten.
-# -- Compiling module texture_rom
-# -- Compiling module texture_rom
-# ** Warning: ../../ip/texture_rom_bb.v(35): (vlog-2275) Existing module 'texture_rom' at ../../ip/texture_rom.v(40) will be overwritten.
-# -- Compiling module triangle_rom
-# -- Compiling module triangle_rom
-# ** Warning: ../../ip/triangle_rom_bb.v(35): (vlog-2275) Existing module 'triangle_rom' at ../../ip/triangle_rom.v(40) will be overwritten.
-# -- Compiling module vertex_rom
-# -- Compiling module vertex_rom
-# ** Warning: ../../ip/vertex_rom_bb.v(35): (vlog-2275) Existing module 'vertex_rom' at ../../ip/vertex_rom.v(40) will be overwritten.
-# 
-# Top level modules:
-# 	depth_rom
-# 	depthbuffer_ram
-# 	divider
-# 	framebuffer_ram
-# 	texture_rom
-# 	triangle_rom
-# 	vertex_rom
-# End time: 15:11:52 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 7
-# ** Note: (vsim-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# vsim work.testbench -voptargs="+acc" -Lf 220model -Lf altera_mf_ver -Lf verilog 
-# Start time: 15:11:52 on Nov 19,2026
-# ** Note: (vsim-8009) Loading existing optimized design _opt1
-# Loading work.testbench(fast)
-# Loading work.rasterizer(fast)
-# Loading work.edge_function(fast)
-# Loading work.divider(fast)
-# Loading work.texture_rom(fast)
-# Loading work.depthbuffer_ram(fast)
-# ** Error: error copying "../../ip/depth.mif": no such file or directory
-# Error in macro ./testbench.tcl line 15
-# error copying "../../ip/depth.mif": no such file or directory
-#     while executing
-# "file copy -force ../../ip/depth.mif ."
-do testbench.tcl
-# End time: 15:12:29 on Nov 19,2026, Elapsed time: 0:00:37
-# Errors: 1, Warnings: 0
-# ** Warning: (vlib-34) Library already exists at "work".
-# Errors: 0, Warnings: 1
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:12:29 on Nov 19,2026
-# vlog -reportprogress 300 ../../src/framebuffer.v ../../src/rasterizer.v ../../src/render_controller.v ../../src/top.v ../../src/triangle_loader.v ../../src/vertexprojector.v ../../src/vertextransformer.v ../../src/vga.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module framebuffer
-# -- Compiling module edge_function
-# -- Compiling module rasterizer
-# -- Compiling module render_controller
-# -- Compiling module top
-# -- Compiling module triangle_loader
-# -- Compiling module vertex_projector
-# -- Compiling module pixel_clock
-# -- Compiling module display
-# 
-# Top level modules:
-# 	top
-# End time: 15:12:29 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:12:29 on Nov 19,2026
-# vlog -reportprogress 300 testbench.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module testbench
-# 
-# Top level modules:
-# 	testbench
-# End time: 15:12:29 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:12:30 on Nov 19,2026
-# vlog -reportprogress 300 ../../ip/depth_rom.v ../../ip/depth_rom_bb.v ../../ip/depthbuffer_ram.v ../../ip/depthbuffer_ram_bb.v ../../ip/divider.v ../../ip/divider_bb.v ../../ip/framebuffer_ram.v ../../ip/framebuffer_ram_bb.v ../../ip/texture_rom.v ../../ip/texture_rom_bb.v ../../ip/triangle_rom.v ../../ip/triangle_rom_bb.v ../../ip/vertex_rom.v ../../ip/vertex_rom_bb.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module depth_rom
-# -- Compiling module depth_rom
-# ** Warning: ../../ip/depth_rom_bb.v(35): (vlog-2275) Existing module 'depth_rom' at ../../ip/depth_rom.v(40) will be overwritten.
-# -- Compiling module depthbuffer_ram
-# -- Compiling module depthbuffer_ram
-# ** Warning: ../../ip/depthbuffer_ram_bb.v(35): (vlog-2275) Existing module 'depthbuffer_ram' at ../../ip/depthbuffer_ram.v(40) will be overwritten.
-# -- Compiling module divider
-# -- Compiling module divider
-# ** Warning: ../../ip/divider_bb.v(35): (vlog-2275) Existing module 'divider' at ../../ip/divider.v(40) will be overwritten.
-# -- Compiling module framebuffer_ram
-# -- Compiling module framebuffer_ram
-# ** Warning: ../../ip/framebuffer_ram_bb.v(35): (vlog-2275) Existing module 'framebuffer_ram' at ../../ip/framebuffer_ram.v(40) will be overwritten.
-# -- Compiling module texture_rom
-# -- Compiling module texture_rom
-# ** Warning: ../../ip/texture_rom_bb.v(35): (vlog-2275) Existing module 'texture_rom' at ../../ip/texture_rom.v(40) will be overwritten.
-# -- Compiling module triangle_rom
-# -- Compiling module triangle_rom
-# ** Warning: ../../ip/triangle_rom_bb.v(35): (vlog-2275) Existing module 'triangle_rom' at ../../ip/triangle_rom.v(40) will be overwritten.
-# -- Compiling module vertex_rom
-# -- Compiling module vertex_rom
-# ** Warning: ../../ip/vertex_rom_bb.v(35): (vlog-2275) Existing module 'vertex_rom' at ../../ip/vertex_rom.v(40) will be overwritten.
-# 
-# Top level modules:
-# 	depth_rom
-# 	depthbuffer_ram
-# 	divider
-# 	framebuffer_ram
-# 	texture_rom
-# 	triangle_rom
-# 	vertex_rom
-# End time: 15:12:30 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 7
-# ** Note: (vsim-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# vsim work.testbench -voptargs="+acc" -Lf 220model -Lf altera_mf_ver -Lf verilog 
-# Start time: 15:12:30 on Nov 19,2026
-# ** Note: (vsim-8009) Loading existing optimized design _opt1
-# Loading work.testbench(fast)
-# Loading work.rasterizer(fast)
-# Loading work.edge_function(fast)
-# Loading work.divider(fast)
-# Loading work.texture_rom(fast)
-# Loading work.depthbuffer_ram(fast)
-do testbench.tcl
-# End time: 15:14:21 on Nov 19,2026, Elapsed time: 0:01:51
-# Errors: 0, Warnings: 0
-# ** Warning: (vlib-34) Library already exists at "work".
-# Errors: 0, Warnings: 1
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:14:21 on Nov 19,2026
-# vlog -reportprogress 300 ../../src/framebuffer.v ../../src/rasterizer.v ../../src/render_controller.v ../../src/top.v ../../src/triangle_loader.v ../../src/vertexprojector.v ../../src/vertextransformer.v ../../src/vga.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module framebuffer
-# -- Compiling module edge_function
-# -- Compiling module rasterizer
-# -- Compiling module render_controller
-# -- Compiling module top
-# -- Compiling module triangle_loader
-# -- Compiling module vertex_projector
-# -- Compiling module pixel_clock
-# -- Compiling module display
-# 
-# Top level modules:
-# 	top
-# End time: 15:14:21 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:14:21 on Nov 19,2026
-# vlog -reportprogress 300 testbench.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module testbench
-# 
-# Top level modules:
-# 	testbench
-# End time: 15:14:21 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:14:21 on Nov 19,2026
-# vlog -reportprogress 300 ../../ip/divider.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module divider
-# 
-# Top level modules:
-# 	divider
-# End time: 15:14:22 on Nov 19,2026, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:14:22 on Nov 19,2026
-# vlog -reportprogress 300 ../../ip/texture_rom.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module texture_rom
-# 
-# Top level modules:
-# 	texture_rom
-# End time: 15:14:22 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:14:22 on Nov 19,2026
-# vlog -reportprogress 300 ../../ip/depthbuffer_ram.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module depthbuffer_ram
-# 
-# Top level modules:
-# 	depthbuffer_ram
-# End time: 15:14:22 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# ** Note: (vsim-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# vsim work.testbench -voptargs="+acc" -Lf 220model -Lf altera_mf_ver -Lf verilog 
-# Start time: 15:14:22 on Nov 19,2026
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
-# ** Note: (vopt-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# ** Error: ../../ip/divider.v(67): Invalid reference 'lpm_drepresentation' in defparam; target resolves below VHDL scope 'LPM_DIVIDE'. 
-# ** Error: ../../ip/divider.v(68): Invalid reference 'lpm_hint' in defparam; target resolves below VHDL scope 'LPM_DIVIDE'. 
-# ** Error: ../../ip/divider.v(69): Invalid reference 'lpm_nrepresentation' in defparam; target resolves below VHDL scope 'LPM_DIVIDE'. 
-# ** Error: ../../ip/divider.v(70): Invalid reference 'lpm_pipeline' in defparam; target resolves below VHDL scope 'LPM_DIVIDE'. 
-# ** Error: ../../ip/divider.v(71): Invalid reference 'lpm_type' in defparam; target resolves below VHDL scope 'LPM_DIVIDE'. 
-# ** Error: ../../ip/divider.v(72): Invalid reference 'lpm_widthd' in defparam; target resolves below VHDL scope 'LPM_DIVIDE'. 
-# ** Error: ../../ip/divider.v(73): Invalid reference 'lpm_widthn' in defparam; target resolves below VHDL scope 'LPM_DIVIDE'. 
-# Optimization failed
-# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=7, Warnings=1.
-# Error loading design
-# Error: Error loading design
-#        Pausing macro execution
-# MACRO ./testbench.tcl PAUSED at line 16
-cd ../../ModelSim/rasterizer_tb
-do testbench.tcl
-# End time: 15:15:32 on Nov 19,2026, Elapsed time: 0:01:10
-# Errors: 7, Warnings: 1
-# ** Warning: (vlib-34) Library already exists at "work".
-# Errors: 0, Warnings: 1
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:15:32 on Nov 19,2026
-# vlog -reportprogress 300 ../../src/framebuffer.v ../../src/rasterizer.v ../../src/render_controller.v ../../src/top.v ../../src/triangle_loader.v ../../src/vertexprojector.v ../../src/vertextransformer.v ../../src/vga.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module framebuffer
-# -- Compiling module edge_function
-# -- Compiling module rasterizer
-# -- Compiling module render_controller
-# -- Compiling module top
-# -- Compiling module triangle_loader
-# -- Compiling module vertex_projector
-# -- Compiling module pixel_clock
-# -- Compiling module display
-# 
-# Top level modules:
-# 	top
-# End time: 15:15:32 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:15:32 on Nov 19,2026
-# vlog -reportprogress 300 testbench.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module testbench
-# 
-# Top level modules:
-# 	testbench
-# End time: 15:15:32 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:15:32 on Nov 19,2026
+# Start time: 19:14:00 on Nov 20,2026
 # vlog -reportprogress 300 ../../sim/divider.v 
 # ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
 # -- Compiling module divider
 # 
 # Top level modules:
 # 	divider
-# End time: 15:15:32 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:14:01 on Nov 20,2026, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:15:33 on Nov 19,2026
+# Start time: 19:14:01 on Nov 20,2026
 # vlog -reportprogress 300 ../../ip/texture_rom.v 
 # ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
 # -- Compiling module texture_rom
 # 
 # Top level modules:
 # 	texture_rom
-# End time: 15:15:33 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:14:02 on Nov 20,2026, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:15:33 on Nov 19,2026
+# Start time: 19:14:02 on Nov 20,2026
 # vlog -reportprogress 300 ../../ip/depthbuffer_ram.v 
 # ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
 # -- Compiling module depthbuffer_ram
 # 
 # Top level modules:
 # 	depthbuffer_ram
-# End time: 15:15:33 on Nov 19,2026, Elapsed time: 0:00:00
+# End time: 19:14:02 on Nov 20,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+# Start time: 19:14:02 on Nov 20,2026
+# vlog -reportprogress 300 ../../ip/depth_rom.v 
+# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
+# -- Compiling module depth_rom
+# 
+# Top level modules:
+# 	depth_rom
+# End time: 19:14:03 on Nov 20,2026, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # ** Note: (vsim-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
 # vsim work.testbench -voptargs="+acc" -Lf 220model -Lf altera_mf_ver -Lf verilog 
-# Start time: 15:15:33 on Nov 19,2026
-# ** Note: (vsim-3812) Design is being optimized...
+# Start time: 19:14:03 on Nov 20,2026
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
 # ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
 # ** Note: (vopt-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# ** Note: (vopt-143) Recognized 1 FSM in module "rasterizer(fast)".
 # ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
 # Loading work.testbench(fast)
 # Loading work.rasterizer(fast)
 # Loading work.edge_function(fast)
 # Loading work.divider(fast)
-# Loading work.texture_rom(fast)
+# Loading work.depth_rom(fast)
 # Loading altera_mf_ver.altsyncram(fast)
 # Loading altera_mf_ver.altsyncram_body(fast)
 # Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES(fast)
 # Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION(fast)
-# Loading work.depthbuffer_ram(fast)
-# Loading altera_mf_ver.altsyncram(fast__1)
-# Loading altera_mf_ver.altsyncram_body(fast__1)
-do testbench.tcl
-# End time: 15:19:07 on Nov 19,2026, Elapsed time: 0:03:34
-# Errors: 0, Warnings: 1
-# ** Warning: (vlib-34) Library already exists at "work".
-# Errors: 0, Warnings: 1
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:19:08 on Nov 19,2026
-# vlog -reportprogress 300 ../../src/framebuffer.v ../../src/rasterizer.v ../../src/render_controller.v ../../src/top.v ../../src/triangle_loader.v ../../src/vertexprojector.v ../../src/vertextransformer.v ../../src/vga.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module framebuffer
-# -- Compiling module edge_function
-# -- Compiling module rasterizer
-# -- Compiling module render_controller
-# -- Compiling module top
-# -- Compiling module triangle_loader
-# -- Compiling module vertex_projector
-# -- Compiling module pixel_clock
-# -- Compiling module display
-# 
-# Top level modules:
-# 	top
-# End time: 15:19:08 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:19:08 on Nov 19,2026
-# vlog -reportprogress 300 testbench.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module testbench
-# 
-# Top level modules:
-# 	testbench
-# End time: 15:19:08 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:19:08 on Nov 19,2026
-# vlog -reportprogress 300 ../../sim/divider.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module divider
-# 
-# Top level modules:
-# 	divider
-# End time: 15:19:08 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:19:08 on Nov 19,2026
-# vlog -reportprogress 300 ../../ip/texture_rom.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module texture_rom
-# 
-# Top level modules:
-# 	texture_rom
-# End time: 15:19:09 on Nov 19,2026, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# Questa Altera Starter FPGA Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
-# Start time: 15:19:09 on Nov 19,2026
-# vlog -reportprogress 300 ../../ip/depthbuffer_ram.v 
-# ** Note: (vlog-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# -- Compiling module depthbuffer_ram
-# 
-# Top level modules:
-# 	depthbuffer_ram
-# End time: 15:19:09 on Nov 19,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# ** Note: (vsim-220) 'c:/altera_lite/25.1std/questa_fse/win64/../modelsim.ini' is used as the ini file.
-# vsim work.testbench -voptargs="+acc" -Lf 220model -Lf altera_mf_ver -Lf verilog 
-# Start time: 15:19:09 on Nov 19,2026
-# ** Note: (vsim-8009) Loading existing optimized design _opt1
-# Loading work.testbench(fast)
-# Loading work.rasterizer(fast)
-# Loading work.edge_function(fast)
-# Loading work.divider(fast)
 # Loading work.texture_rom(fast)
-# Loading altera_mf_ver.altsyncram(fast)
-# Loading altera_mf_ver.altsyncram_body(fast)
-# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES(fast)
-# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION(fast)
-# Loading work.depthbuffer_ram(fast)
 # Loading altera_mf_ver.altsyncram(fast__1)
 # Loading altera_mf_ver.altsyncram_body(fast__1)
+# Loading work.depthbuffer_ram(fast)
+# Loading altera_mf_ver.altsyncram(fast__2)
+# Loading altera_mf_ver.altsyncram_body(fast__2)
+# ** UI-Msg (Warning): (vish-4014) No objects found matching '/testbench/DUT/u_sum'.
+# Executing ONERROR command at macro ./wave.do line 42
+# ** UI-Msg (Warning): (vish-4014) No objects found matching '/testbench/DUT/v_sum'.
+# Executing ONERROR command at macro ./wave.do line 43
+# ** Warning: (vsim-3534) [FOFIR] - Failed to open file "./ip/depth_recip.mif" for reading.
+# No such file or directory. (errno = ENOENT)    : c:/altera_lite/25.1std/questa_fse/win64/../intel/verilog/src/altera_mf.v(264)
+#    Time: 0 ps  Iteration: 0  Instance: /testbench/DUT/inv_depth_LUT/altsyncram_component/m_default/altsyncram_inst
+# ERROR: cannot read ./ip/depth_recip.mif.
+# ** Warning: (vsim-7) Failed to open readmem file "./ip/depth_recip.ver" in read mode.
+# No such file or directory. (errno = ENOENT)    : c:/altera_lite/25.1std/questa_fse/win64/../intel/verilog/src/altera_mf.v(48978)
+#    Time: 0 ps  Iteration: 0  Instance: /testbench/DUT/inv_depth_LUT/altsyncram_component/m_default/altsyncram_inst
+# ** Warning: (vsim-3534) [FOFIR] - Failed to open file "./ip/texture.mif" for reading.
+# No such file or directory. (errno = ENOENT)    : c:/altera_lite/25.1std/questa_fse/win64/../intel/verilog/src/altera_mf.v(264)
+#    Time: 0 ps  Iteration: 0  Instance: /testbench/DUT/texture/altsyncram_component/m_default/altsyncram_inst
+# ERROR: cannot read ./ip/texture.mif.
+# ** Warning: (vsim-7) Failed to open readmem file "./ip/texture.ver" in read mode.
+# No such file or directory. (errno = ENOENT)    : c:/altera_lite/25.1std/questa_fse/win64/../intel/verilog/src/altera_mf.v(48978)
+#    Time: 0 ps  Iteration: 0  Instance: /testbench/DUT/texture/altsyncram_component/m_default/altsyncram_inst
+# ** Warning: (vsim-3534) [FOFIR] - Failed to open file "./ip/depth_buffer.mif" for reading.
+# No such file or directory. (errno = ENOENT)    : c:/altera_lite/25.1std/questa_fse/win64/../intel/verilog/src/altera_mf.v(264)
+#    Time: 0 ps  Iteration: 0  Instance: /testbench/DUT/depth_buffer/altsyncram_component/m_default/altsyncram_inst
+# ERROR: cannot read ./ip/depth_buffer.mif.
+# ** Warning: (vsim-7) Failed to open readmem file "./ip/depth_buffer.ver" in read mode.
+# No such file or directory. (errno = ENOENT)    : c:/altera_lite/25.1std/questa_fse/win64/../intel/verilog/src/altera_mf.v(48964)
+#    Time: 0 ps  Iteration: 0  Instance: /testbench/DUT/depth_buffer/altsyncram_component/m_default/altsyncram_inst
