@@ -154,6 +154,7 @@ module rasterizer (
 
     // divider to get reciprocal of area for barycentric coordinates
     // barycentric coordinates = area(BCP) / area(ABC) for a point P (areas should be unsigned)
+    // BC is the opposite edge of vertex A, and you multiply value of A by barycentric coordinate
     // https://codeplea.com/triangular-interpolation
     // https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle//barycentric-coordinates.html
 
@@ -280,6 +281,7 @@ module rasterizer (
     wire signed [65:0] depth_scaled;
     wire [15:0] depth_out;
 
+    // we have to interpolate 1/w and not w, since only 1/w is linear in screen space
     assign depth_sum = edge1 * $signed({1'b0, depth0}) + 
                        edge2 * $signed({1'b0, depth1}) + 
                        edge0 * $signed({1'b0, depth2});
