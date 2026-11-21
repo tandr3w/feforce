@@ -55,7 +55,7 @@ module rasterizer (
     parameter signed [15:0] LIGHT_Z = -4000;
 
     // default ambient light applied to every pixel, to avoid pixels being completely black
-    parameter [15:0] LIGHT_AMBIENT = 10000;
+    parameter [15:0] LIGHT_AMBIENT = 1000;
 
     reg [2:0] divider_counter; // counts how many cycles the divider has been running for
 
