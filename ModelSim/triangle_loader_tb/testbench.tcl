@@ -6,10 +6,10 @@ vlib work;
 
 # compile the Verilog source code in the parent folder
 vlog ../../src/*.v
-vlog ../../vertex_rom.v
-vlog ../../triangle_rom.v
-file copy -force ../../triangles.mif .
-file copy -force ../../vertices.mif .
+vlog ../../sim/vertex_rom.v
+vlog ../../sim/triangle_rom.v
+file copy -force ../../sim/triangles.hex .
+file copy -force ../../sim/vertices.hex .
 
 # compile the Verilog code of the testbench
 vlog *.v

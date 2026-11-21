@@ -72,16 +72,30 @@ module rasterizer (
     wire signed [25:0] t_area_recip; // signed fixed point 1.24
     wire [20:0] remain;
 
+    // 1st stage of pipeline
+    // during this stage, most things are calculated, like the x, y, edge functions, valid, and uv coordinates other than the last division
     reg [8:0] curr_x;
     reg [7:0] curr_y;
+    reg done_d0;
 
-    // delay the output by 1 cycle
+    // 2nd stage of pipeline: output delayed by 1 cycle
+    // at this stage, the depth buffer and interpolated depth will be loaded, and we need to request the texture color
+    // which corresponds to the address from 2 cycles ago, so we have to pipeline the final uow_scaled, vow_scaled products
     reg [8:0] x_d1;
     reg [7:0] y_d1;
     reg [9:0] depth_d1;
     reg valid_d1;
-    reg done_d0;
     reg done_d1;
+    reg [69:0] uow_scaled_d1, vow_scaled_d1;
+    wire write_enable_d1;
+
+    // 3rd stage of pipeline: output delayed by 2 cycles
+    // at this stage, we should output everything
+    // write_enable is already calculated properly so we don't have to pipeline valid or depth more
+    reg [8:0] x_d2;
+    reg [7:0] y_d2;
+    reg done_d2;
+    reg write_enable_d2;
 
     wire [8:0] min_x_raw, max_x_raw;
     wire [7:0] min_y_raw, max_y_raw;
@@ -143,7 +157,6 @@ module rasterizer (
     // https://codeplea.com/triangular-interpolation
     // https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle//barycentric-coordinates.html
 
-
     divider div (
         .clock(clk),
         .numer(26'd16777216), // 1.0 in signed fixed point 1.24 is 2^24
@@ -162,24 +175,64 @@ module rasterizer (
     // affine textures: just interpolate uv coords
     // https://gabrielgambetta.com/computer-graphics-from-scratch/14-textures.html
     // https://m.youtube.com/watch?t=1747&v=nBzCS-Y0FcY&feature=youtu.be
+    // for perspective correct textures, need to divide each coord by w, interpolate, then divide the interpolated value by 1/w
+    // we already have 1/w as an input so we just need to implement an extra rom to divide by 1/w --> need another pipeline cycle and rom going from 1/w to w
 
-    wire signed [29:0] u_sum, v_sum;
-    wire signed [55:0] u_scaled, v_scaled;
+    wire [21:0] uow0, uow1, uow2, vow0, vow1, vow2; // u over w, v over w
+
+    // todo make a function or something to make the intermediate products less messy
+
+    // depth recips are Q3.13
+    assign uow0 = (u0 * depth_recip0);
+    assign uow1 = (u1 * depth_recip1);
+    assign uow2 = (u2 * depth_recip2);
+
+    assign vow0 = (v0 * depth_recip0);
+    assign vow1 = (v1 * depth_recip1);
+    assign vow2 = (v2 * depth_recip2);
+
+    wire signed [43:0] uow_sum, vow_sum, w_recip_sum;
+
+    assign uow_sum = edge1 * $signed({1'b0, uow0}) +
+                     edge2 * $signed({1'b0, uow1}) +
+                     edge0 * $signed({1'b0, uow2});
+
+    assign vow_sum = edge1 * $signed({1'b0, vow0}) +
+                     edge2 * $signed({1'b0, vow1}) +
+                     edge0 * $signed({1'b0, vow2});
+
+    assign w_recip_sum = edge1 * $signed({1'b0, depth0}) +
+                         edge2 * $signed({1'b0, depth1}) +
+                         edge0 * $signed({1'b0, depth2});
+
+    wire signed [69:0] uow_scaled, vow_scaled, w_recip_scaled;
     wire [5:0] u_coord, v_coord;
 
-    assign u_sum = edge1 * $signed({1'b0, u0}) +
-                edge2 * $signed({1'b0, u1}) +
-                edge0 * $signed({1'b0, u2});
+    wire [15:0] interp_depth; // todo get this from lookup table by doing 1/(1/w), q8.8
+    // need to delay uow_scaled and vow_scaled by 1 cycle, and all the ouputs by 2 cycles in total
+    wire signed [85:0] u_scaled, v_scaled;
 
-    assign v_sum = edge1 * $signed({1'b0, v0}) +
-                edge2 * $signed({1'b0, v1}) +
-                edge0 * $signed({1'b0, v2});
+    assign uow_scaled = (uow_sum * t_area_recip) >>> 24;
+    assign vow_scaled = (vow_sum * t_area_recip) >>> 24;
+    assign w_recip_scaled = (w_recip_sum * t_area_recip) >>> 24;
 
-    assign u_scaled = u_sum * t_area_recip;
-    assign v_scaled = v_sum * t_area_recip;
+    // since adding fractional bits to the input is equivalent to removing fractional bits from the output, we can just use the original lut
+    // the projector inputs in Q7.5 and outputs in Q3.13, so for this one we can input in Q2.10 and output in Q8.8
+    // todo: this is kinda sus so we should probably make it more consistent later
+    // as we are kinda contradicting ourselves in the decision for how many bits matter
+    depth_rom inv_depth_LUT (
+        .address(w_recip_scaled[14:3]), // q3.13 to q8.8, but we only take the first 12 bits as we don't need that much precision
+        .clock(clk),
+        .q(interp_depth)
+    );
 
-    assign u_coord = u_scaled >>> 24;
-    assign v_coord = v_scaled >>> 24;
+    assign u_scaled = uow_scaled_d1 * interp_depth;
+    assign v_scaled = vow_scaled_d1 * interp_depth;
+
+    // shift by 8 for the multiply by q8.8 and 13 for the multiply by q3.13 earlier
+    // we want to do the shifts at the end to avoid rounding intermediate products
+    assign u_coord = u_scaled >>> 21;
+    assign v_coord = v_scaled >>> 21;
 
     wire [15:0] texture_color;
 
@@ -237,7 +290,6 @@ module rasterizer (
 
     wire [9:0] stored_depth;
 
-    wire write_enable_d1;
     assign write_enable_d1 = valid_d1 && (depth_d1 > stored_depth);
 
     depthbuffer_ram depth_buffer(
@@ -250,10 +302,10 @@ module rasterizer (
     );
 
     assign write_color = {red_out, green_out, blue_out};
-    assign write_x = x_d1;
-    assign write_y = y_d1;
-    assign write_enable = write_enable_d1;
-    assign done = done_d1;
+    assign write_x = x_d2;
+    assign write_y = y_d2;
+    assign write_enable = write_enable_d2;
+    assign done = done_d2;
 
     // pipeline logic
     always @(posedge clk or posedge rst) begin
@@ -263,6 +315,14 @@ module rasterizer (
             depth_d1 <= 0;
             valid_d1 <= 0;
             done_d1 <= 0;
+            uow_scaled_d1 <= 0;
+            vow_scaled_d1 <= 0;
+
+            x_d2 <= 0;
+            y_d2 <= 0;
+            done_d2 <= 0;
+            write_enable_d2 <= 0;
+
         end
         else begin
             // stored_depth and texture_color are delayed by 1 cycle, which we need to set the write_color and write_enable
@@ -273,6 +333,13 @@ module rasterizer (
             depth_d1 <= depth_out[9:0];
             valid_d1 <= (state == RASTER) && !done_d0 && inside;
             done_d1 <= done_d0;
+            uow_scaled_d1 <= uow_scaled;
+            vow_scaled_d1 <= vow_scaled;
+
+            x_d2 <= x_d1;
+            y_d2 <= y_d1;
+            done_d2 <= done_d1;
+            write_enable_d2 <= write_enable_d1;
         end
     end
 
@@ -338,13 +405,8 @@ module rasterizer (
                         curr_x <= min_x;
                         curr_y <= curr_y + 1;
                     end else begin
-                        if (done_d0) begin
-                            done_d0 <= 0;
-                            state <= IDLE; // Done all pixels in bounding box, go back to idle
-                        end
-                        else begin 
-                            done_d0 <= 1;
-                        end
+                        state <= IDLE; // Done all pixels in bounding box, go back to idle
+                        done_d0 <= 1; // it's okay to go to idle early since render controller won't call start until done is marked
                     end
                 end
             endcase
