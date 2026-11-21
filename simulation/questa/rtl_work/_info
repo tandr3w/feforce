@@ -11,79 +11,79 @@ cModel Technology
 Z0 dC:/Users/every/Documents/Programming/feforce/simulation/questa
 vdepth_rom
 2C:/Users/every/Documents/Programming/feforce/ip/depth_rom.v
-Z1 !s110 1795220024
+!s110 1795221912
 !i10b 1
 !s100 UP[QK3KK54H?`S>kX`WXV3
 IeAKFHBaBQ_lW8U7ZCd5@_2
 R0
-Z2 w1795209073
+Z1 w1795209073
 8C:/Users/every/Documents/Programming/feforce/ip/depth_rom.v
 FC:/Users/every/Documents/Programming/feforce/ip/depth_rom.v
 !i122 0
-Z3 L0 40 61
-Z4 VDg1SIo80bB@j0V0VzS_@n1
-Z5 OL;L;2025.2;82
+Z2 L0 40 61
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+Z4 OL;L;2025.2;82
 r1
 !s85 0
 31
-Z6 !s108 1795220024.000000
+!s108 1795221912.000000
 !s107 C:/Users/every/Documents/Programming/feforce/ip/depth_rom.v|
 !s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/ip|C:/Users/every/Documents/Programming/feforce/ip/depth_rom.v|
 !i113 0
-Z7 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
-Z8 !s92 -work work +incdir+C:/Users/every/Documents/Programming/feforce/ip -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
-Z9 tCvgOpt 0 defaultOptions 1085333592
+Z5 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z6 !s92 -work work +incdir+C:/Users/every/Documents/Programming/feforce/ip -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z7 tCvgOpt 0 defaultOptions 1085333592
 vdepthbuffer_ram
 2C:/Users/every/Documents/Programming/feforce/ip/depthbuffer_ram.v
-Z10 !s110 1795220027
+Z8 !s110 1795221915
 !i10b 1
 !s100 8jEQJ;Lk[45>=_h_=OleU1
 I:kKKBBOL3_ehVY^TN3>^41
 R0
-R2
+R1
 8C:/Users/every/Documents/Programming/feforce/ip/depthbuffer_ram.v
 FC:/Users/every/Documents/Programming/feforce/ip/depthbuffer_ram.v
 !i122 12
-Z11 L0 40 74
+Z9 L0 40 74
+R3
 R4
-R5
 r1
 !s85 0
 31
-Z12 !s108 1795220026.000000
+Z10 !s108 1795221915.000000
 !s107 C:/Users/every/Documents/Programming/feforce/ip/depthbuffer_ram.v|
 !s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/ip|C:/Users/every/Documents/Programming/feforce/ip/depthbuffer_ram.v|
 !i113 0
+R5
+R6
 R7
-R8
-R9
 vdisplay
-Z13 2C:/Users/every/Documents/Programming/feforce/src/vga.v
-R1
+Z11 2C:/Users/every/Documents/Programming/feforce/src/vga.v
+Z12 !s110 1795221913
 !i10b 1
 !s100 I]6e;<Mk;zz2^cJl4E`f83
 IM61ZVo`EY[>zSeR0Vc@bO3
 R0
-Z14 w1795069002
-Z15 8C:/Users/every/Documents/Programming/feforce/src/vga.v
-Z16 FC:/Users/every/Documents/Programming/feforce/src/vga.v
+Z13 w1795069002
+Z14 8C:/Users/every/Documents/Programming/feforce/src/vga.v
+Z15 FC:/Users/every/Documents/Programming/feforce/src/vga.v
 !i122 2
 L0 21 45
+R3
 R4
-R5
 r1
 !s85 0
 31
-R6
+Z16 !s108 1795221913.000000
 Z17 !s107 C:/Users/every/Documents/Programming/feforce/src/vga.v|
 Z18 !s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/src|C:/Users/every/Documents/Programming/feforce/src/vga.v|
 !i113 0
-R7
+R5
 Z19 !s92 -work work +incdir+C:/Users/every/Documents/Programming/feforce/src -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
-R9
+R7
 vdivider
 2C:/Users/every/Documents/Programming/feforce/ip/divider.v
-Z20 !s110 1795220026
+R8
 !i10b 1
 !s100 bo9mU<@IRYF1TWc:b5nlE3
 IXK?m<HOb8Od26IJ_::TeW3
@@ -93,45 +93,45 @@ w1795120812
 FC:/Users/every/Documents/Programming/feforce/ip/divider.v
 !i122 11
 L0 40 37
+R3
 R4
-R5
 r1
 !s85 0
 31
-R12
+R10
 !s107 C:/Users/every/Documents/Programming/feforce/ip/divider.v|
 !s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/ip|C:/Users/every/Documents/Programming/feforce/ip/divider.v|
 !i113 0
+R5
+R6
 R7
-R8
-R9
 vedge_function
-Z21 2C:/Users/every/Documents/Programming/feforce/src/rasterizer.v
-Z22 !s110 1795220025
+Z20 2C:/Users/every/Documents/Programming/feforce/src/rasterizer.v
+Z21 !s110 1795221914
 !i10b 1
 !s100 9]VK6G7_MXbg]73?8Sm3=0
 IeZ4G9V`JZmORCE=M1TO@^3
 R0
-Z23 w1795219215
-Z24 8C:/Users/every/Documents/Programming/feforce/src/rasterizer.v
-Z25 FC:/Users/every/Documents/Programming/feforce/src/rasterizer.v
+Z22 w1795221888
+Z23 8C:/Users/every/Documents/Programming/feforce/src/rasterizer.v
+Z24 FC:/Users/every/Documents/Programming/feforce/src/rasterizer.v
 !i122 6
 L0 3 22
+R3
 R4
-R5
 r1
 !s85 0
 31
-Z26 !s108 1795220025.000000
-Z27 !s107 C:/Users/every/Documents/Programming/feforce/src/rasterizer.v|
-Z28 !s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/src|C:/Users/every/Documents/Programming/feforce/src/rasterizer.v|
+Z25 !s108 1795221914.000000
+Z26 !s107 C:/Users/every/Documents/Programming/feforce/src/rasterizer.v|
+Z27 !s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/src|C:/Users/every/Documents/Programming/feforce/src/rasterizer.v|
 !i113 0
-R7
+R5
 R19
-R9
+R7
 vframebuffer
 2C:/Users/every/Documents/Programming/feforce/src/framebuffer.v
-R22
+R21
 !i10b 1
 !s100 1hS2cf22Mf0^2<XTeF?ZU0
 I@cG[j]XOki7Oh[ZKnEn6b0
@@ -141,21 +141,21 @@ w1795064540
 FC:/Users/every/Documents/Programming/feforce/src/framebuffer.v
 !i122 7
 L0 3 44
+R3
 R4
-R5
 r1
 !s85 0
 31
-R26
+R25
 !s107 C:/Users/every/Documents/Programming/feforce/src/framebuffer.v|
 !s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/src|C:/Users/every/Documents/Programming/feforce/src/framebuffer.v|
 !i113 0
-R7
+R5
 R19
-R9
+R7
 vframebuffer_ram
 2C:/Users/every/Documents/Programming/feforce/ip/framebuffer_ram.v
-R20
+R8
 !i10b 1
 !s100 TkPcJM=ELb?DaAK1FJgYc1
 IC17d;8kZcjJ^<O6<6Wf<k1
@@ -164,70 +164,70 @@ w1794948897
 8C:/Users/every/Documents/Programming/feforce/ip/framebuffer_ram.v
 FC:/Users/every/Documents/Programming/feforce/ip/framebuffer_ram.v
 !i122 10
-R11
+R9
+R3
 R4
-R5
 r1
 !s85 0
 31
-R12
+R10
 !s107 C:/Users/every/Documents/Programming/feforce/ip/framebuffer_ram.v|
 !s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/ip|C:/Users/every/Documents/Programming/feforce/ip/framebuffer_ram.v|
 !i113 0
+R5
+R6
 R7
-R8
-R9
 vpixel_clock
-R13
-R1
+R11
+R12
 !i10b 1
 !s100 UK[dFUJiEKbJaoBX1jlM01
 I2V^IhleekoZ>BikCUAQaO2
 R0
+R13
 R14
 R15
-R16
 !i122 2
 L0 3 17
+R3
 R4
-R5
 r1
 !s85 0
 31
-R6
+R16
 R17
 R18
 !i113 0
-R7
+R5
 R19
-R9
+R7
 vrasterizer
+R20
 R21
-R22
 !i10b 1
-!s100 g45zeKDkFnXW<]3654?g80
-IFYO=_0d4c@84ccYceeESj1
+!s100 IBBM4ZfXhTNHinU6G;j=22
+IVSA>Y:NX@LMh3[@H?gH@f3
 R0
+R22
 R23
 R24
-R25
 !i122 6
 L0 26 391
+R3
 R4
-R5
 r1
 !s85 0
 31
+R25
 R26
 R27
-R28
 !i113 0
-R7
+R5
 R19
-R9
+R7
 vrender_controller
 2C:/Users/every/Documents/Programming/feforce/src/render_controller.v
-R22
+R21
 !i10b 1
 !s100 97ocQQdfhNYegk66ViJ]U1
 I;ZgzaBLg_9cGMWEb9<Ib=3
@@ -237,45 +237,45 @@ w1795115431
 FC:/Users/every/Documents/Programming/feforce/src/render_controller.v
 !i122 5
 L0 1 183
+R3
 R4
-R5
 r1
 !s85 0
 31
-R26
+R16
 !s107 C:/Users/every/Documents/Programming/feforce/src/render_controller.v|
 !s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/src|C:/Users/every/Documents/Programming/feforce/src/render_controller.v|
 !i113 0
-R7
+R5
 R19
-R9
+R7
 vtexture_rom
 2C:/Users/every/Documents/Programming/feforce/ip/texture_rom.v
-R10
+R8
 !i10b 1
 !s100 T1UPh8la5eoLN?bf;H?D52
 IILXBfOW0bZ4]5QDo@dPU80
 R0
-R2
+R1
 8C:/Users/every/Documents/Programming/feforce/ip/texture_rom.v
 FC:/Users/every/Documents/Programming/feforce/ip/texture_rom.v
 !i122 13
+R2
 R3
 R4
-R5
 r1
 !s85 0
 31
-!s108 1795220027.000000
+R10
 !s107 C:/Users/every/Documents/Programming/feforce/ip/texture_rom.v|
 !s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/ip|C:/Users/every/Documents/Programming/feforce/ip/texture_rom.v|
 !i113 0
+R5
+R6
 R7
-R8
-R9
 vtop
 2C:/Users/every/Documents/Programming/feforce/src/top.v
-R22
+R12
 !i10b 1
 !s100 :J<[OT^EMzh[EEH9MeRcE3
 IVOEENzSndYG7UmC_QJfWX3
@@ -285,21 +285,21 @@ w1795121253
 FC:/Users/every/Documents/Programming/feforce/src/top.v
 !i122 4
 L0 3 107
+R3
 R4
-R5
 r1
 !s85 0
 31
-R26
+R16
 !s107 C:/Users/every/Documents/Programming/feforce/src/top.v|
 !s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/src|C:/Users/every/Documents/Programming/feforce/src/top.v|
 !i113 0
-R7
+R5
 R19
-R9
+R7
 vtriangle_loader
 2C:/Users/every/Documents/Programming/feforce/src/triangle_loader.v
-R1
+R12
 !i10b 1
 !s100 4XZFC8iK00bHgdOf1Vi@o2
 IdI>;=UKS^DBc]:6B_6CE00
@@ -309,87 +309,87 @@ w1795123019
 FC:/Users/every/Documents/Programming/feforce/src/triangle_loader.v
 !i122 3
 L0 1 116
+R3
 R4
-R5
 r1
 !s85 0
 31
-R6
+R16
 !s107 C:/Users/every/Documents/Programming/feforce/src/triangle_loader.v|
 !s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/src|C:/Users/every/Documents/Programming/feforce/src/triangle_loader.v|
 !i113 0
-R7
+R5
 R19
-R9
+R7
 vtriangle_rom
 2C:/Users/every/Documents/Programming/feforce/ip/triangle_rom.v
-R20
+R21
 !i10b 1
 !s100 oeERG3Q0UdKQn^EMQ62z<1
 I@P<j>bB2AVS59iKf21;g92
 R0
-R2
+R1
 8C:/Users/every/Documents/Programming/feforce/ip/triangle_rom.v
 FC:/Users/every/Documents/Programming/feforce/ip/triangle_rom.v
 !i122 9
+R2
 R3
 R4
-R5
 r1
 !s85 0
 31
-R12
+R25
 !s107 C:/Users/every/Documents/Programming/feforce/ip/triangle_rom.v|
 !s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/ip|C:/Users/every/Documents/Programming/feforce/ip/triangle_rom.v|
 !i113 0
+R5
+R6
 R7
-R8
-R9
 vvertex_projector
 2C:/Users/every/Documents/Programming/feforce/src/vertexprojector.v
-R1
+R12
 !i10b 1
 !s100 FjLXzHG;7BgFPhzd2]kmB1
 ID:`AAV>c5[DmM`_U9SO`?1
 R0
-w1795217760
+R22
 8C:/Users/every/Documents/Programming/feforce/src/vertexprojector.v
 FC:/Users/every/Documents/Programming/feforce/src/vertexprojector.v
 !i122 1
 L0 12 213
+R3
 R4
-R5
 r1
 !s85 0
 31
-R6
+R16
 !s107 C:/Users/every/Documents/Programming/feforce/src/vertexprojector.v|
 !s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/src|C:/Users/every/Documents/Programming/feforce/src/vertexprojector.v|
 !i113 0
-R7
+R5
 R19
-R9
+R7
 vvertex_rom
 2C:/Users/every/Documents/Programming/feforce/ip/vertex_rom.v
-R20
+R21
 !i10b 1
 !s100 6GX4_KGSlbJeURRUR3d`b3
 IH2051RabQTAMNj]HF4I]30
 R0
-R2
+R1
 8C:/Users/every/Documents/Programming/feforce/ip/vertex_rom.v
 FC:/Users/every/Documents/Programming/feforce/ip/vertex_rom.v
 !i122 8
+R2
 R3
 R4
-R5
 r1
 !s85 0
 31
-R12
+R25
 !s107 C:/Users/every/Documents/Programming/feforce/ip/vertex_rom.v|
 !s90 -reportprogress|300|-work|work|+incdir+C:/Users/every/Documents/Programming/feforce/ip|C:/Users/every/Documents/Programming/feforce/ip/vertex_rom.v|
 !i113 0
+R5
+R6
 R7
-R8
-R9
