@@ -124,6 +124,8 @@ module vertex_projector ( // i should output new coords x0,y0 ... to x2,y2 based
     assign y2_val = y2_sum >> 8;
     assign z2_val = z2_sum >> 8;
 
+    // todo consider whether we should change what bits of the address is the input of the lut
+    // since right now its kinda randomly chosen
     depth_rom depth_LUT(w_addr[14:3], clk, w_data); // takes 1 clock cycle
     // depth_rom depth_LUT(w1_addr, clk, w1_data); 
     // depth_rom depth_LUT(w2_addr, clk, w2_data); 

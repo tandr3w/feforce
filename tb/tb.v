@@ -73,7 +73,7 @@ module tb();
         VGA_Y_d <= DUT.sy[8:0];
     end
     
-    parameter downscale_factor = 0;
+    parameter downscale_factor = 2;
     parameter slice_size = downscale_factor == 0 ? 1 : downscale_factor - 1;
 
     assign VGA_X = VGA_X_d >> downscale_factor;
