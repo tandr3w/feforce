@@ -231,6 +231,7 @@ hps_isw_handoff/
 sim/vish_stacktrace.vstf
 sys_description/
 
+simulation/*
 greybox_tmp
 *.vstf
 */transcript
