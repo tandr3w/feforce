@@ -26,7 +26,7 @@ module vertex_projector ( // i should output new coords x0,y0 ... to x2,y2 based
     output reg signed [15:0] y0_out, y1_out, y2_out,
 
     // calculated depth?
-    output reg signed [15:0] z0_out, z1_out, z2_out, // z
+    output reg [15:0] w0_out_recip, w1_out_recip, w2_out_recip, // w out
 
     output reg is_done
     // fixed point check later
@@ -61,8 +61,8 @@ module vertex_projector ( // i should output new coords x0,y0 ... to x2,y2 based
 
     reg [3:0] state;
     reg [15:0] w0_out, w1_out, w2_out; // w
-    reg [15:0] w0_out_recip, w1_out_recip, w2_out_recip; // w out
-    
+    reg signed [15:0] z0_out, z1_out, z2_out; // z
+
     // camera space 
     // perspective divide
     // screen space
@@ -124,6 +124,8 @@ module vertex_projector ( // i should output new coords x0,y0 ... to x2,y2 based
     assign y2_val = y2_sum >> 8;
     assign z2_val = z2_sum >> 8;
 
+    // todo consider whether we should change what bits of the address is the input of the lut
+    // since right now its kinda randomly chosen
     depth_rom depth_LUT(w_addr[14:3], clk, w_data); // takes 1 clock cycle
     // depth_rom depth_LUT(w1_addr, clk, w1_data); 
     // depth_rom depth_LUT(w2_addr, clk, w2_data); 

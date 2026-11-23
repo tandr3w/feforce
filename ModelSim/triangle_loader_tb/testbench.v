@@ -1,18 +1,18 @@
 `timescale 1ns / 1ps
 
 module testbench ( );
-
-	reg clk = 0;
-
+    reg clk = 0;
     reg rst;
     reg start;
-    reg [7:0] triangle_number;
+    reg [11:0] triangle_number;
 
     wire signed [15:0] x0, y0, z0;
     wire signed [15:0] x1, y1, z1;
     wire signed [15:0] x2, y2, z2;
 
-    wire [15:0] color0, color1, color2;
+    wire signed [15:0] normal_x, normal_y, normal_z;
+    wire [5:0] u0, u1, u2; // 0 to 63
+    wire [5:0] v0, v1, v2;
 
     wire is_final;
     wire valid;
@@ -67,9 +67,11 @@ module testbench ( );
         .y2(y2),
         .z2(z2),
 
-        .color0(color0),
-        .color1(color1),
-        .color2(color2),
+        .normal_x(normal_x),
+        .normal_y(normal_y),
+        .normal_z(normal_z),
+        .u0(u0), .u1(u1), .u2(u2),
+        .v0(v0), .v1(v1), .v2(v2),
 
         .is_final(is_final),
         .valid(valid)

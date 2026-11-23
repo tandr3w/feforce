@@ -55,11 +55,12 @@ module top(
         end
     end
 
-    // ------ Code to draw to the framebuffer -------
     wire [8:0] raster_x;
     wire [7:0] raster_y;
     wire [15:0] raster_color;
     wire raster_write;
+    wire clear;
+    wire [16:0] clear_addr;
 
     render_controller rc (
         .clk(clk),
@@ -68,7 +69,10 @@ module top(
         .write_x(raster_x),
         .write_y(raster_y),
         .write_color(raster_color),
-        .write_enable(raster_write)
+        .write_enable(raster_write),
+        
+        .clear(clear),
+        .clear_addr(clear_addr)
     );
     
     wire [15:0] fb_color;
@@ -82,12 +86,14 @@ module top(
         .write_color(raster_color),
         .write_enable(raster_write),
 
+        .clear(clear),
+        .clear_addr(clear_addr),
+
         // Parameters to read from framebuffer
         .read_x(sx),
         .read_y(sy),
         .read_color(fb_color)
     );
-    // -------------
 
     assign VGA_CLK = pixel_clk;
     assign VGA_BLANK_N = de_d;
