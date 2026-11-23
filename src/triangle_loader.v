@@ -91,21 +91,21 @@ module triangle_loader (
                     // save vertex 0 data
                     x0 <= vertex_data[47:32];
                     y0 <= vertex_data[31:16];
-                    z0 <= vertex_data[15:0] + 16'd3072;
+                    z0 <= vertex_data[15:0];
                     state <= LOAD_V1;
                 end
                 LOAD_V1: begin
                     // save vertex 1 data
                     x1 <= vertex_data[47:32];
                     y1 <= vertex_data[31:16];
-                    z1 <= vertex_data[15:0] + 16'd3072;
+                    z1 <= vertex_data[15:0];
                     state <= LOAD_V2;
                 end
                 LOAD_V2: begin
                     // save vertex 2 data
                     x2 <= vertex_data[47:32];
                     y2 <= vertex_data[31:16];
-                    z2 <= vertex_data[15:0] + 16'd3072;
+                    z2 <= vertex_data[15:0];
                     state <= IDLE;
                     valid <= 1;
                 end
