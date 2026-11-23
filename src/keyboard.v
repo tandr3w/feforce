@@ -2,7 +2,7 @@
 // Please see license at https://github.com/fpgacademy/DESim
 
 // Protect against undefined nets
-`default_nettype none
+// `default_nettype none
 
 // This module uses ps2_clk and ps2_dat to capture scancodes received from the PS/2 keyboard. The
 // last three scancodes received are always displayed on HEX6 - HEX0. Each time a scancode is 
