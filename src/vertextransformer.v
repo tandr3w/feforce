@@ -139,8 +139,9 @@ module vertex_transformer(
                     ny_out <= sum_ny; 
                     nz_out <= sum_nz;
 
-                    state <= DONE;// iify
+                    
                 end
+                state <= DONE;// iify
                 
 
                 
