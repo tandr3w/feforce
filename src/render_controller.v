@@ -167,7 +167,8 @@ module render_controller (
         .clk(clk),
         .rst(rst),
 
-        .normal_x_in(normal_x), .normal_y_in(normal_y), .normal_z_in(normal_z),
+        // .normal_x_in(normal_x), .normal_y_in(normal_y), .normal_z_in(normal_z),
+        .normal_x_in(nx_transformed), .normal_y_in(ny_transformed), .normal_z_in(nz_transformed),
         .u0_in(u0), .u1_in(u1), .u2_in(u2),
         .v0_in(v0), .v1_in(v1), .v2_in(v2),
 
