@@ -13,12 +13,14 @@
 // modified for use with project 
 
 // rename key with reset
-module keyboard (CLOCK_50, KEY, PS2_CLK, PS2_DAT, rotate, translate_yuh);
-    input wire CLOCK_50;
-    input wire [0:0] KEY;
+module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate_yuh);
+    input wire clk;
+    //input wire [0:0] KEY;
+
+    input wire reset;
     inout wire PS2_CLK, PS2_DAT;
     output reg rotate; 
-    output reg [1:0] translate_yuh; 
+    output reg signed [1:0] translate_yuh; 
     // output wire [9:0] LEDR;       // DE-series LEDs
     // output wire [6:0] HEX0;
     // output wire [6:0] HEX1;       // DE-series HEX displays
@@ -28,6 +30,8 @@ module keyboard (CLOCK_50, KEY, PS2_CLK, PS2_DAT, rotate, translate_yuh);
     // output wire [6:0] HEX5;       // DE-series HEX displays
 
     wire Resetn, negedge_ps2_clk;
+
+    assign Resetn = reset;
     reg [32:0] Serial;              // each PS2 serial data packet has 11 bits:
                                     // STOP (1) PARITY d7 d6 d5 d4 d3 d2 d1 d0 START (0)
                                     // The most-recent three data packets received are saved
@@ -40,19 +44,19 @@ module keyboard (CLOCK_50, KEY, PS2_CLK, PS2_DAT, rotate, translate_yuh);
     reg prev_ps2_clk;               // ps2_clk value in the previous CLOCK_50 clock cycle
     wire PS2_CLK_S, PS2_DAT_S;      // PS2 signals synchronized to CLOCK_50
 
-    assign Resetn = KEY[0];
+    //assign Resetn = KEY[0];
 
     // synchronize the PS/2 signals with CLOCK_50
-    sync S3 (PS2_CLK, Resetn, CLOCK_50, PS2_CLK_S);
-    sync S4 (PS2_DAT, Resetn, CLOCK_50, PS2_DAT_S);
+    sync S3 (PS2_CLK, Resetn, clk, PS2_CLK_S);
+    sync S4 (PS2_DAT, Resetn, clk, PS2_DAT_S);
     
-    always @(posedge CLOCK_50)
+    always @(posedge clk)
         prev_ps2_clk <= PS2_CLK_S;
 
     // check when ps2_clk has changed from 1 to 0
     assign negedge_ps2_clk = (prev_ps2_clk & !PS2_CLK_S);
 
-    always @(posedge CLOCK_50) begin    // specify a 33-bit shift register
+    always @(posedge clk) begin    // specify a 33-bit shift register
         if (Resetn == 0)
             Serial <= 33'b0;
         else if (negedge_ps2_clk) begin
@@ -62,7 +66,7 @@ module keyboard (CLOCK_50, KEY, PS2_CLK, PS2_DAT, rotate, translate_yuh);
     end
 
     // count ps2_clk cycles (equivalent to counting data bits received)
-    always @(posedge CLOCK_50) begin
+    always @(posedge clk) begin
         if (!Resetn || Packet == 'd11)
             Packet <= 4'b0;
         else if (negedge_ps2_clk) begin
@@ -75,9 +79,9 @@ module keyboard (CLOCK_50, KEY, PS2_CLK, PS2_DAT, rotate, translate_yuh);
     assign ps2_rec = (Packet == 'd11) && (Serial[30:23] == Serial[8:1]);
     
     // last received PS/2 scancode is in Serial[8:1]
-    regn USC (Serial[8:1], Resetn, ps2_rec, CLOCK_50, scancode);
+    regn USC (Serial[8:1], Resetn, ps2_rec, clk, scancode);
     
-    always @(posedge CLOCK_50)  begin // keep track of total number of PS/2 key-presses received
+    always @(posedge clk)  begin // keep track of total number of PS/2 key-presses received
         if (!Resetn) begin
             Total <= 10'b0;
         end 
@@ -93,20 +97,20 @@ module keyboard (CLOCK_50, KEY, PS2_CLK, PS2_DAT, rotate, translate_yuh);
     // replace with scancode if prob
     always @ (scancode) begin 
         if (scancode == 8'h2D) begin 
-            rotate <= 1; 
+            rotate <= 1'b1; 
 
         end
         else if (scancode == 8'h1C) begin
-            translate <= 2'11; 
+            translate_yuh <= 2'b11; 
 
         end
         else if (scancode == 8'h1C) begin
-            translate <= 2'01; 
+            translate_yuh <= 2'b01; 
 
         end
         else begin 
-            translate <= 2'00;
-            rotate <= 0; 
+            translate_yuh <= 2'b00;
+            rotate <= 1'b0; 
         end
     end
     // assign LEDR = Total;

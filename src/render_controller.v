@@ -13,6 +13,7 @@ module render_controller (
     parameter IDLE = 3'b000;
     parameter LOAD = 3'b001;
     parameter TRANSFORM = 3'b010;
+    parameter PROJECT = 3'b111; // out of order cuz why not
     parameter RASTER = 3'b011;
     parameter CLEAR = 3'b100; 
     parameter DONE = 3'b101;
@@ -52,14 +53,40 @@ module render_controller (
     wire projector_done;
     reg projector_start;
 
+    reg transformer_start; 
+    wire transformer_done; 
+
+    wire rotate_sig; 
+    wire signed [1:0] translate_sig;
+
+
+    wire signed [15:0] x0_transformed, x1_transformed, x2_transformed; 
+    wire signed [15:0] y0_transformed, y1_transformed, y2_transformed;
+    wire signed [15:0] z0_transformed, z1_transformed, z2_transformed;
+    wire signed [15:0] nx_transformed, ny_transformed, nz_transformed;
+
+
+    // keyboard wires
+
+
+
+    // the transformed stuff goes in the projector now
+
     vertex_projector projector(
         .clk(clk),
         .rst(rst),
         .start(projector_start),
 
-        .x0(x0), .y0(y0), .z0(z0),
-        .x1(x1), .y1(y1), .z1(z1),
-        .x2(x2), .y2(y2), .z2(z2),
+        // now we accept the transformed stuff
+
+        // .x0(x0), .y0(y0), .z0(z0),
+        // .x1(x1), .y1(y1), .z1(z1),
+        // .x2(x2), .y2(y2), .z2(z2),
+
+
+        .x0(x0_transformed), .y0(y0_transformed), .z0(z0_transformed),
+        .x1(x1_transformed), .y1(y1_transformed), .z1(z1_transformed),
+        .x2(x2_transformed), .y2(y2_transformed), .z2(z2_transformed),
 
         .x0_out(x0_out), .x1_out(x1_out), .x2_out(x2_out),
         .y0_out(y0_out), .y1_out(y1_out), .y2_out(y2_out),
@@ -67,6 +94,51 @@ module render_controller (
         .w0_out_recip(w_recip_0), .w1_out_recip(w_recip_1), .w2_out_recip(w_recip_2),
         .is_done(projector_done)
     );
+
+
+    vertex_transformer transformer(
+        .clk(clk),
+        .rst(rst),
+        .start(transformer_start),
+
+        .translate(translate_sig),
+        .rotate(rotate_sig),
+
+        .x0(x0), .y0(y0), .z0(z0),
+        .x1(x1), .y1(y1), .z1(z1),
+        .x2(x2), .y2(y2), .z2(z2),
+
+        .nx(normal_x), .ny(normal_y), .nz(normal_z), 
+
+        .x0_out(x0_transformed), .x1_out(x1_transformed), .x2_out(x2_transformed),
+        .y0_out(y0_transformed), .y1_out(y1_transformed), .y2_out(y2_transformed),
+        .z0_out(z0_transformed), .z1_out(z1_transformed), .z2_out(z2_transformed),
+        .nx_out(nx_transformed), .ny_out(nx_transformed), .nz_out(nx_transformed),
+
+        .is_done(transformer_done)
+
+    );  
+
+
+
+    wire PS2_CLK_S, PS2_DAT_S;  // for internal stuff
+
+
+
+    keyboard da_big_fugging_gg_ez_keybord (
+        .clk(clk),
+        .reset(rst),
+
+        .PS2_CLK(PS2_CLK_S),
+        .PS2_DAT(PS2_DAT_S), 
+
+        .rotate(rotate_sig),
+        .translate(translate_sig)  
+    );  
+
+
+    // sync S3 (PS2_CLK, Resetn, clk, PS2_CLK_S);
+    // sync S4 (PS2_DAT, Resetn, clk, PS2_DAT_S);
 
     wire signed [23:0] proj_product_x0, proj_product_x1, proj_product_x2;
     wire signed [22:0] proj_product_y0, proj_product_y1, proj_product_y2;
@@ -146,10 +218,20 @@ module render_controller (
                         state <= DONE;
                     end else if (loader_valid) begin
                         state <= TRANSFORM;
-                        projector_start <= 1;
+                        // projector_start <= 1;
+
+                        transformer_start <= 1; 
+                        
                     end
                 end
-                TRANSFORM: begin
+                TRANSFORM: begin 
+                    transformer_start <= 0;
+                    if (transformer_done) begin 
+                        state <= PROJECT; 
+                        projector_start <= 1; 
+                    end
+                end
+                PROJECT: begin 
                     projector_start <= 0;
                     if (projector_done) begin
                         state <= RASTER;
