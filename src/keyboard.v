@@ -13,14 +13,14 @@
 // modified for use with project 
 
 // rename key with reset
-module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate_yuh);
+module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate);
     input wire clk;
     //input wire [0:0] KEY;
 
     input wire reset;
     inout wire PS2_CLK, PS2_DAT;
     output reg rotate; 
-    output reg signed [1:0] translate_yuh; 
+    output reg signed [1:0] translate; 
     // output wire [9:0] LEDR;       // DE-series LEDs
     // output wire [6:0] HEX0;
     // output wire [6:0] HEX1;       // DE-series HEX displays
@@ -101,15 +101,15 @@ module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate_yuh);
 
         end
         else if (scancode == 8'h1C) begin
-            translate_yuh <= 2'b11; 
+            translate <= 2'b11; 
 
         end
         else if (scancode == 8'h1C) begin
-            translate_yuh <= 2'b01; 
+            translate <= 2'b01; 
 
         end
         else begin 
-            translate_yuh <= 2'b00;
+            translate <= 2'b00;
             rotate <= 1'b0; 
         end
     end

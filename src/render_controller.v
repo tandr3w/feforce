@@ -240,6 +240,19 @@ module render_controller (
                         projector_start <= 1; 
                     end
                 end
+                CLEAR: begin // clear screen after transform
+                    if (clear_addr < 17'd76799) begin
+                        clear_addr <= clear_addr + 1;
+                    end 
+                    // else if (transformer_done) begin // clear the screen(reset) then project new
+                    //     clear_addr <= 0; 
+                    //     state <= PROJECT;  
+                    // end
+                    else begin
+                        clear_addr <= 0;
+                        state <= PROJECT;
+                    end
+                end
                 PROJECT: begin 
                     projector_start <= 0;
                     if (projector_done) begin
@@ -253,19 +266,6 @@ module render_controller (
                         curr_triangle <= curr_triangle + 1; // start loading the next triangle
                         loader_start <= 1;
                         state <= LOAD; // Load next triangle
-                    end
-                end
-                CLEAR: begin
-                    if (clear_addr < 17'd76799) begin
-                        clear_addr <= clear_addr + 1;
-                    end 
-                    // else if (transformer_done) begin // clear the screen(reset) then project new
-                    //     clear_addr <= 0; 
-                    //     state <= PROJECT;  
-                    // end
-                    else begin
-                        clear_addr <= 0;
-                        state <= IDLE;
                     end
                 end
                 DONE: begin
