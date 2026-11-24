@@ -2,7 +2,7 @@
 
 import math
 
-OBJ = "assets/cone.obj"
+OBJ = "assets/monkey.obj"
 
 verts = []
 uvs = []

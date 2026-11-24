@@ -35,7 +35,7 @@ module tb();
 
     PS2_keyboard keyboard_sim (
         .Clock(CLOCK_50),
-        .Resetn(~KEY[0]),
+        .Resetn(KEY[0]),
         .key_action(key_action),
         .scan_code(scan_code),
         .ps2_clk(PS2_CLK_S),
