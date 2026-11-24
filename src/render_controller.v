@@ -158,12 +158,12 @@ module render_controller (
     assign proj_product_y2 = (120 * y2_out);
 
     // note that y is inverted because the VGA coordinate system has y increasing downwards
-    assign projected_x0 = (proj_product_x0 >> 8) + 160;
-    assign projected_x1 = (proj_product_x1 >> 8) + 160;
-    assign projected_x2 = (proj_product_x2 >> 8) + 160;
-    assign projected_y0 = 120 - (proj_product_y0 >> 8);
-    assign projected_y1 = 120 - (proj_product_y1 >> 8);
-    assign projected_y2 = 120 - (proj_product_y2 >> 8);
+    assign projected_x0 = (proj_product_x0 >>> 8) + 160;
+    assign projected_x1 = (proj_product_x1 >>> 8) + 160;
+    assign projected_x2 = (proj_product_x2 >>> 8) + 160;
+    assign projected_y0 = 120 - (proj_product_y0 >>> 8);
+    assign projected_y1 = 120 - (proj_product_y1 >>> 8);
+    assign projected_y2 = 120 - (proj_product_y2 >>> 8);
 
     assign clear = (state == CLEAR);
 
@@ -281,6 +281,7 @@ module render_controller (
                 DONE: begin
                     loader_start <= 0;
                     raster_start <= 0;
+                    state <= CLEAR; // loop back
                 end
             endcase
         end

@@ -12,7 +12,9 @@ module top(
     output VGA_VS,
     output VGA_CLK,
     output VGA_BLANK_N,
-    output VGA_SYNC_N
+    output VGA_SYNC_N,
+    inout wire  PS2_CLK_S, 
+    inout wire PS2_DAT_S 
 );
     wire [9:0] sx, sy;
     wire pixel_clk;
@@ -38,7 +40,7 @@ module top(
         .de(de)
     );
 
-    wire PS2_CLK_S, PS2_DAT_S;  // for internal stuff
+    // wire PS2_CLK_S, PS2_DAT_S;  // for internal stuff
 
     wire rotate_sig; 
     wire signed [1:0] translate_sig;
