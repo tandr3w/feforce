@@ -46,6 +46,7 @@ module vertex_transformer(
     //reg [15:0] sine_addr; // define the width 9 bits for numbr 4 bits for decimal place 
 
     reg [11:0] sine_addr; //use binary angle map
+    reg [11:0] cur_angle; 
     // or 10.6 for sine addr
 
 
@@ -70,33 +71,33 @@ module vertex_transformer(
     // change to -360 to 360 decimal in a 12 bit format
     sine_rom sine(sine_addr, clk, sine_data); // i feel like it makes the msot sense using an address sine addr since i dont intend for rotation to change
 
-    always @ (*) begin
-        case (state) 
+    // always @ (*) begin
+    //     case (state) 
 
-            IDLE: begin 
-                // load sin
-                sine_addr <= sine_addr + rotation; // rotation (10.6 + 10.6)
+    //         IDLE: begin 
+    //             // load sin
+    //             sine_addr <= sine_addr + rotation; // rotation (10.6 + 10.6)
 
-            end
+    //         end
 
-            LOAD_SIN: begin 
-                //load cos
-                // https://electronicstechnician.tpub.com/14091/css/Binary-Angular-Measurement-316.htm
-                sine_addr <= sine_addr + 12'd1024; // theres prob a better way to do this(we are using brads because i hate conversion)
-                // consider wrap around once past 360(for both cases)
+    //         LOAD_SIN: begin 
+    //             //load cos
+    //             // https://electronicstechnician.tpub.com/14091/css/Binary-Angular-Measurement-316.htm
+    //             sine_addr <= sine_addr + 12'd1024; // theres prob a better way to do this(we are using brads because i hate conversion)
+    //             // consider wrap around once past 360(for both cases)
 
                 
-            end
-            // LOAD_COS: begin 
-            //     // https://electronicstechnician.tpub.com/14091/css/Binary-Angular-Measurement-316.htm
-            //     sine_addr <= sine_addr + 12'd1024; // theres prob a better way to do this(we are using brads because i hate conversion)
-            //     // consider wrap around once past 360(for both cases)
-            // end
+    //         end
+    //         // LOAD_COS: begin 
+    //         //     // https://electronicstechnician.tpub.com/14091/css/Binary-Angular-Measurement-316.htm
+    //         //     sine_addr <= sine_addr + 12'd1024; // theres prob a better way to do this(we are using brads because i hate conversion)
+    //         //     // consider wrap around once past 360(for both cases)
+    //         // end
 
-            default sine_addr <= 12'b0; // should be 12 bit
+    //         default sine_addr <= 12'b0; // should be 12 bit
 
-        endcase  
-    end
+    //     endcase  
+    // end
 
 
     always @ (posedge clk or posedge rst) begin
@@ -111,6 +112,9 @@ module vertex_transformer(
             IDLE: begin 
                 is_done  <= 1'b0;
                 // sine_addr <= 12'b0; 
+                // we want this to be ready by load_sin
+                cur_angle <= 12'b0;
+                sine_addr <= rotation;
                 if (start) begin
                     state <= LOAD_SIN;  
 
@@ -120,6 +124,8 @@ module vertex_transformer(
 
             LOAD_SIN: begin 
                 // sine_addr <= rotation;
+                cur_angle <= rotation; 
+                sine_addr <= cur_angle + 12'd1024; 
                 sine_angle <= sine_data; 
                 state <= LOAD_COS;
             end
@@ -155,17 +161,17 @@ module vertex_transformer(
                     
                 end
                 else if (!rotate) begin 
-                    x0_out <= translation_of_x0;
-                    y0_out <= translation_of_y0;
-                    z0_out <= translation_of_z0 + 16'b0000110000000000;
+                    x0_out <= x0 + translation_of_x0;
+                    y0_out <= y0 + translation_of_y0;
+                    z0_out <= z0 + translation_of_z0 + 16'b0000110000000000;
 
-                    x1_out <= translation_of_x1;
-                    y1_out <= translation_of_y1;
-                    z1_out <= translation_of_z1 + 16'b0000110000000000;
+                    x1_out <= x1 + translation_of_x1;
+                    y1_out <= y1 + translation_of_y1;
+                    z1_out <= z1 + translation_of_z1 + 16'b0000110000000000;
 
-                    x2_out <= translation_of_x2;
-                    y2_out <= translation_of_y2;
-                    z2_out <= translation_of_z2 + 16'b0000110000000000;
+                    x2_out <= x2 + translation_of_x2;
+                    y2_out <= y2 + translation_of_y2;
+                    z2_out <= z2 + translation_of_z2 + 16'b0000110000000000;
 
 
 
@@ -215,11 +221,13 @@ module vertex_transformer(
     // holy shit
 
     
-
+    // 32 bits
     assign cos_of_x0 = cosine_angle * x0 >>> 15; // fractional bits add up to 23, want 8
     assign sin_of_z0 = sine_angle * z0 >>> 15; // take the lower terms (where the decimal in the middle or smth)
     assign translation_of_x0 = translate * translation_x; //UPDATE this is alr fixed point dont shift
-    assign sum_x0 = cos_of_x0[15:0] + sin_of_z0[15:0] + translation_of_x0; // since 8.8 no need to shift
+
+
+    assign sum_x0 = cos_of_x0 + sin_of_z0 + translation_of_x0; // since 8.8 no need to shift
 
     assign translation_of_y0 = translate * translation_y;
     assign sum_y0 = y0 + translation_of_y0; // alr in 8.8 
@@ -227,14 +235,14 @@ module vertex_transformer(
     assign cos_of_z0 = cosine_angle * z0 >>> 15;
     assign sin_of_x0 = sine_angle * x0 >>> 15; 
     assign translation_of_z0 = translate * translation_z;
-    assign sum_z0 = (-1 * sin_of_x0[15:0]) + cos_of_z0[15:0] + translation_of_z0 + 16'b0000110000000000;  // add 12 fixed point
+    assign sum_z0 = (-sin_of_x0) + cos_of_z0 + translation_of_z0 + 16'b0000110000000000;  // add 12 fixed point
 
 
     // x1 ,y1 ,z1
     assign cos_of_x1 = cosine_angle * x1 >>> 15;
     assign sin_of_z1 = sine_angle * z1 >>> 15;
     assign translation_of_x1 = translate * translation_x;
-    assign sum_x1 = cos_of_x1[15:0] + sin_of_z1[15:0] + translation_of_x1; // since 8.8 no need to shift
+    assign sum_x1 = cos_of_x1 + sin_of_z1 + translation_of_x1; // since 8.8 no need to shift
 
     assign translation_of_y1 = translate * translation_y;
     assign sum_y1 = y1 + translation_of_y1; // alr in 8.8 
@@ -242,14 +250,14 @@ module vertex_transformer(
     assign cos_of_z1 = cosine_angle * z1 >>> 15;
     assign sin_of_x1 = sine_angle * x1 >>> 15; 
     assign translation_of_z1 = translate * translation_z;
-    assign sum_z1 = (-1 * sin_of_x1[15:0]) + cos_of_z1[15:0] + translation_of_z1 + 16'b0000110000000000; 
+    assign sum_z1 = (-sin_of_x1) + cos_of_z1 + translation_of_z1 + 16'b0000110000000000; 
 
 
     // x2, y2, z2
     assign cos_of_x2 = cosine_angle * x2 >>> 15;
     assign sin_of_z2 = sine_angle * z2 >>> 15;
     assign translation_of_x2 = translate * translation_x;
-    assign sum_x2 = cos_of_x2[15:0] + sin_of_z2[15:0] + translation_of_x2; // since 8.8 no need to shift
+    assign sum_x2 = cos_of_x2 + sin_of_z2 + translation_of_x2; // since 8.8 no need to shift
 
     assign translation_of_y2 = translate * translation_y;
     assign sum_y2 = y2 + translation_of_y2; // alr in 8.8 
@@ -257,7 +265,7 @@ module vertex_transformer(
     assign cos_of_z2 = cosine_angle * z2 >>> 15;
     assign sin_of_x2 = sine_angle * x2 >>> 15; 
     assign translation_of_z2 = translate * translation_z;
-    assign sum_z2 = (-1 * sin_of_x2[15:0]) + cos_of_z2[15:0] + translation_of_z2 + 16'b0000110000000000; // 12 in 8.8
+    assign sum_z2 = (-sin_of_x2) + cos_of_z2 + translation_of_z2 + 16'b0000110000000000; // 12 in 8.8
 
 
     // normal vector stuff
@@ -265,7 +273,7 @@ module vertex_transformer(
     assign cos_of_nx = cosine_angle * nx >>> 15;
     assign sin_of_nz = sine_angle * nz >>> 15;
     assign translation_of_nx = translate * translation_x;
-    assign sum_nx = cos_of_nx[15:0] + sin_of_nz[15:0] + translation_of_nx; // since 8.8 no need to shift
+    assign sum_nx = cos_of_nx + sin_of_nz + translation_of_nx; // since 8.8 no need to shift
 
     assign translation_of_ny = translate * translation_y;
     assign sum_ny = ny + translation_of_ny; // alr in 8.8 
@@ -273,7 +281,7 @@ module vertex_transformer(
     assign cos_of_nz = cosine_angle * nz >>> 15;
     assign sin_of_nx = sine_angle * nx >>> 15; 
     assign translation_of_nz = translate * translation_z;
-    assign sum_nz = (-1 * sin_of_nx[15:0]) + cos_of_nz[15:0] + translation_of_nz; 
+    assign sum_nz = (-sin_of_nx) + cos_of_nz + translation_of_nz; 
 
 
     // assign x0_out = (cosine_angle * x0) + (sine_angle * z0) + (translation_x * translate); 

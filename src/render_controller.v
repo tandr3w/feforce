@@ -201,12 +201,15 @@ module render_controller (
         .clear_addr(clear_addr)
     );
 
+
+    // i need to do drugs(coofe)
     always @(posedge clk or posedge rst) begin
         if (rst) begin
             curr_triangle <= 0;
             raster_start <= 0;
             loader_start <= 0;
             projector_start <= 0;
+            transformer_start <= 0;
             clear_addr <= 0;
             state <= CLEAR;
         end else begin
@@ -242,19 +245,19 @@ module render_controller (
                 TRANSFORM: begin 
                     transformer_start <= 0;
                     if (transformer_done) begin 
-                        state <= CLEAR; // used to be project
-                        // projector_start <= 1; 
+                        state <= PROJECT; // used to be project
+                        projector_start <= 1; 
                     end
                 end
                 CLEAR: begin // clear screen after transform
                     if (clear_addr < 17'd76799) begin
                         clear_addr <= clear_addr + 1;
                     end 
-                    else if (transformer_done) begin // clear the screen(reset) then project new
-                        clear_addr <= 0; 
-                        state <= PROJECT;  
-                        projector_start <= 1; 
-                    end
+                    // else if (transformer_done) begin // clear the screen(reset) then project new
+                    //     clear_addr <= 0; 
+                    //     state <= PROJECT;  
+                    //     projector_start <= 1; 
+                    // end
                     else begin
                         clear_addr <= 0;
                         state <= IDLE;
