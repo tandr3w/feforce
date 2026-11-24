@@ -128,7 +128,7 @@
                     is_done  <= 1'b0;
                     // sine_addr <= 12'b0; 
                     // we want this to be ready by load_sin
-                    cur_angle <= 12'b0;
+                    // cur_angle <= 12'b0;
                     sine_addr <= rotation;
                     if (start) begin
                         state <= LOAD_SIN;  
@@ -139,7 +139,7 @@
 
                 LOAD_SIN: begin 
                     // sine_addr <= rotation;
-                    cur_angle <= rotation; 
+                    // cur_angle <= rotation; 
                     sine_addr <= rotation + 12'd1024; 
                     sine_angle <= sine_data; 
                     state <= LOAD_COS;
