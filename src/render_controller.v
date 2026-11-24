@@ -221,15 +221,18 @@ module render_controller (
                     end 
                     else if (loader_valid) begin
 
-                        if (translate_sig != 2'b00) begin 
-                            state <= TRANSFORM;
-                            transformer_start <= 1; 
+                        // if (translate_sig != 2'b00) begin 
+                        //     state <= TRANSFORM;
+                        //     transformer_start <= 1; 
 
-                        end
-                        else begin 
-                            state <= PROJECT;
-                            projector_start <= 1; 
-                        end 
+                        // end
+                        // else begin 
+                        //     state <= PROJECT;
+                        //     projector_start <= 1; 
+                        // end 
+
+                        state <= TRANSFORM;
+                        transformer_start <= 1; 
                         
                     end
                 end

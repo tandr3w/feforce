@@ -201,7 +201,7 @@ module vertex_transformer(
     assign cos_of_z0 = cosine_angle * z0 >>> 15;
     assign sin_of_x0 = sine_angle * x0 >>> 15; 
     assign translation_of_z0 = translate * translation_z;
-    assign sum_z0 = (-1 * sin_of_x0[15:0]) + cos_of_z0[15:0] + translation_of_z0; 
+    assign sum_z0 = (-1 * sin_of_x0[15:0]) + cos_of_z0[15:0] + translation_of_z0 + 16'b0000110000000000;  
 
 
     // x1 ,y1 ,z1
@@ -216,7 +216,7 @@ module vertex_transformer(
     assign cos_of_z1 = cosine_angle * z1 >>> 15;
     assign sin_of_x1 = sine_angle * x1 >>> 15; 
     assign translation_of_z1 = translate * translation_z;
-    assign sum_z1 = (-1 * sin_of_x1[15:0]) + cos_of_z1[15:0] + translation_of_z1; 
+    assign sum_z1 = (-1 * sin_of_x1[15:0]) + cos_of_z1[15:0] + translation_of_z1 + 16'b0000110000000000; 
 
 
     // x2, y2, z2
@@ -231,7 +231,7 @@ module vertex_transformer(
     assign cos_of_z2 = cosine_angle * z2 >>> 15;
     assign sin_of_x2 = sine_angle * x2 >>> 15; 
     assign translation_of_z2 = translate * translation_z;
-    assign sum_z2 = (-1 * sin_of_x2[15:0]) + cos_of_z2[15:0] + translation_of_z2; 
+    assign sum_z2 = (-1 * sin_of_x2[15:0]) + cos_of_z2[15:0] + translation_of_z2 + 16'b0000110000000000; // 12 in 8.8
 
 
     // normal vector stuff
