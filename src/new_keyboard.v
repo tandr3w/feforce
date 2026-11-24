@@ -110,18 +110,18 @@ module PS2_keyboard (Clock, Resetn, key_action, scan_code, ps2_clk, ps2_dat, rot
             next_to_send = keyboard_FIFO[0];
     end
 
-    always @ (scancode) begin 
-        if (scancode == 8'h2D) begin 
+    always @ (scan_code) begin 
+        if (scan_code == 8'h2D) begin 
             rotate <= 1'b1;
             translate <= 2'b00; 
 
         end
-        else if (scancode == 8'h1C) begin
+        else if (scan_code == 8'h1C) begin
             translate <= 2'b11;
             rotate <= 1'b0;  
 
         end
-        else if (scancode == 8'h23) begin
+        else if (scan_code == 8'h23) begin
             translate <= 2'b01;
             rotate <= 1'b0;  
 
