@@ -39,10 +39,13 @@ module top(
     );
 
     wire PS2_CLK_S, PS2_DAT_S;  // for internal stuff
+
+    wire rotate_sig; 
+    wire signed [1:0] translate_sig;
     // was a bit confused so i just copied and pasted into here from render controller
     keyboard U3 (
         .clk(clk),
-        .rst(rst),
+        .reset(rst),
 
         .PS2_CLK(PS2_CLK_S),
         .PS2_DAT(PS2_DAT_S), 
@@ -79,6 +82,8 @@ module top(
     render_controller rc (
         .clk(clk),
         .rst(rst),
+        .rotate(rotate_sig),
+        .translate(translate_sig),
 
         .write_x(raster_x),
         .write_y(raster_y),

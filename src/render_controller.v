@@ -2,6 +2,9 @@ module render_controller (
     input wire clk,
     input wire rst,
 
+    input wire rotate, // inputs for rotate and translate
+    input wire [1:0] translate,
+
     output [8:0] write_x,
     output [7:0] write_y,
     output [15:0] write_color,
@@ -56,8 +59,8 @@ module render_controller (
     reg transformer_start; 
     wire transformer_done; 
 
-    wire rotate_sig; 
-    wire signed [1:0] translate_sig;
+    // wire rotate_sig; 
+    // wire signed [1:0] translate_sig;
 
 
     wire signed [15:0] x0_transformed, x1_transformed, x2_transformed; 
@@ -101,8 +104,8 @@ module render_controller (
         .rst(rst),
         .start(transformer_start),
 
-        .translate(translate_sig),
-        .rotate(rotate_sig),
+        .translate(translate),
+        .rotate(rotate),
 
         .x0(x0), .y0(y0), .z0(z0),
         .x1(x1), .y1(y1), .z1(z1),
@@ -122,20 +125,20 @@ module render_controller (
 
 
 
-    wire PS2_CLK_S, PS2_DAT_S;  // for internal stuff
+    // wire PS2_CLK_S, PS2_DAT_S;  // for internal stuff
 
 
 
-    keyboard da_big_fugging_gg_ez_keybord (
-        .clk(clk),
-        .reset(rst),
+    // keyboard da_big_fugging_gg_ez_keybord (
+    //     .clk(clk),
+    //     .reset(rst),
 
-        .PS2_CLK(PS2_CLK_S),
-        .PS2_DAT(PS2_DAT_S), 
+    //     .PS2_CLK(PS2_CLK_S),
+    //     .PS2_DAT(PS2_DAT_S), 
 
-        .rotate(rotate_sig),
-        .translate(translate_sig)  
-    );  
+    //     .rotate(rotate_sig),
+    //     .translate(translate_sig)  
+    // );  
 
 
     // sync S3 (PS2_CLK, Resetn, clk, PS2_CLK_S);
