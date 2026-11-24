@@ -33,9 +33,9 @@
 
         reg [2:0] state; 
         //parameter [15:0] rotation = 16'b0000001010000000; // rotation amt(smth) in 10.6 *fix change to binary angle map
-        parameter [11:0] rotation = 12'b000001110010;
+        parameter [11:0] rotation = 12'b000101110010;
 
-        parameter signed [15:0] translation_x = 16'b0000000010000000; // translation amt(arbitary) fixed point 8.8
+        parameter signed [15:0] translation_x = 16'b0000001010000000; // translation amt(arbitary) fixed point 8.8
         parameter signed [15:0] translation_y = 16'b0000000010000000; // translation amt
         parameter signed [15:0] translation_z = 16'b0000000000000000; // translation amt
         parameter IDLE = 3'b000;
