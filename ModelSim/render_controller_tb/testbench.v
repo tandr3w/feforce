@@ -32,7 +32,9 @@ module testbench ( );
         .write_x(write_x),
         .write_y(write_y),
         .write_color(write_color),
-        .write_enable(write_enable)
+        .write_enable(write_enable),
+        .rotate(1'b0),
+        .translate(2'b00)
     );
 
 endmodule
