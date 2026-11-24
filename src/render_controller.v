@@ -2,8 +2,8 @@ module render_controller (
     input wire clk,
     input wire rst,
 
-    input wire rotate, // inputs for rotate and translate
-    input wire [1:0] translate,
+    input wire [11:0] rotate, // inputs for rotate and translate
+    input wire [15:0] translate,
 
     output [8:0] write_x,
     output [7:0] write_y,
@@ -22,8 +22,8 @@ module render_controller (
     parameter DONE = 3'b101;
 
     reg [2:0] state;
-    reg prev_rotate;
-    reg [1:0] prev_translate;
+    reg [11:0] prev_rotate;
+    reg [15:0] prev_translate;
 
     reg [11:0] curr_triangle;
 

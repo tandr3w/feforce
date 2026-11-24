@@ -8,10 +8,10 @@
         input start,
 
         //input mode, // placeholder for keyboard
-        input signed [1:0] translate, // either -1 or 1
+        input signed [15:0] translate, // either -1 or 1
         //input [13:0] rotate; // temp rotation along the x axis??? 
 
-        input rotate,
+        input [11:0] rotate,
 
         
 
@@ -33,10 +33,14 @@
 
         reg [2:0] state; 
         //parameter [15:0] rotation = 16'b0000001010000000; // rotation amt(smth) in 10.6 *fix change to binary angle map
-        parameter [11:0] rotation = 12'b000101110010;
+        // parameter [11:0] rotation = 12'b000101110010;
+        wire [11:0] rotation;
+        assign rotation = rotate;
 
-        parameter signed [15:0] translation_x = 16'b0000001010000000; // translation amt(arbitary) fixed point 8.8
-        parameter signed [15:0] translation_y = 16'b0000000010000000; // translation amt
+        // parameter signed [15:0] translation_x = 16'b0000000001000000; // translation amt(arbitary) fixed point 8.8
+        wire signed [15:0] translation_x;
+        assign translation_x = translate;
+        parameter signed [15:0] translation_y = 16'b0000000000000000; // translation amt
         parameter signed [15:0] translation_z = 16'b0000000000000000; // translation amt
         parameter IDLE = 3'b000;
         parameter LOAD_COS = 3'b001;
@@ -257,47 +261,47 @@
         // 32 bits
         assign cos_of_x0 = cosine_angle * x0 >>> 15; // fractional bits add up to 23, want 8
         assign sin_of_z0 = sine_angle * z0 >>> 15; // take the lower terms (where the decimal in the middle or smth)
-        assign translation_of_x0 = translate * translation_x; //UPDATE this is alr fixed point dont shift
+        assign translation_of_x0 =  translation_x; //UPDATE this is alr fixed point dont shift
 
 
         assign sum_x0 = cos_of_x0 + sin_of_z0 + translation_of_x0; // since 8.8 no need to shift
 
-        assign translation_of_y0 = translate * translation_y;
+        assign translation_of_y0 =  translation_y;
         assign sum_y0 = y0 + translation_of_y0; // alr in 8.8 
 
         assign cos_of_z0 = cosine_angle * z0 >>> 15;
         assign sin_of_x0 = sine_angle * x0 >>> 15; 
-        assign translation_of_z0 = translate * translation_z;
+        assign translation_of_z0 =  translation_z;
         assign sum_z0 = (-sin_of_x0) + cos_of_z0 + translation_of_z0 + 16'b0000110000000000;  // add 12 fixed point
 
 
         // x1 ,y1 ,z1
         assign cos_of_x1 = cosine_angle * x1 >>> 15;
         assign sin_of_z1 = sine_angle * z1 >>> 15;
-        assign translation_of_x1 = translate * translation_x;
+        assign translation_of_x1 =  translation_x;
         assign sum_x1 = cos_of_x1 + sin_of_z1 + translation_of_x1; // since 8.8 no need to shift
 
-        assign translation_of_y1 = translate * translation_y;
+        assign translation_of_y1 =  translation_y;
         assign sum_y1 = y1 + translation_of_y1; // alr in 8.8 
 
         assign cos_of_z1 = cosine_angle * z1 >>> 15;
         assign sin_of_x1 = sine_angle * x1 >>> 15; 
-        assign translation_of_z1 = translate * translation_z;
+        assign translation_of_z1 = translation_z;
         assign sum_z1 = (-sin_of_x1) + cos_of_z1 + translation_of_z1 + 16'b0000110000000000; 
 
 
         // x2, y2, z2
         assign cos_of_x2 = cosine_angle * x2 >>> 15;
         assign sin_of_z2 = sine_angle * z2 >>> 15;
-        assign translation_of_x2 = translate * translation_x;
+        assign translation_of_x2 = translation_x;
         assign sum_x2 = cos_of_x2 + sin_of_z2 + translation_of_x2; // since 8.8 no need to shift
 
-        assign translation_of_y2 = translate * translation_y;
+        assign translation_of_y2 = translation_y;
         assign sum_y2 = y2 + translation_of_y2; // alr in 8.8 
 
         assign cos_of_z2 = cosine_angle * z2 >>> 15;
         assign sin_of_x2 = sine_angle * x2 >>> 15; 
-        assign translation_of_z2 = translate * translation_z;
+        assign translation_of_z2 = translation_z;
         assign sum_z2 = (-sin_of_x2) + cos_of_z2 + translation_of_z2 + 16'b0000110000000000; // 12 in 8.8
 
 

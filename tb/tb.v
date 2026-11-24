@@ -39,9 +39,7 @@ module tb();
         .key_action(key_action),
         .scan_code(scan_code),
         .ps2_clk(PS2_CLK_S),
-        .ps2_dat(PS2_DAT_S),
-        .rotate(),
-        .translate()
+        .ps2_dat(PS2_DAT_S)
     );
     initial $sim_fpga(CLOCK_50, SW, KEY, LEDR, HEX, key_action, scan_code, 
                       ps2_lock_control, VGA_X, VGA_Y, VGA_COLOR, plot, GPIO);

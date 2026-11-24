@@ -1,6 +1,6 @@
 from PIL import Image
 
-img = Image.open("assets/bricks.jpg").convert("RGB")
+img = Image.open("assets/wood.jpg").convert("RGB")
 img = img.resize((64, 64))
 
 out = """WIDTH=16;

@@ -42,8 +42,8 @@ module top(
 
     // wire PS2_CLK_S, PS2_DAT_S;  // for internal stuff
 
-    wire rotate_sig; 
-    wire signed [1:0] translate_sig;
+    wire [11:0] rotate_sig; 
+    wire signed [15:0] translate_sig;
     // was a bit confused so i just copied and pasted into here from render controller
 
     // synchronize the PS/2 signals with CLOCK_50
@@ -61,7 +61,7 @@ module top(
         .translate(translate_sig)  
 
     );
-    assign LEDR[1] = rotate_sig; 
+    assign LEDR[1] = rotate_sig[6]; 
     assign rst = ~KEY[0];
     assign LEDR[0] = rst;
     // Delay signals by 1 clock cycle since the RAM has 1 cycle read latency

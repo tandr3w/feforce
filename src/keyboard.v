@@ -19,8 +19,8 @@ module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate);
 
     input wire reset;
     inout wire PS2_CLK, PS2_DAT;
-    output reg rotate; 
-    output reg signed [1:0] translate; 
+    output reg [11:0] rotate; 
+    output reg signed [15:0] translate; 
     // output wire [9:0] LEDR;       // DE-series LEDs
     // output wire [6:0] HEX0;
     // output wire [6:0] HEX1;       // DE-series HEX displays
@@ -94,26 +94,23 @@ module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate);
       
         
     end
+
     // replace with scancode if prob
-    always @ (scancode) begin 
-        if (scancode == 8'h2D) begin 
-            rotate <= 1'b1;
-            translate <= 2'b00; 
-
+    always @ (posedge clk) begin
+        if (Resetn == 1'b0) begin
+            rotate <= 0;
+            translate <= 0;
         end
-        else if (scancode == 8'h1C) begin
-            translate <= 2'b11;
-            rotate <= 1'b0;  
-
-        end
-        else if (scancode == 8'h23) begin
-            translate <= 2'b01;
-            rotate <= 1'b0;  
-
-        end
-        else begin 
-            translate <= 2'b00;
-            rotate <= 1'b0; 
+        if (ps2_rec) begin
+            if (scancode == 8'h2D) begin 
+                rotate <= rotate + 12'd16;
+            end
+            else if (scancode == 8'h1C) begin
+                translate <= translate + (16'd1 << 4);
+            end
+            else if (scancode == 8'h23) begin
+                translate <= translate - (16'd1 << 4);
+            end
         end
     end
     // assign LEDR = Total;

@@ -426,8 +426,8 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[8] -entity DE1_
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[9] -entity DE1_SoC
 set_location_assignment PIN_AD7 -to PS2_CLK_S
 set_location_assignment PIN_AE7 -to PS2_DAT_S
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_CLK -entity DE1_SoC
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_DAT -entity DE1_SoC
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_CLK_S -entity DE1_SoC
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_DAT_S -entity DE1_SoC
 set_location_assignment PIN_AD9 -to PS2_CLK2
 set_location_assignment PIN_AE9 -to PS2_DAT2
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_CLK2 -entity DE1_SoC
@@ -892,7 +892,7 @@ set_global_assignment -name EDA_TEST_BENCH_FILE ModelSim/testbench.v -section_id
 
 
 set_global_assignment -name SEARCH_PATH "c:\\users\\henry\\documents\\github\\feforce"
-set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "VERILOG HDL" -section_id eda_simulation
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT NONE -section_id eda_simulation
 set_global_assignment -name VERILOG_FILE src/vertextransformer.v
 set_global_assignment -name VERILOG_FILE src/keyboard.v
 set_global_assignment -name QIP_FILE ip/depth_rom.qip

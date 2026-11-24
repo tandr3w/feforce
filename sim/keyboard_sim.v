@@ -13,7 +13,7 @@
  *       Note: ps2_clk frequency is 6 times slower than Clock
 */
 
-module PS2_keyboard (Clock, Resetn, key_action, scan_code, ps2_clk, ps2_dat, rotate, translate);
+module PS2_keyboard (Clock, Resetn, key_action, scan_code, ps2_clk, ps2_dat);
     localparam KB_0_IDLE         = 3'h0,
                KB_1_LOAD_DATA    = 3'h1, 
                KB_2_DATA_OUT     = 3'h2;
@@ -35,9 +35,6 @@ module PS2_keyboard (Clock, Resetn, key_action, scan_code, ps2_clk, ps2_dat, rot
     reg [2:0] y_Q;                      // FSM present state
     reg [2:0] Y_D;                      // FSM next state
 
-    output reg rotate; 
-    output reg signed [1:0] translate;  // wefwergergiuergiuhjnergiuhonerghuinoergrkuihbngfre
-    
     // Integers
     integer i;
     
@@ -108,28 +105,6 @@ module PS2_keyboard (Clock, Resetn, key_action, scan_code, ps2_clk, ps2_dat, rot
             next_to_send <= 8'h0;
     	else if (y_Q == KB_1_LOAD_DATA)
             next_to_send = keyboard_FIFO[0];
-    end
-
-    always @ (scan_code) begin 
-        if (scan_code == 8'h2D) begin 
-            rotate <= 1'b1;
-            translate <= 2'b00; 
-
-        end
-        else if (scan_code == 8'h1C) begin
-            translate <= 2'b11;
-            rotate <= 1'b0;  
-
-        end
-        else if (scan_code == 8'h23) begin
-            translate <= 2'b01;
-            rotate <= 1'b0;  
-
-        end
-        else begin 
-            translate <= 2'b00;
-            rotate <= 1'b0; 
-        end
     end
     
     assign start_sending = (y_Q == KB_2_DATA_OUT);
