@@ -1,10 +1,10 @@
 // Module to simulate texture ROM for DESim since it can't use the IP
 module texture_rom (
-    input [11:0] address,
+    input [13:0] address,
     input clock,
     output reg [15:0] q
 );
-    reg [15:0] memory [0:4095];
+    reg [15:0] memory [0:16383];
     initial begin
         $readmemh("texture.hex", memory);
     end

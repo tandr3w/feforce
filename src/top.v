@@ -12,7 +12,9 @@ module top(
     output VGA_VS,
     output VGA_CLK,
     output VGA_BLANK_N,
-    output VGA_SYNC_N
+    output VGA_SYNC_N,
+    inout wire  PS2_CLK_S, 
+    inout wire PS2_DAT_S 
 );
     wire [9:0] sx, sy;
     wire pixel_clk;
@@ -38,6 +40,32 @@ module top(
         .de(de)
     );
 
+    // wire PS2_CLK_S, PS2_DAT_S;  // for internal stuff
+
+    wire [11:0] rotate_sig; 
+    wire signed [15:0] translate_sig;
+    // was a bit confused so i just copied and pasted into here from render controller
+
+    // synchronize the PS/2 signals with CLOCK_50
+    // sync S3 (PS2_CLK, rst, clk, PS2_CLK_S);
+    // sync S4 (PS2_DAT, rst, clk, PS2_DAT_S);
+    wire [1:0] texture_index;
+    keyboard U3 (
+        .clk(clk),
+        .reset(rst),
+
+        .PS2_CLK(PS2_CLK_S),
+        .PS2_DAT(PS2_DAT_S), 
+// ??
+        .rotate(rotate_sig),
+        .translate(translate_sig),
+
+        .texture_index(texture_index)
+
+    );
+    assign LEDR[1] = rotate_sig[6]; 
+
+    assign LEDR[9:8] = texture_index;
     assign rst = ~KEY[0];
     assign LEDR[0] = rst;
     // Delay signals by 1 clock cycle since the RAM has 1 cycle read latency
@@ -65,6 +93,9 @@ module top(
     render_controller rc (
         .clk(clk),
         .rst(rst),
+        .rotate(rotate_sig),
+        .translate(translate_sig),
+        .texture_index(texture_index),
 
         .write_x(raster_x),
         .write_y(raster_y),

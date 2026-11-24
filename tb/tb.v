@@ -31,7 +31,16 @@ module tb();
     wire VGA_CLK;
     wire VGA_BLANK_N;
     wire VGA_SYNC_N;
+    wire PS2_CLK_S, PS2_DAT_S;  // for internal stuff
 
+    PS2_keyboard keyboard_sim (
+        .Clock(CLOCK_50),
+        .Resetn(KEY[0]),
+        .key_action(key_action),
+        .scan_code(scan_code),
+        .ps2_clk(PS2_CLK_S),
+        .ps2_dat(PS2_DAT_S)
+    );
     initial $sim_fpga(CLOCK_50, SW, KEY, LEDR, HEX, key_action, scan_code, 
                       ps2_lock_control, VGA_X, VGA_Y, VGA_COLOR, plot, GPIO);
 
@@ -98,7 +107,9 @@ module tb();
         .VGA_VS(VGA_VS),
         .VGA_CLK(VGA_CLK),
         .VGA_BLANK_N(VGA_BLANK_N),
-        .VGA_SYNC_N(VGA_SYNC_N)
+        .VGA_SYNC_N(VGA_SYNC_N),
+        .PS2_CLK_S(PS2_CLK_S),
+        .PS2_DAT_S(PS2_DAT_S)
     );
 
 endmodule

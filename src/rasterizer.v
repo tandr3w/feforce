@@ -36,6 +36,8 @@ module rasterizer (
 
     input clear,
     input [16:0] clear_addr,
+    
+    input [1:0] texture_index, // decides which texture is used
 
     output [8:0] write_x,
     output [7:0] write_y,
@@ -238,7 +240,7 @@ module rasterizer (
     wire [15:0] texture_color;
 
     texture_rom texture (
-        .address({v_coord, u_coord}), // 64 * v_coord + u_coord
+        .address({texture_index, v_coord, u_coord}), // 4096 * texture_index + 64 * v_coord + u_coord
         .clock(clk),
         .q(texture_color)
     );

@@ -17,6 +17,9 @@ add wave sim:/testbench/U7.product_z0
 add wave sim:/testbench/U7.product_z1
 add wave sim:/testbench/U7.product_z2
 
+add wave sim:/testbench/U7.cosine_angle
+add wave sim:/testbench/U7.sine_angle
+
 TreeUpdate [SetDefaultTree]
 quietly wave cursor active 1
 configure wave -namecolwidth 80

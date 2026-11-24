@@ -5,10 +5,13 @@ add wave sim:/testbench/DUT/state
 add wave sim:/testbench/DUT/curr_triangle
 add wave sim:/testbench/DUT/loader_start
 add wave sim:/testbench/DUT/loader_valid
+add wave sim:/testbench/DUT/transformer_start
+add wave sim:/testbench/DUT/transformer_done
 add wave sim:/testbench/DUT/projector_start
 add wave sim:/testbench/DUT/projector_done
 add wave sim:/testbench/DUT/raster_start
 add wave sim:/testbench/DUT/raster_done
+add wave sim:/testbench/DUT/clear_addr
 TreeUpdate [SetDefaultTree]
 quietly wave cursor active 1
 configure wave -namecolwidth 80

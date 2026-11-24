@@ -2,6 +2,10 @@ module render_controller (
     input wire clk,
     input wire rst,
 
+    input wire [11:0] rotate, // inputs for rotate and translate
+    input wire [15:0] translate,
+    input [1:0] texture_index,
+
     output [8:0] write_x,
     output [7:0] write_y,
     output [15:0] write_color,
@@ -19,6 +23,9 @@ module render_controller (
     parameter DONE = 3'b101;
 
     reg [2:0] state;
+    reg [11:0] prev_rotate;
+    reg [15:0] prev_translate;
+    reg [1:0] prev_texture;
 
     reg [11:0] curr_triangle;
 
@@ -56,8 +63,8 @@ module render_controller (
     reg transformer_start; 
     wire transformer_done; 
 
-    wire rotate_sig; 
-    wire signed [1:0] translate_sig;
+    // wire rotate_sig; 
+    // wire signed [1:0] translate_sig;
 
 
     wire signed [15:0] x0_transformed, x1_transformed, x2_transformed; 
@@ -101,8 +108,8 @@ module render_controller (
         .rst(rst),
         .start(transformer_start),
 
-        .translate(translate_sig),
-        .rotate(rotate_sig),
+        .translate(translate),
+        .rotate(rotate),
 
         .x0(x0), .y0(y0), .z0(z0),
         .x1(x1), .y1(y1), .z1(z1),
@@ -113,7 +120,8 @@ module render_controller (
         .x0_out(x0_transformed), .x1_out(x1_transformed), .x2_out(x2_transformed),
         .y0_out(y0_transformed), .y1_out(y1_transformed), .y2_out(y2_transformed),
         .z0_out(z0_transformed), .z1_out(z1_transformed), .z2_out(z2_transformed),
-        .nx_out(nx_transformed), .ny_out(nx_transformed), .nz_out(nx_transformed),
+
+        .nx_out(nx_transformed), .ny_out(ny_transformed), .nz_out(nz_transformed),
 
         .is_done(transformer_done)
 
@@ -121,20 +129,20 @@ module render_controller (
 
 
 
-    wire PS2_CLK_S, PS2_DAT_S;  // for internal stuff
+    // wire PS2_CLK_S, PS2_DAT_S;  // for internal stuff
 
 
 
-    keyboard da_big_fugging_gg_ez_keybord (
-        .clk(clk),
-        .reset(rst),
+    // keyboard da_big_fugging_gg_ez_keybord (
+    //     .clk(clk),
+    //     .reset(rst),
 
-        .PS2_CLK(PS2_CLK_S),
-        .PS2_DAT(PS2_DAT_S), 
+    //     .PS2_CLK(PS2_CLK_S),
+    //     .PS2_DAT(PS2_DAT_S), 
 
-        .rotate(rotate_sig),
-        .translate(translate_sig)  
-    );  
+    //     .rotate(rotate_sig),
+    //     .translate(translate_sig)  
+    // );  
 
 
     // sync S3 (PS2_CLK, Resetn, clk, PS2_CLK_S);
@@ -154,12 +162,12 @@ module render_controller (
     assign proj_product_y2 = (120 * y2_out);
 
     // note that y is inverted because the VGA coordinate system has y increasing downwards
-    assign projected_x0 = (proj_product_x0 >> 8) + 160;
-    assign projected_x1 = (proj_product_x1 >> 8) + 160;
-    assign projected_x2 = (proj_product_x2 >> 8) + 160;
-    assign projected_y0 = 120 - (proj_product_y0 >> 8);
-    assign projected_y1 = 120 - (proj_product_y1 >> 8);
-    assign projected_y2 = 120 - (proj_product_y2 >> 8);
+    assign projected_x0 = (proj_product_x0 >>> 8) + 160;
+    assign projected_x1 = (proj_product_x1 >>> 8) + 160;
+    assign projected_x2 = (proj_product_x2 >>> 8) + 160;
+    assign projected_y0 = 120 - (proj_product_y0 >>> 8);
+    assign projected_y1 = 120 - (proj_product_y1 >>> 8);
+    assign projected_y2 = 120 - (proj_product_y2 >>> 8);
 
     assign clear = (state == CLEAR);
 
@@ -185,6 +193,8 @@ module render_controller (
         .depth_recip1(w_recip_1),
         .depth_recip2(w_recip_2),
 
+        .texture_index(texture_index),
+
         .start(raster_start),
         .done(raster_done),
 
@@ -197,12 +207,15 @@ module render_controller (
         .clear_addr(clear_addr)
     );
 
+
+    // i need to do drugs(coofe)
     always @(posedge clk or posedge rst) begin
         if (rst) begin
             curr_triangle <= 0;
             raster_start <= 0;
             loader_start <= 0;
             projector_start <= 0;
+            transformer_start <= 0;
             clear_addr <= 0;
             state <= CLEAR;
         end else begin
@@ -217,26 +230,28 @@ module render_controller (
                     loader_start <= 0;
                     if (is_final) begin
                         state <= DONE;
-                    end else if (loader_valid) begin
+                    end 
+                    else if (loader_valid) begin
 
-                        if (transformer_start) begin 
-                            state <= TRANSFORM;
-                        // projector_start <= 1;
+                        // if (translate_sig != 2'b00) begin 
+                        //     state <= TRANSFORM;
+                        //     transformer_start <= 1; 
 
-                            transformer_start <= 1; 
+                        // end
+                        // else begin 
+                        //     state <= PROJECT;
+                        //     projector_start <= 1; 
+                        // end 
 
-                        end
-                        else begin 
-                            state <= PROJECT;
-                            projector_start <= 1; 
-                        end 
+                        state <= TRANSFORM;
+                        transformer_start <= 1; 
                         
                     end
                 end
                 TRANSFORM: begin 
                     transformer_start <= 0;
                     if (transformer_done) begin 
-                        state <= CLEAR; // used to be project
+                        state <= PROJECT; // used to be project
                         projector_start <= 1; 
                     end
                 end
@@ -255,22 +270,31 @@ module render_controller (
                         state <= LOAD; // Load next triangle
                     end
                 end
-                CLEAR: begin
+                DONE: begin
+                    loader_start <= 0;
+                    raster_start <= 0;
+                    curr_triangle <= 0;
+                    clear_addr <= 0;
+                    if (rotate != prev_rotate || translate != prev_translate || texture_index != prev_texture) begin
+                        state <= CLEAR; // loop back
+                    end
+                    prev_rotate <= rotate;
+                    prev_translate <= translate;
+                    prev_texture <= texture_index;
+                end
+                CLEAR: begin // clear screen after transform
                     if (clear_addr < 17'd76799) begin
                         clear_addr <= clear_addr + 1;
                     end 
                     // else if (transformer_done) begin // clear the screen(reset) then project new
                     //     clear_addr <= 0; 
                     //     state <= PROJECT;  
+                    //     projector_start <= 1; 
                     // end
                     else begin
                         clear_addr <= 0;
                         state <= IDLE;
                     end
-                end
-                DONE: begin
-                    loader_start <= 0;
-                    raster_start <= 0;
                 end
             endcase
         end

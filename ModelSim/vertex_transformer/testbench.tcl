@@ -6,8 +6,10 @@ vlib work;
 
 # compile the Verilog source code in the parent folder
 vlog ../../src/vertextransformer.v
-vlog ../../sine_rom.v
-file copy -force ../../sine_rom.mif .
+# vlog ../../sine_rom.v
+# file copy ../../sine_rom.mif .
+file copy -force ../../sim/sine_table.hex .
+file copy -force ../../sine_rom.v .
 
 # compile the Verilog code of the testbench
 vlog *.v

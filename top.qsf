@@ -42,7 +42,7 @@ set_global_assignment -name DEVICE 5CSEMA5F31C6
 set_global_assignment -name TOP_LEVEL_ENTITY top
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 25.1STD.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "14:05:38  OCTOBER 23, 2026"
-set_global_assignment -name LAST_QUARTUS_VERSION "18.1.0 Lite Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "23.1std.0 Lite Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
@@ -424,10 +424,10 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[6] -entity DE1_
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[7] -entity DE1_SoC
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[8] -entity DE1_SoC
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[9] -entity DE1_SoC
-set_location_assignment PIN_AD7 -to PS2_CLK
-set_location_assignment PIN_AE7 -to PS2_DAT
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_CLK -entity DE1_SoC
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_DAT -entity DE1_SoC
+set_location_assignment PIN_AD7 -to PS2_CLK_S
+set_location_assignment PIN_AE7 -to PS2_DAT_S
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_CLK_S -entity DE1_SoC
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_DAT_S -entity DE1_SoC
 set_location_assignment PIN_AD9 -to PS2_CLK2
 set_location_assignment PIN_AE9 -to PS2_DAT2
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_CLK2 -entity DE1_SoC
@@ -890,6 +890,11 @@ set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id testbench
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME testbench -section_id testbench
 set_global_assignment -name EDA_TEST_BENCH_FILE ModelSim/testbench.v -section_id testbench
 
+
+set_global_assignment -name SEARCH_PATH "c:\\users\\henry\\documents\\github\\feforce"
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT NONE -section_id eda_simulation
+set_global_assignment -name VERILOG_FILE src/vertextransformer.v
+set_global_assignment -name VERILOG_FILE src/keyboard.v
 set_global_assignment -name QIP_FILE ip/depth_rom.qip
 set_global_assignment -name SDC_FILE top.sdc
 set_global_assignment -name VERILOG_FILE src/vertexprojector.v
@@ -906,5 +911,6 @@ set_global_assignment -name QIP_FILE ip/divider.qip
 set_global_assignment -name SOURCE_FILE db/top.cmp.rdb
 set_global_assignment -name QIP_FILE ip/depthbuffer_ram.qip
 set_global_assignment -name QIP_FILE ip/texture_rom.qip
-
+set_global_assignment -name QIP_FILE ip/sine_rom.qip
+set_global_assignment -name VERILOG_FILE ip/sine_rom.v
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

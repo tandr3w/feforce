@@ -13,14 +13,15 @@
 // modified for use with project 
 
 // rename key with reset
-module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate_yuh);
+module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate, texture_index);
     input wire clk;
     //input wire [0:0] KEY;
 
     input wire reset;
     inout wire PS2_CLK, PS2_DAT;
-    output reg rotate; 
-    output reg signed [1:0] translate_yuh; 
+    output reg [11:0] rotate; 
+    output reg signed [15:0] translate; 
+    output reg [1:0] texture_index;
     // output wire [9:0] LEDR;       // DE-series LEDs
     // output wire [6:0] HEX0;
     // output wire [6:0] HEX1;       // DE-series HEX displays
@@ -31,7 +32,7 @@ module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate_yuh);
 
     wire Resetn, negedge_ps2_clk;
 
-    assign Resetn = reset;
+    assign Resetn = ~reset;
     reg [32:0] Serial;              // each PS2 serial data packet has 11 bits:
                                     // STOP (1) PARITY d7 d6 d5 d4 d3 d2 d1 d0 START (0)
                                     // The most-recent three data packets received are saved
@@ -91,26 +92,30 @@ module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate_yuh);
             end 
         end 
 
-      
         
     end
+
     // replace with scancode if prob
-    always @ (scancode) begin 
-        if (scancode == 8'h2D) begin 
-            rotate <= 1'b1; 
-
+    always @ (posedge clk) begin
+        if (Resetn == 1'b0) begin
+            rotate <= 0;
+            translate <= 0;
+            texture_index <= 0;
         end
-        else if (scancode == 8'h1C) begin
-            translate_yuh <= 2'b11; 
-
-        end
-        else if (scancode == 8'h1C) begin
-            translate_yuh <= 2'b01; 
-
-        end
-        else begin 
-            translate_yuh <= 2'b00;
-            rotate <= 1'b0; 
+        if (ps2_rec) begin
+            if (scancode == 8'h2D) begin // R: rotate
+                rotate <= rotate + 12'd16;
+            end
+            else if (scancode == 8'h1C) begin // D: move right
+                translate <= translate + (16'd1 << 4);
+            end
+            else if (scancode == 8'h23) begin // A: move left
+                translate <= translate - (16'd1 << 4);
+            end
+            else if (scancode == 8'h2C) begin // T: change texture
+                // texture_index <= texture_index + 1;
+                texture_index <= texture_index + 1;
+            end
         end
     end
     // assign LEDR = Total;
