@@ -201,7 +201,7 @@ module vertex_transformer(
     assign cos_of_z0 = cosine_angle * z0 >>> 15;
     assign sin_of_x0 = sine_angle * x0 >>> 15; 
     assign translation_of_z0 = translate * translation_z;
-    assign sum_z0 = (-1 * sin_of_x0[15:0]) + cos_of_z0[15:0] + translation_of_z0 + 16'b0000110000000000;  
+    assign sum_z0 = (-1 * sin_of_x0[15:0]) + cos_of_z0[15:0] + translation_of_z0 + 16'b0000110000000000;  // add 12 fixed point
 
 
     // x1 ,y1 ,z1
