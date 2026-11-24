@@ -18,7 +18,7 @@ Open the project in Quartus using `feforce.qpf`. Python scripts are provided in 
 
 ## Controls
 
-Press KEY[0] for reset. 
+Press KEY[0] for reset. Press A to translate left, and D to translate right. Press R to rotate. Press t to change textures.
 
 ## Testing
 
