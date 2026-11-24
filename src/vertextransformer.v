@@ -68,25 +68,35 @@ module vertex_transformer(
 
    
     // change to -360 to 360 decimal in a 12 bit format
-    // sine_rom sine(sine_addr, clk, sine_data); // i feel like it makes the msot sense using an address sine addr since i dont intend for rotation to change
+    sine_rom sine(sine_addr, clk, sine_data); // i feel like it makes the msot sense using an address sine addr since i dont intend for rotation to change
 
-    // always @ (*) begin
-    //     case (state) 
+    always @ (*) begin
+        case (state) 
 
-    //         LOAD_SIN: begin 
+            IDLE: begin 
+                // load sin
+                sine_addr <= sine_addr + rotation; // rotation (10.6 + 10.6)
 
-    //             sine_addr <= sine_addr + rotation; // rotation (10.6 + 10.6)
-    //         end
-    //         LOAD_COS: begin 
-    //             // https://electronicstechnician.tpub.com/14091/css/Binary-Angular-Measurement-316.htm
-    //             sine_addr <= sine_addr + 12'd1024; // theres prob a better way to do this(we are using brads because i hate conversion)
-    //             // consider wrap around once past 360(for both cases)
-    //         end
+            end
 
-    //         default sine_addr <= 12'b0; // should be 12 bit
+            LOAD_SIN: begin 
+                //load cos
+                // https://electronicstechnician.tpub.com/14091/css/Binary-Angular-Measurement-316.htm
+                sine_addr <= sine_addr + 12'd1024; // theres prob a better way to do this(we are using brads because i hate conversion)
+                // consider wrap around once past 360(for both cases)
 
-    //     endcase  
-    // end
+                
+            end
+            // LOAD_COS: begin 
+            //     // https://electronicstechnician.tpub.com/14091/css/Binary-Angular-Measurement-316.htm
+            //     sine_addr <= sine_addr + 12'd1024; // theres prob a better way to do this(we are using brads because i hate conversion)
+            //     // consider wrap around once past 360(for both cases)
+            // end
+
+            default sine_addr <= 12'b0; // should be 12 bit
+
+        endcase  
+    end
 
 
     always @ (posedge clk or posedge rst) begin
@@ -100,7 +110,7 @@ module vertex_transformer(
             case (state) 
             IDLE: begin 
                 is_done  <= 1'b0;
-                sine_addr <= 12'b0; 
+                // sine_addr <= 12'b0; 
                 if (start) begin
                     state <= LOAD_SIN;  
 
@@ -109,13 +119,13 @@ module vertex_transformer(
             end 
 
             LOAD_SIN: begin 
-                sine_addr <= rotation;
+                // sine_addr <= rotation;
                 sine_angle <= sine_data; 
                 state <= LOAD_COS;
             end
 
             LOAD_COS: begin 
-                sine_addr <= sine_addr + 12'd1024; 
+                // sine_addr <= sine_addr + 12'd1024; 
                 cosine_angle <= sine_data;
                 state <= COMPUTE;
                 
@@ -125,7 +135,7 @@ module vertex_transformer(
 
                 // if we dont receive a rotate signal, do nothing
 
-                // if (rotate) begin 
+                if (rotate) begin 
                     x0_out <= sum_x0;
                     y0_out <= sum_y0;
                     z0_out <= sum_z0; 
@@ -143,7 +153,23 @@ module vertex_transformer(
                     nz_out <= sum_nz;
 
                     
-                // end
+                end
+                else if (!rotate) begin 
+                    x0_out <= translation_of_x0;
+                    y0_out <= translation_of_y0;
+                    z0_out <= translation_of_z0 + 16'b0000110000000000;
+
+                    x1_out <= translation_of_x1;
+                    y1_out <= translation_of_y1;
+                    z1_out <= translation_of_z1 + 16'b0000110000000000;
+
+                    x2_out <= translation_of_x2;
+                    y2_out <= translation_of_y2;
+                    z2_out <= translation_of_z2 + 16'b0000110000000000;
+
+
+
+                end
                 state <= DONE;// iify
                 
 
