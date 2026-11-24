@@ -49,7 +49,7 @@ module top(
     // synchronize the PS/2 signals with CLOCK_50
     // sync S3 (PS2_CLK, rst, clk, PS2_CLK_S);
     // sync S4 (PS2_DAT, rst, clk, PS2_DAT_S);
-
+    wire [1:0] texture_index;
     keyboard U3 (
         .clk(clk),
         .reset(rst),
@@ -58,10 +58,14 @@ module top(
         .PS2_DAT(PS2_DAT_S), 
 // ??
         .rotate(rotate_sig),
-        .translate(translate_sig)  
+        .translate(translate_sig),
+
+        .texture_index(texture_index)
 
     );
     assign LEDR[1] = rotate_sig[6]; 
+
+    assign LEDR[9:8] = texture_index;
     assign rst = ~KEY[0];
     assign LEDR[0] = rst;
     // Delay signals by 1 clock cycle since the RAM has 1 cycle read latency
@@ -91,6 +95,7 @@ module top(
         .rst(rst),
         .rotate(rotate_sig),
         .translate(translate_sig),
+        .texture_index(texture_index),
 
         .write_x(raster_x),
         .write_y(raster_y),

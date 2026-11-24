@@ -13,7 +13,7 @@
 // modified for use with project 
 
 // rename key with reset
-module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate);
+module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate, texture_index);
     input wire clk;
     //input wire [0:0] KEY;
 
@@ -21,6 +21,7 @@ module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate);
     inout wire PS2_CLK, PS2_DAT;
     output reg [11:0] rotate; 
     output reg signed [15:0] translate; 
+    output reg [1:0] texture_index;
     // output wire [9:0] LEDR;       // DE-series LEDs
     // output wire [6:0] HEX0;
     // output wire [6:0] HEX1;       // DE-series HEX displays
@@ -91,7 +92,6 @@ module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate);
             end 
         end 
 
-      
         
     end
 
@@ -100,16 +100,21 @@ module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate);
         if (Resetn == 1'b0) begin
             rotate <= 0;
             translate <= 0;
+            texture_index <= 0;
         end
         if (ps2_rec) begin
-            if (scancode == 8'h2D) begin 
+            if (scancode == 8'h2D) begin // R: rotate
                 rotate <= rotate + 12'd16;
             end
-            else if (scancode == 8'h1C) begin
+            else if (scancode == 8'h1C) begin // D: move right
                 translate <= translate + (16'd1 << 4);
             end
-            else if (scancode == 8'h23) begin
+            else if (scancode == 8'h23) begin // A: move left
                 translate <= translate - (16'd1 << 4);
+            end
+            else if (scancode == 8'h2C) begin // T: change texture
+                // texture_index <= texture_index + 1;
+                texture_index <= texture_index + 1;
             end
         end
     end

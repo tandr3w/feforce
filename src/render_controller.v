@@ -4,6 +4,7 @@ module render_controller (
 
     input wire [11:0] rotate, // inputs for rotate and translate
     input wire [15:0] translate,
+    input [1:0] texture_index,
 
     output [8:0] write_x,
     output [7:0] write_y,
@@ -24,6 +25,7 @@ module render_controller (
     reg [2:0] state;
     reg [11:0] prev_rotate;
     reg [15:0] prev_translate;
+    reg [1:0] prev_texture;
 
     reg [11:0] curr_triangle;
 
@@ -191,6 +193,8 @@ module render_controller (
         .depth_recip1(w_recip_1),
         .depth_recip2(w_recip_2),
 
+        .texture_index(texture_index),
+
         .start(raster_start),
         .done(raster_done),
 
@@ -246,8 +250,6 @@ module render_controller (
                 end
                 TRANSFORM: begin 
                     transformer_start <= 0;
-                    prev_rotate <= rotate;
-                    prev_translate <= translate;
                     if (transformer_done) begin 
                         state <= PROJECT; // used to be project
                         projector_start <= 1; 
@@ -273,9 +275,12 @@ module render_controller (
                     raster_start <= 0;
                     curr_triangle <= 0;
                     clear_addr <= 0;
-                    if (rotate != prev_rotate || translate != prev_translate) begin
+                    if (rotate != prev_rotate || translate != prev_translate || texture_index != prev_texture) begin
                         state <= CLEAR; // loop back
                     end
+                    prev_rotate <= rotate;
+                    prev_translate <= translate;
+                    prev_texture <= texture_index;
                 end
                 CLEAR: begin // clear screen after transform
                     if (clear_addr < 17'd76799) begin
