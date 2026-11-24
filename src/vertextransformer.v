@@ -40,6 +40,8 @@
         parameter [15:0] translation_z = 16'b0000000100000000; // translation amt
         parameter IDLE = 3'b000;
         parameter LOAD_COS = 3'b001;
+        parameter WAIT_COS = 3'b101;
+        parameter WAIT_SIN = 3'b111; 
         parameter LOAD_SIN = 3'b010;
         parameter COMPUTE = 3'b011; 
         parameter DONE = 3'b100;
@@ -131,19 +133,33 @@
                     // cur_angle <= 12'b0;
                     sine_addr <= rotation;
                     if (start) begin
-                        state <= LOAD_SIN;  
+                        state <= WAIT_SIN;  
 
                     end
 
                 end 
 
+                WAIT_SIN: begin 
+                    // sine_angle <= sine_data; 
+                    state <= LOAD_SIN;
+                end
+
+
+
                 LOAD_SIN: begin 
                     // sine_addr <= rotation;
                     // cur_angle <= rotation; 
-                    sine_addr <= rotation + 12'd1024; 
                     sine_angle <= sine_data; 
+                    sine_addr <= rotation + 12'd1024; 
+                    
+                    state <= WAIT_COS;
+                end
+
+                WAIT_COS: begin 
+                    // sine_angle <= sine_data; 
                     state <= LOAD_COS;
                 end
+
 
                 LOAD_COS: begin 
                     // sine_addr <= sine_addr + 12'd1024; 

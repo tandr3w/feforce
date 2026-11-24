@@ -69,6 +69,8 @@ module testbench ();
         #100; 
         // do another test(translation)
         translate <= 2'b01;
+        rotate <= 1'b1; 
+
 
 
 
@@ -102,6 +104,7 @@ module testbench ();
 
         #200;
         translate <= 2'b00;
+        rotate <= 0; 
 
 
     end

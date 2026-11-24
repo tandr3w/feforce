@@ -9,7 +9,7 @@ vlog ../../src/vertextransformer.v
 # vlog ../../sine_rom.v
 # file copy ../../sine_rom.mif .
 file copy -force ../../sim/sine_table.hex .
-file copy -force ../../sim/sine_rom.v .
+file copy -force ../../sine_rom.v .
 
 # compile the Verilog code of the testbench
 vlog *.v
