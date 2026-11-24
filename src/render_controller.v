@@ -22,6 +22,8 @@ module render_controller (
     parameter DONE = 3'b101;
 
     reg [2:0] state;
+    reg prev_rotate;
+    reg [1:0] prev_translate;
 
     reg [11:0] curr_triangle;
 
@@ -244,23 +246,11 @@ module render_controller (
                 end
                 TRANSFORM: begin 
                     transformer_start <= 0;
+                    prev_rotate <= rotate;
+                    prev_translate <= translate;
                     if (transformer_done) begin 
                         state <= PROJECT; // used to be project
                         projector_start <= 1; 
-                    end
-                end
-                CLEAR: begin // clear screen after transform
-                    if (clear_addr < 17'd76799) begin
-                        clear_addr <= clear_addr + 1;
-                    end 
-                    // else if (transformer_done) begin // clear the screen(reset) then project new
-                    //     clear_addr <= 0; 
-                    //     state <= PROJECT;  
-                    //     projector_start <= 1; 
-                    // end
-                    else begin
-                        clear_addr <= 0;
-                        state <= IDLE;
                     end
                 end
                 PROJECT: begin 
@@ -281,7 +271,25 @@ module render_controller (
                 DONE: begin
                     loader_start <= 0;
                     raster_start <= 0;
-                    state <= CLEAR; // loop back
+                    curr_triangle <= 0;
+                    clear_addr <= 0;
+                    if (rotate != prev_rotate || translate != prev_translate) begin
+                        state <= CLEAR; // loop back
+                    end
+                end
+                CLEAR: begin // clear screen after transform
+                    if (clear_addr < 17'd76799) begin
+                        clear_addr <= clear_addr + 1;
+                    end 
+                    // else if (transformer_done) begin // clear the screen(reset) then project new
+                    //     clear_addr <= 0; 
+                    //     state <= PROJECT;  
+                    //     projector_start <= 1; 
+                    // end
+                    else begin
+                        clear_addr <= 0;
+                        state <= IDLE;
+                    end
                 end
             endcase
         end

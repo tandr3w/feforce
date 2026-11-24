@@ -205,8 +205,9 @@
                         y2_out <= y2 + translation_of_y2;
                         z2_out <= z2 + translation_of_z2 + 16'b0000110000000000;
 
-
-
+                        nx_out <= nx;
+                        ny_out <= ny;
+                        nz_out <= nz;
                     end
                     state <= DONE;// iify
                     
@@ -304,16 +305,16 @@
         // nx, ny, nz
         assign cos_of_nx = cosine_angle * nx >>> 15;
         assign sin_of_nz = sine_angle * nz >>> 15;
-        assign translation_of_nx = translate * translation_x;
-        assign sum_nx = cos_of_nx + sin_of_nz + translation_of_nx; // since 8.8 no need to shift
+        // assign translation_of_nx = translate * translation_x;
+        assign sum_nx = cos_of_nx + sin_of_nz; // since 8.8 no need to shift
 
-        assign translation_of_ny = translate * translation_y;
-        assign sum_ny = ny + translation_of_ny; // alr in 8.8 
+        // assign translation_of_ny = translate * translation_y;
+        assign sum_ny = ny; // alr in 8.8 
 
         assign cos_of_nz = cosine_angle * nz >>> 15;
         assign sin_of_nx = sine_angle * nx >>> 15; 
-        assign translation_of_nz = translate * translation_z;
-        assign sum_nz = (-sin_of_nx) + cos_of_nz + translation_of_nz; 
+        // assign translation_of_nz = translate * translation_z;
+        assign sum_nz = (-sin_of_nx) + cos_of_nz; 
 
 
         // assign x0_out = (cosine_angle * x0) + (sine_angle * z0) + (translation_x * translate); 
