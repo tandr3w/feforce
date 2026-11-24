@@ -113,6 +113,7 @@ module render_controller (
         .x0_out(x0_transformed), .x1_out(x1_transformed), .x2_out(x2_transformed),
         .y0_out(y0_transformed), .y1_out(y1_transformed), .y2_out(y2_transformed),
         .z0_out(z0_transformed), .z1_out(z1_transformed), .z2_out(z2_transformed),
+
         .nx_out(nx_transformed), .ny_out(ny_transformed), .nz_out(nz_transformed),
 
         .is_done(transformer_done)
@@ -217,9 +218,10 @@ module render_controller (
                     loader_start <= 0;
                     if (is_final) begin
                         state <= DONE;
-                    end else if (loader_valid) begin
+                    end 
+                    else if (loader_valid) begin
 
-                        if (transformer_start) begin 
+                        if (translate_sig != 2'b00) begin 
                             state <= TRANSFORM;
                             transformer_start <= 1; 
 

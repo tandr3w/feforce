@@ -31,7 +31,7 @@ module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate);
 
     wire Resetn, negedge_ps2_clk;
 
-    assign Resetn = reset;
+    assign Resetn = ~reset;
     reg [32:0] Serial;              // each PS2 serial data packet has 11 bits:
                                     // STOP (1) PARITY d7 d6 d5 d4 d3 d2 d1 d0 START (0)
                                     // The most-recent three data packets received are saved
@@ -97,15 +97,18 @@ module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate);
     // replace with scancode if prob
     always @ (scancode) begin 
         if (scancode == 8'h2D) begin 
-            rotate <= 1'b1; 
+            rotate <= 1'b1;
+            translate <= 2'b00; 
 
         end
         else if (scancode == 8'h1C) begin
-            translate <= 2'b11; 
+            translate <= 2'b11;
+            rotate <= 1'b0;  
 
         end
-        else if (scancode == 8'h1C) begin
-            translate <= 2'b01; 
+        else if (scancode == 8'h23) begin
+            translate <= 2'b01;
+            rotate <= 1'b0;  
 
         end
         else begin 

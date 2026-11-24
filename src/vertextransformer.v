@@ -68,25 +68,25 @@ module vertex_transformer(
 
    
     // change to -360 to 360 decimal in a 12 bit format
-    sine_rom sine(sine_addr, clk, sine_data); // i feel like it makes the msot sense using an address sine addr since i dont intend for rotation to change
+    // sine_rom sine(sine_addr, clk, sine_data); // i feel like it makes the msot sense using an address sine addr since i dont intend for rotation to change
 
-    always @ (*) begin
-        case (state) 
+    // always @ (*) begin
+    //     case (state) 
 
-            LOAD_SIN: begin 
+    //         LOAD_SIN: begin 
 
-                sine_addr <= sine_addr + rotation; // rotation (10.6 + 10.6)
-            end
-            LOAD_COS: begin 
-                // https://electronicstechnician.tpub.com/14091/css/Binary-Angular-Measurement-316.htm
-                sine_addr <= sine_addr + 12'd1024; // theres prob a better way to do this(we are using brads because i hate conversion)
-                // consider wrap around once past 360(for both cases)
-            end
+    //             sine_addr <= sine_addr + rotation; // rotation (10.6 + 10.6)
+    //         end
+    //         LOAD_COS: begin 
+    //             // https://electronicstechnician.tpub.com/14091/css/Binary-Angular-Measurement-316.htm
+    //             sine_addr <= sine_addr + 12'd1024; // theres prob a better way to do this(we are using brads because i hate conversion)
+    //             // consider wrap around once past 360(for both cases)
+    //         end
 
-            default sine_addr <= 12'b0; // should be 12 bit
+    //         default sine_addr <= 12'b0; // should be 12 bit
 
-        endcase  
-    end
+    //     endcase  
+    // end
 
 
     always @ (posedge clk or posedge rst) begin
@@ -100,6 +100,7 @@ module vertex_transformer(
             case (state) 
             IDLE: begin 
                 is_done  <= 1'b0;
+                sine_addr <= 12'b0; 
                 if (start) begin
                     state <= LOAD_SIN;  
 
@@ -108,11 +109,13 @@ module vertex_transformer(
             end 
 
             LOAD_SIN: begin 
+                sine_addr <= rotation;
                 sine_angle <= sine_data; 
                 state <= LOAD_COS;
             end
 
             LOAD_COS: begin 
+                sine_addr <= sine_addr + 12'd1024; 
                 cosine_angle <= sine_data;
                 state <= COMPUTE;
                 
@@ -122,7 +125,7 @@ module vertex_transformer(
 
                 // if we dont receive a rotate signal, do nothing
 
-                if (rotate) begin 
+                // if (rotate) begin 
                     x0_out <= sum_x0;
                     y0_out <= sum_y0;
                     z0_out <= sum_z0; 
@@ -140,7 +143,7 @@ module vertex_transformer(
                     nz_out <= sum_nz;
 
                     
-                end
+                // end
                 state <= DONE;// iify
                 
 
