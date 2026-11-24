@@ -240,16 +240,17 @@ module render_controller (
                     transformer_start <= 0;
                     if (transformer_done) begin 
                         state <= CLEAR; // used to be project
-                        projector_start <= 1; 
+                        // projector_start <= 1; 
                     end
                 end
                 CLEAR: begin // clear screen after transform
                     if (clear_addr < 17'd76799) begin
                         clear_addr <= clear_addr + 1;
                     end 
-                    if (transformer_done) begin // clear the screen(reset) then project new
+                    else if (transformer_done) begin // clear the screen(reset) then project new
                         clear_addr <= 0; 
                         state <= PROJECT;  
+                        projector_start <= 1; 
                     end
                     else begin
                         clear_addr <= 0;

@@ -38,6 +38,20 @@ module top(
         .de(de)
     );
 
+    wire PS2_CLK_S, PS2_DAT_S;  // for internal stuff
+    // was a bit confused so i just copied and pasted into here from render controller
+    keyboard U3 (
+        .clk(clk),
+        .rst(rst),
+
+        .PS2_CLK(PS2_CLK_S),
+        .PS2_DAT(PS2_DAT_S), 
+// ??
+        .rotate(rotate_sig),
+        .translate(translate_sig)  
+
+    );
+
     assign rst = ~KEY[0];
     assign LEDR[0] = rst;
     // Delay signals by 1 clock cycle since the RAM has 1 cycle read latency
