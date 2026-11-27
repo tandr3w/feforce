@@ -2,36 +2,50 @@
 
 import math
 
-OBJ = "assets/donut.obj"
+OBJS = [
+    "assets/cube.obj",
+    "assets/cone.obj",
+    "assets/donut.obj",
+    "assets/monkey.obj",
+]
 
 verts = []
 uvs = []
 tris = []
+object_ranges = []
 
-# read obj
-for line in open(OBJ):
-    args = line.split()
+# read objs
+for OBJ in OBJS:
+    vertex_offset = len(verts)
+    texture_offset = len(uvs)
+    triangle_start = len(tris)
 
-    if not args:
-        continue
+    for line in open(OBJ):
+        args = line.split()
 
-    if args[0] == "v":
-        verts.append(tuple(map(float, args[1:4])))
+        if not args:
+            continue
 
-    elif args[0] == "vt":
-        uvs.append(tuple(map(float, args[1:3])))
+        if args[0] == "v":
+            verts.append(tuple(map(float, args[1:4])))
 
-    elif args[0] == "f":
-        face = []
-        for x in args[1:]:
-            indices = x.split("/")
-            vertex_index = int(indices[0]) - 1
-            texture_index = int(indices[1]) - 1 if len(indices) > 1 and indices[1] else 0
-            face.append((vertex_index, texture_index))
+        elif args[0] == "vt":
+            uvs.append(tuple(map(float, args[1:3])))
 
-        # for non-triangle faces, create n-2 triangles by looping through every group of 3 vertices sequentially
-        for i in range(1, len(face) - 1):
-            tris.append((face[0], face[i], face[i + 1]))
+        elif args[0] == "f":
+            face = []
+            for x in args[1:]:
+                indices = x.split("/")
+                vertex_index = int(indices[0]) - 1 + vertex_offset
+                texture_index = int(indices[1]) - 1 + texture_offset if len(indices) > 1 and indices[1] else 0
+                face.append((vertex_index, texture_index))
+
+            # for non-triangle faces, create n-2 triangles by looping through every group of 3 vertices sequentially
+            for i in range(1, len(face) - 1):
+                tris.append((face[0], face[i], face[i + 1]))
+
+    triangle_end = len(tris) - 1
+    object_ranges.append((triangle_start, triangle_end))
 
 def q88(x): # convert x to q8.8 fixed point
     return int(round(x * 256)) & 0xffff
@@ -123,6 +137,12 @@ with open("../sim/triangles.hex", "w") as f:
 out += f"    [{len(tris)}..4095] : 0;\nEND;\n"
 
 open("../ip/triangles.mif", "w").write(out)
+
+# store where each object ends
+with open("../sim/object_ends.hex", "w") as f:
+    for start, end in object_ranges:
+        f.write(f"{end:03X}\n")
+    f.write("1000\n") # represents end of the file
 
 print(len(verts), "vertices")
 print(len(tris), "triangles")

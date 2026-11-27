@@ -50,6 +50,8 @@ module top(
     // sync S3 (PS2_CLK, rst, clk, PS2_CLK_S);
     // sync S4 (PS2_DAT, rst, clk, PS2_DAT_S);
     wire [1:0] texture_index;
+    wire [11:0] object_index;
+    wire is_last_object;
     keyboard U3 (
         .clk(clk),
         .reset(rst),
@@ -60,7 +62,9 @@ module top(
         .rotate(rotate_sig),
         .translate(translate_sig),
 
-        .texture_index(texture_index)
+        .texture_index(texture_index),
+        .object_index(object_index),
+        .is_last_object(is_last_object)
 
     );
     assign LEDR[1] = rotate_sig[6]; 
@@ -96,6 +100,7 @@ module top(
         .rotate(rotate_sig),
         .translate(translate_sig),
         .texture_index(texture_index),
+        .object_index(object_index),
 
         .write_x(raster_x),
         .write_y(raster_y),
@@ -103,7 +108,8 @@ module top(
         .write_enable(raster_write),
         
         .clear(clear),
-        .clear_addr(clear_addr)
+        .clear_addr(clear_addr),
+        .is_last_object(is_last_object)
     );
     
     wire [15:0] fb_color;

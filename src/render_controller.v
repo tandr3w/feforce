@@ -5,6 +5,7 @@ module render_controller (
     input wire [11:0] rotate, // inputs for rotate and translate
     input wire [15:0] translate,
     input [1:0] texture_index,
+    input [11:0] object_index,
 
     output [8:0] write_x,
     output [7:0] write_y,
@@ -12,7 +13,9 @@ module render_controller (
     output write_enable,
 
     output clear,
-    output reg [16:0] clear_addr
+    output reg [16:0] clear_addr,
+
+    output is_last_object
 );
     parameter IDLE = 3'b000;
     parameter LOAD = 3'b001;
@@ -26,8 +29,15 @@ module render_controller (
     reg [11:0] prev_rotate;
     reg [15:0] prev_translate;
     reg [1:0] prev_texture;
+    reg [11:0] prev_object;
 
     reg [11:0] curr_triangle;
+
+    reg [12:0] object_ends [0:4095];
+    initial begin // store the triangle number that each object ends at
+        $readmemh("object_ends.hex", object_ends);
+    end
+    assign is_last_object = object_ends[object_index + 1][12]; // bit 13 is set to 1 for the last object
 
     wire signed [15:0] x0, y0, z0, x1, y1, z1, x2, y2, z2;
     wire [5:0] u0, u1, u2, v0, v1, v2;
@@ -221,14 +231,14 @@ module render_controller (
         end else begin
             case (state)
                 IDLE: begin
-                    curr_triangle <= 0;
                     loader_start <= 1;
                     raster_start <= 0;
                     state <= LOAD;
                 end
                 LOAD: begin
                     loader_start <= 0;
-                    if (is_final) begin
+                    // check if we reached the last triangle in this object
+                    if (is_final || (curr_triangle > object_ends[object_index][11:0])) begin
                         state <= DONE;
                     end 
                     else if (loader_valid) begin
@@ -273,14 +283,16 @@ module render_controller (
                 DONE: begin
                     loader_start <= 0;
                     raster_start <= 0;
-                    curr_triangle <= 0;
+                    // go back to first triangle in the selected object
+                    curr_triangle <= object_index == 0 ? 0 : object_ends[object_index - 1][11:0] + 1;
                     clear_addr <= 0;
-                    if (rotate != prev_rotate || translate != prev_translate || texture_index != prev_texture) begin
+                    if (rotate != prev_rotate || translate != prev_translate || texture_index != prev_texture || object_index != prev_object) begin
                         state <= CLEAR; // loop back
                     end
                     prev_rotate <= rotate;
                     prev_translate <= translate;
-                    prev_texture <= texture_index;
+                    prev_texture <= texture_index;  
+                    prev_object <= object_index;
                 end
                 CLEAR: begin // clear screen after transform
                     if (clear_addr < 17'd76799) begin
