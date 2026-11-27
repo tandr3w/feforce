@@ -30,6 +30,7 @@ module PS2_keyboard (Clock, Resetn, key_action, scan_code, ps2_clk, ps2_dat);
     reg [7:0] next_to_send;             // next scan_code to send
     reg [7:0] keyboard_FIFO [0:15];     // FIFO memory to hold scan_code bytes
     reg [4:0] FIFO_depth;               // number of scan_code bytes to send
+    reg [7:0] last_scan_code;
     
     
     reg [2:0] y_Q;                      // FSM present state
@@ -78,15 +79,17 @@ module PS2_keyboard (Clock, Resetn, key_action, scan_code, ps2_clk, ps2_dat);
     always @(posedge Clock) begin                   // reset
     	if (Resetn == 1'b0) begin
             FIFO_depth <= 0;
+            last_scan_code <= 0;
     
             for (i=0; i <= 15; i=i+1)
                 keyboard_FIFO[i] <= 0;
     	end
     	else if (y_Q != KB_1_LOAD_DATA) begin       // can insert into FIFO
-            if (key_action) begin                   // scan_code available?
+            if (key_action && scan_code != last_scan_code) begin
                 if (FIFO_depth[4] == 1'b0) begin    // if FIFO not full
                     keyboard_FIFO[FIFO_depth] <= scan_code; 
                     FIFO_depth <= FIFO_depth + 1'b1;
+                    last_scan_code <= scan_code;
                 end 
             end
     	end

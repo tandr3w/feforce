@@ -103,16 +103,17 @@ module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate, texture_index)
             texture_index <= 0;
         end
         if (ps2_rec) begin
-            if (scancode == 8'h2D) begin // R: rotate
+            // use Serial[8:1] instead of scancode to avoid the reg delay making it 1 late
+            if (Serial[8:1] == 8'h2D) begin // R: rotate
                 rotate <= rotate + 12'd16;
             end
-            else if (scancode == 8'h1C) begin // D: move right
+            else if (Serial[8:1] == 8'h1C) begin // D: move right
                 translate <= translate + (16'd1 << 4);
             end
-            else if (scancode == 8'h23) begin // A: move left
+            else if (Serial[8:1] == 8'h23) begin // A: move left
                 translate <= translate - (16'd1 << 4);
             end
-            else if (scancode == 8'h2C) begin // T: change texture
+            else if (Serial[8:1] == 8'h2C) begin // T: change texture
                 // texture_index <= texture_index + 1;
                 texture_index <= texture_index + 1;
             end
