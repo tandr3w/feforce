@@ -3,6 +3,7 @@ module render_controller (
     input wire rst,
 
     input wire [11:0] rotate, // inputs for rotate and translate
+    input wire [11:0] light_rotate,
     input wire [15:0] translate,
     input [1:0] texture_index,
     input [11:0] object_index,
@@ -27,6 +28,7 @@ module render_controller (
 
     reg [2:0] state;
     reg [11:0] prev_rotate;
+    reg [11:0] prev_light_rotate;
     reg [15:0] prev_translate;
     reg [1:0] prev_texture;
     reg [11:0] prev_object;
@@ -81,6 +83,7 @@ module render_controller (
     wire signed [15:0] y0_transformed, y1_transformed, y2_transformed;
     wire signed [15:0] z0_transformed, z1_transformed, z2_transformed;
     wire signed [15:0] nx_transformed, ny_transformed, nz_transformed;
+    wire signed [15:0] light_x_transformed, light_y_transformed, light_z_transformed;
 
 
     // keyboard wires
@@ -120,6 +123,7 @@ module render_controller (
 
         .translate(translate),
         .rotate(rotate),
+        .light_rotate(light_rotate),
 
         .x0(x0), .y0(y0), .z0(z0),
         .x1(x1), .y1(y1), .z1(z1),
@@ -132,6 +136,7 @@ module render_controller (
         .z0_out(z0_transformed), .z1_out(z1_transformed), .z2_out(z2_transformed),
 
         .nx_out(nx_transformed), .ny_out(ny_transformed), .nz_out(nz_transformed),
+        .light_x_out(light_x_transformed), .light_y_out(light_y_transformed), .light_z_out(light_z_transformed),
 
         .is_done(transformer_done)
 
@@ -187,6 +192,7 @@ module render_controller (
 
         // .normal_x_in(normal_x), .normal_y_in(normal_y), .normal_z_in(normal_z),
         .normal_x_in(nx_transformed), .normal_y_in(ny_transformed), .normal_z_in(nz_transformed),
+        .light_x_in(light_x_transformed), .light_y_in(light_y_transformed), .light_z_in(light_z_transformed),
         .u0_in(u0), .u1_in(u1), .u2_in(u2),
         .v0_in(v0), .v1_in(v1), .v2_in(v2),
 
@@ -286,10 +292,12 @@ module render_controller (
                     // go back to first triangle in the selected object
                     curr_triangle <= object_index == 0 ? 0 : object_ends[object_index - 1][11:0] + 1;
                     clear_addr <= 0;
-                    if (rotate != prev_rotate || translate != prev_translate || texture_index != prev_texture || object_index != prev_object) begin
+                    // clear if anything changed from the previous state
+                    if (rotate != prev_rotate || light_rotate != prev_light_rotate || translate != prev_translate || texture_index != prev_texture || object_index != prev_object) begin
                         state <= CLEAR; // loop back
                     end
                     prev_rotate <= rotate;
+                    prev_light_rotate <= light_rotate;
                     prev_translate <= translate;
                     prev_texture <= texture_index;  
                     prev_object <= object_index;

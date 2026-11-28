@@ -27,6 +27,7 @@ module rasterizer (
     input clk,
     input rst,
     input signed [15:0] normal_x_in, normal_y_in, normal_z_in,
+    input signed [15:0] light_x_in, light_y_in, light_z_in,
     input [5:0] u0_in, u1_in, u2_in, v0_in, v1_in, v2_in,
     input [8:0] x0_in, x1_in, x2_in,
     input [7:0] y0_in, y1_in, y2_in,
@@ -51,13 +52,8 @@ module rasterizer (
     
     parameter DIVIDER_CYCLES = 8; // number of cycles it takes to go from divider input to output (configured in ip)
 
-    // direction of diffuse lighting
-    parameter signed [15:0] LIGHT_X = 10084; // signed Q1.14
-    parameter signed [15:0] LIGHT_Y = 0;
-    parameter signed [15:0] LIGHT_Z = -4000;
-
     // default ambient light applied to every pixel, to avoid pixels being completely black
-    parameter [15:0] LIGHT_AMBIENT = 1000;
+    parameter [15:0] LIGHT_AMBIENT = 2000;
 
     reg [2:0] divider_counter; // counts how many cycles the divider has been running for
 
@@ -68,6 +64,8 @@ module rasterizer (
     reg [15:0] depth0, depth1, depth2;
 
     reg signed [15:0] normal_x, normal_y, normal_z;
+    // direction of diffuse lighting
+    reg signed [15:0] light_x, light_y, light_z;
     reg [5:0] u0, u1, u2, v0, v1, v2;
 
     // reg [15:0] color0, color1, color2;
@@ -256,7 +254,7 @@ module rasterizer (
 
     wire [15:0] brightness;
 
-    assign brightness_sum = (normal_x * LIGHT_X) + (normal_y * LIGHT_Y) + (normal_z * LIGHT_Z);
+    assign brightness_sum = (normal_x * light_x) + (normal_y * light_y) + (normal_z * light_z);
 
     assign brightness_raw = brightness_sum >> 14;
 
@@ -369,6 +367,9 @@ module rasterizer (
                         normal_x <= normal_x_in;
                         normal_y <= normal_y_in;
                         normal_z <= normal_z_in;
+                        light_x <= light_x_in;
+                        light_y <= light_y_in;
+                        light_z <= light_z_in;
 
                         u0 <= u0_in;
                         u1 <= u1_in;

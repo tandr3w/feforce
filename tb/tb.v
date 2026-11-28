@@ -100,6 +100,8 @@ module tb();
         // .rst(rst),
         .KEY(KEY),
         .LEDR(LEDR),
+        .HEX0(HEX0),
+        .HEX2(HEX2),
         .VGA_R(VGA_R),
         .VGA_G(VGA_G),
         .VGA_B(VGA_B),

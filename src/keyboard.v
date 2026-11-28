@@ -13,13 +13,15 @@
 // modified for use with project 
 
 // rename key with reset
-module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate, texture_index, object_index, is_last_object);
+module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, light_rotate, light_rotation_mode, translate, texture_index, object_index, is_last_object);
     input wire clk;
     //input wire [0:0] KEY;
 
     input wire reset;
     inout wire PS2_CLK, PS2_DAT;
-    output reg [11:0] rotate; 
+    output reg [11:0] rotate;
+    output reg [11:0] light_rotate;
+    output reg light_rotation_mode;
     output reg signed [15:0] translate; 
     output reg [1:0] texture_index;
     output reg [11:0] object_index;
@@ -101,14 +103,28 @@ module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate, texture_index,
     always @ (posedge clk) begin
         if (Resetn == 1'b0) begin
             rotate <= 0;
+            light_rotate <= 0;
+            light_rotation_mode <= 0;
             translate <= 0;
             texture_index <= 0;
             object_index <= 0;
         end
         if (ps2_rec) begin
             // use Serial[8:1] instead of scancode to avoid the reg delay making it 1 late
-            if (Serial[8:1] == 8'h2D) begin // R: rotate
-                rotate <= rotate + 12'd16;
+            if (Serial[8:1] == 8'h34) begin // G: toggle between rotating object and light
+                light_rotation_mode <= ~light_rotation_mode;
+            end
+            else if (Serial[8:1] == 8'h3B) begin // J: rotate left
+                if (light_rotation_mode)
+                    light_rotate <= light_rotate - 12'd128;
+                else
+                    rotate <= rotate - 12'd16;
+            end
+            else if (Serial[8:1] == 8'h4B) begin // L: rotate right
+                if (light_rotation_mode)
+                    light_rotate <= light_rotate + 12'd128;
+                else
+                    rotate <= rotate + 12'd16;
             end
             else if (Serial[8:1] == 8'h1C) begin // D: move right
                 translate <= translate + (16'd1 << 4);
@@ -120,7 +136,7 @@ module keyboard (clk, reset, PS2_CLK, PS2_DAT, rotate, translate, texture_index,
                 // texture_index <= texture_index + 1;
                 texture_index <= texture_index + 1;
             end
-            else if (Serial[8:1] == 8'h44) begin
+            else if (Serial[8:1] == 8'h44) begin // O: change object
                 object_index <= is_last_object ? 0 : object_index + 1;
             end
         end

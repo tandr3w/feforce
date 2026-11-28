@@ -12,8 +12,8 @@
         //input [13:0] rotate; // temp rotation along the x axis??? 
 
         input [11:0] rotate,
+        input [11:0] light_rotate,
 
-        
 
         input signed [15:0] x0, y0, z0, // fixed point 8.8
         input signed [15:0] x1, y1, z1,
@@ -26,12 +26,14 @@
         output reg signed [15:0] z0_out, z1_out, z2_out,
 
         output reg signed [15:0] nx_out, ny_out, nz_out, 
+        output reg signed [15:0] light_x_out, light_y_out, light_z_out,
 
         output reg is_done
     );
 
 
-        reg [2:0] state; 
+        reg [1:0] state;
+        reg [2:0] angle_step;
         //parameter [15:0] rotation = 16'b0000001010000000; // rotation amt(smth) in 10.6 *fix change to binary angle map
         // parameter [11:0] rotation = 12'b000101110010;
         wire [11:0] rotation;
@@ -42,13 +44,10 @@
         assign translation_x = translate;
         parameter signed [15:0] translation_y = 16'b0000000000000000; // translation amt
         parameter signed [15:0] translation_z = 16'b0000000000000000; // translation amt
-        parameter IDLE = 3'b000;
-        parameter LOAD_COS = 3'b001;
-        parameter WAIT_COS = 3'b101;
-        parameter WAIT_SIN = 3'b111; 
-        parameter LOAD_SIN = 3'b010;
-        parameter COMPUTE = 3'b011; 
-        parameter DONE = 3'b100;
+        parameter IDLE = 2'b00;
+        parameter LOAD_ANGLES = 2'b01;
+        parameter COMPUTE = 2'b10;
+        parameter DONE = 2'b11;
         //reg [15:0] sine_addr; // define the width 9 bits for numbr 4 bits for decimal place 
 
         reg [11:0] sine_addr; //use binary angle map
@@ -61,15 +60,22 @@
 
         reg signed [15:0] sine_angle; // need to discuss on width stuff 1.15
         reg signed [15:0] cosine_angle;
+        reg signed [15:0] light_sine_angle, light_cosine_angle;
 
         // intermediate sutff
-        wire signed [31:0] cos_of_x0, cos_of_x1, cos_of_x2, cos_of_z0, cos_of_z1, cos_of_z2, cos_of_nx, cos_of_nz; 
-        wire signed [31:0] sin_of_x0, sin_of_x1, sin_of_x2, sin_of_z0, sin_of_z1, sin_of_z2, sin_of_nx, sin_of_nz;
+        wire signed [31:0] cos_of_x0, cos_of_x1, cos_of_x2, cos_of_z0, cos_of_z1, cos_of_z2, cos_of_nx, cos_of_nz, cos_of_lx, cos_of_lz;
+        wire signed [31:0] sin_of_x0, sin_of_x1, sin_of_x2, sin_of_z0, sin_of_z1, sin_of_z2, sin_of_nx, sin_of_nz, sin_of_lx, sin_of_lz;
         wire signed [15:0] translation_of_x0, translation_of_y0, translation_of_z0;
         wire signed [15:0] translation_of_x1, translation_of_y1, translation_of_z1;
         wire signed [15:0] translation_of_x2, translation_of_y2, translation_of_z2;
         wire signed [15:0] translation_of_nx, translation_of_ny, translation_of_nz;
         wire signed [15:0] sum_x0, sum_x1, sum_x2, sum_nx, sum_y0, sum_y1, sum_y2, sum_ny, sum_z0, sum_z1, sum_z2, sum_nz; 
+        wire signed [15:0] sum_lx, sum_ly, sum_lz;
+
+        // default light direction is directly towards the object from the front
+        parameter signed [15:0] LIGHT_X = 0;
+        parameter signed [15:0] LIGHT_Y = 0;
+        parameter signed [15:0] LIGHT_Z = -16384;
 
 
 
@@ -105,6 +111,22 @@
         //     endcase  
         // end
 
+        // set addresses for angle loading
+        always @(*) begin
+            case (state)
+                IDLE: sine_addr = rotation;
+                LOAD_ANGLES: begin
+                    case (angle_step)
+                        3'd0: sine_addr = rotation + 12'd1024;
+                        3'd1: sine_addr = light_rotate;
+                        3'd2: sine_addr = light_rotate + 12'd1024;
+                        3'd3: sine_addr = rotation;
+                        default: sine_addr = rotation;
+                    endcase
+                end
+                default: sine_addr = rotation;
+            endcase
+        end
 
         always @ (posedge clk or posedge rst) begin
             if (rst) begin
@@ -120,9 +142,13 @@
                 nx_out <= 0; 
                 ny_out <= 0; 
                 nz_out <= 0; 
+                light_x_out <= LIGHT_X;
+                light_y_out <= LIGHT_Y;
+                light_z_out <= LIGHT_Z;
 
                 is_done <= 1'b0;
                 state <= IDLE; 
+                angle_step <= 0;
 
 
 
@@ -135,87 +161,47 @@
                     // sine_addr <= 12'b0; 
                     // we want this to be ready by load_sin
                     // cur_angle <= 12'b0;
-                    sine_addr <= rotation;
                     if (start) begin
-                        state <= WAIT_SIN;  
-
+                        angle_step <= 0;
+                        state <= LOAD_ANGLES;
                     end
 
                 end 
 
-                WAIT_SIN: begin 
-                    // sine_angle <= sine_data; 
-                    state <= LOAD_SIN;
-                end
-
-
-
-                LOAD_SIN: begin 
-                    // sine_addr <= rotation;
-                    // cur_angle <= rotation; 
-                    sine_angle <= sine_data; 
-                    sine_addr <= rotation + 12'd1024; 
-                    
-                    state <= WAIT_COS;
-                end
-
-                WAIT_COS: begin 
-                    // sine_angle <= sine_data; 
-                    state <= LOAD_COS;
-                end
-
-
-                LOAD_COS: begin 
-                    // sine_addr <= sine_addr + 12'd1024; 
-                    // cur_angle <= cur_angle + 12'd1024; 
-                    cosine_angle <= sine_data;
-                    state <= COMPUTE;
-                    
+                LOAD_ANGLES: begin
+                    case (angle_step)
+                        3'd0: sine_angle <= sine_data;
+                        3'd1: cosine_angle <= sine_data;
+                        3'd2: light_sine_angle <= sine_data;
+                        3'd3: light_cosine_angle <= sine_data;
+                    endcase
+                    if (angle_step == 3)
+                        state <= COMPUTE;
+                    else
+                        angle_step <= angle_step + 1'b1;
                 end
 
                 COMPUTE: begin 
-
-                    // if we dont receive a rotate signal, do nothing
-
-                    if (rotate) begin 
-                        x0_out <= sum_x0;
-                        y0_out <= sum_y0;
-                        z0_out <= sum_z0; 
-                        
-                        x1_out <= sum_x1;
-                        y1_out <= sum_y1;
-                        z1_out <= sum_z1;
-
-                        x2_out <= sum_x2;
-                        y2_out <= sum_y2;
-                        z2_out <= sum_z2;
-
-                        nx_out <= sum_nx;
-                        ny_out <= sum_ny; 
-                        nz_out <= sum_nz;
-
-                        
-                    end
-                    else if (!rotate) begin 
-                        x0_out <= x0 + translation_of_x0;
-                        y0_out <= y0 + translation_of_y0;
-                        z0_out <= z0 + translation_of_z0 + 16'b0000110000000000;
-
-                        x1_out <= x1 + translation_of_x1;
-                        y1_out <= y1 + translation_of_y1;
-                        z1_out <= z1 + translation_of_z1 + 16'b0000110000000000;
-
-                        x2_out <= x2 + translation_of_x2;
-                        y2_out <= y2 + translation_of_y2;
-                        z2_out <= z2 + translation_of_z2 + 16'b0000110000000000;
-
-                        nx_out <= nx;
-                        ny_out <= ny;
-                        nz_out <= nz;
-                    end
-                    state <= DONE;// iify
+                    x0_out <= sum_x0;
+                    y0_out <= sum_y0;
+                    z0_out <= sum_z0; 
                     
+                    x1_out <= sum_x1;
+                    y1_out <= sum_y1;
+                    z1_out <= sum_z1;
 
+                    x2_out <= sum_x2;
+                    y2_out <= sum_y2;
+                    z2_out <= sum_z2;
+
+                    nx_out <= sum_nx;
+                    ny_out <= sum_ny; 
+                    nz_out <= sum_nz;
+
+                    light_x_out <= sum_lx;
+                    light_y_out <= sum_ly;
+                    light_z_out <= sum_lz;
+                    state <= DONE;// iify
                     
                 end
 
@@ -320,6 +306,16 @@
         // assign translation_of_nz = translate * translation_z;
         assign sum_nz = (-sin_of_nx) + cos_of_nz; 
 
+        // rotate the light vector in the same way as the normal
+        assign cos_of_lx = light_cosine_angle * LIGHT_X >>> 15;
+        assign sin_of_lz = light_sine_angle * LIGHT_Z >>> 15;
+        assign sum_lx = cos_of_lx + sin_of_lz;
+
+        assign sum_ly = LIGHT_Y;
+
+        assign cos_of_lz = light_cosine_angle * LIGHT_Z >>> 15;
+        assign sin_of_lx = light_sine_angle * LIGHT_X >>> 15;
+        assign sum_lz = (-sin_of_lx) + cos_of_lz;
 
         // assign x0_out = (cosine_angle * x0) + (sine_angle * z0) + (translation_x * translate); 
         // assign y0_out = y0 + (translation_y * translate); 
